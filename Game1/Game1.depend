@@ -1,0 +1,84 @@
+# depslib dependency file v1.0
+1586359823 source:d:\btlon\game1\main.cpp
+	<iostream>
+	"CommonFunc.h"
+	"BaseObject.h"
+	"game_map.h"
+	"MainObject.h"
+	"ImpTimer.h"
+	"ThreatsObject.h"
+	"ExplosionObject.h"
+	"TextObject.h"
+
+1586093659 source:d:\btlon\game1\commonfunc.cpp
+	"CommonFunc.h"
+
+1586255559 d:\btlon\game1\commonfunc.h
+	<windows.h>
+	<string>
+	<vector>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+
+1585925073 source:d:\btlon\game1\baseobject.cpp
+	"BaseObject.h"
+
+1585844234 d:\btlon\game1\baseobject.h
+	"CommonFunc.h"
+
+1586255559 source:d:\btlon\game1\game_map.cpp
+	"game_map.h"
+	"CommonFunc.h"
+
+1585881882 d:\btlon\game1\game_map.h
+	"CommonFunc.h"
+	"BaseObject.h"
+
+1586357950 source:d:\btlon\game1\mainobject.cpp
+	"MainObject.h"
+	"BulletObject.h"
+
+1586264177 d:\btlon\game1\mainobject.h
+	<vector>
+	"CommonFunc.h"
+	"BaseObject.h"
+	"BulletObject.h"
+
+1585900048 source:d:\btlon\game1\imptimer.cpp
+	"ImpTimer.h"
+	"CommonFunc.h"
+
+1585889687 d:\btlon\game1\imptimer.h
+
+1586354975 source:d:\btlon\game1\bulletobject.cpp
+	<random>
+	"BulletObject.h"
+
+1586354975 d:\btlon\game1\bulletobject.h
+	<random>
+	"BaseObject.h"
+	"CommonFunc.h"
+
+1586358058 source:d:\btlon\game1\threatsobject.cpp
+	"ThreatsObject.h"
+
+1586096442 d:\btlon\game1\threatsobject.h
+	"CommonFunc.h"
+	"BaseObject.h"
+	"BulletObject.h"
+
+1586100736 source:d:\btlon\game1\explosionobject.cpp
+	"ExplosionObject.h"
+
+1586100736 d:\btlon\game1\explosionobject.h
+	"BaseObject.h"
+	"CommonFunc.h"
+
+1586161755 source:d:\btlon\game1\textobject.cpp
+	"TextObject.h"
+
+1586162438 d:\btlon\game1\textobject.h
+	"CommonFunc.h"
+
