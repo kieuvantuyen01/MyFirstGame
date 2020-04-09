@@ -61,6 +61,11 @@ void TextObject::SetColor(int type)
         SDL_Color color = {0, 0, 0};
         text_color_ = color;
     }
+    else if (type == YELLOW_TEXT)
+    {
+        SDL_Color color = {249, 244, 0};
+        text_color_ = color;
+    }
 }
 
 void TextObject::RenderText(SDL_Renderer* screen,

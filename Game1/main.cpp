@@ -9,6 +9,8 @@
 #include "ThreatsObject.h"
 #include "ExplosionObject.h"
 #include "TextObject.h"
+#include "PlayerPower.h"
+#include "Geometric.h"
 
 BaseObject g_background;
 TTF_Font* font_time = NULL;
@@ -114,6 +116,9 @@ std::vector<ThreatsObiect*> MakeThreadList()
             list_threats.push_back(p_threat);
         }
     }
+
+
+
     ThreatsObiect* threat_objs = new ThreatsObiect[20];
 
     for (int i = 0; i < 20; i++)
@@ -160,6 +165,12 @@ int main(int argc, char* argv[])
     p_player.LoadImg("img/player_right_.png", g_screen);
     p_player.set_clips();
 
+    PlayerPower player_power;
+    player_power.Init(g_screen);
+
+    PlayerMoney player_money;
+    player_money.Init(g_screen);
+    player_money.SetPos(SCREEN_WIDTH*0.5-300, 0);
 
     std::vector<ThreatsObiect*>threats_list = MakeThreadList();
 
@@ -183,8 +194,14 @@ int main(int argc, char* argv[])
 
     //Time text
     TextObject time_game;
-    time_game.SetColor(TextObject::WHITE_TEXT);
+    time_game.SetColor(TextObject::YELLOW_TEXT);
 
+    TextObject mark_game;
+    mark_game.SetColor(TextObject::YELLOW_TEXT);
+    UINT mark_value = 0;
+
+    TextObject money_game;
+    money_game.SetColor(TextObject::YELLOW_TEXT);
 
     bool is_quit = false;
     while(!is_quit)
@@ -214,6 +231,18 @@ int main(int argc, char* argv[])
 
         game_map.SetMap(map_data);
         game_map.DrawMap(g_screen);
+
+        //Draw Geometric
+        GeometricFormat rectangle_size{0, 0, SCREEN_WIDTH, 40};
+        ColorData color_data1{237, 28, 36};
+        Geometric::RenderRectangle(rectangle_size, color_data1, g_screen);
+
+        GeometricFormat outline_size(1, 1, SCREEN_WIDTH, 38);
+        ColorData color_data2{0, 0, 0};
+        Geometric::RenderOutline(outline_size, color_data2, g_screen);
+
+        player_power.Show(g_screen);
+        player_money.Show(g_screen);
 
         for (int i = 0; i < threats_list.size(); i++)
         {
@@ -267,6 +296,8 @@ int main(int argc, char* argv[])
                         p_player.setRect(0, 0);
                         p_player.set_come_back_time(60);
                         SDL_Delay(1000);
+                        player_power.Decrease();
+                        player_power.Render(g_screen);
                         continue;
                     }
                     else
@@ -305,6 +336,7 @@ int main(int argc, char* argv[])
                         bool bCol = SDLCommonFunc::CheckCollision(bRect, tRect);
                         if (bCol)
                         {
+                            mark_value ++;
                             int frame_exp_width = exp_threat.get_frame_width();
                             int frame_exp_height = exp_threat.get_frame_height();
                             for (int ex = 0; ex < NUM_FRAME_EXP; ex++)
@@ -326,7 +358,7 @@ int main(int argc, char* argv[])
         }
 
         //Show game time
-        std::string str_time = "Time: ";
+        std::string str_time = "TIME: ";
         Uint32 time_val = SDL_GetTicks()/1000; //thoi gian hien tai
         Uint32 val_time = 304 - time_val;
         if (val_time <= 0)
@@ -346,6 +378,22 @@ int main(int argc, char* argv[])
             time_game.LoadFromRenderText(font_time, g_screen);
             time_game.RenderText(g_screen, SCREEN_WIDTH-200, 15);
         }
+
+        std::string val_str_mark = std::to_string(mark_value);
+        std::string strMark("MARK: ");
+        strMark += val_str_mark;
+
+        mark_game.SetText(strMark);
+        mark_game.LoadFromRenderText(font_time, g_screen);
+        mark_game.RenderText(g_screen, SCREEN_WIDTH*0.5 - 50, 15);
+
+        int money_count = p_player.GetMoneyCount();
+        std::string money_str = std::to_string(money_count);
+
+        money_game.SetText(money_str);
+        money_game.LoadFromRenderText(font_time, g_screen);
+        money_game.RenderText(g_screen, SCREEN_WIDTH*0.5-250, 15);
+
         SDL_RenderPresent(g_screen);
 
         int real_imp_time = fps_timer.get_ticks();

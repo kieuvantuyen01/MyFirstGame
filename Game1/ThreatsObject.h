@@ -15,11 +15,11 @@ public:
     ThreatsObiect();
     ~ThreatsObiect();
 
-
     enum TypeMove
     {
         STATIC_THREAT = 0,
         MOVE_IN_SPACE_THREAT = 1,
+        FLY_THREAT = 2,
     };
     void set_x_val(const float xVal) {x_val_ = xVal;}
     void set_y_val(const float yVal) {y_val_ = yVal;}
@@ -63,6 +63,7 @@ private:
     float x_pos_;
     float y_pos_;
     bool on_ground_;
+    bool is_fly_;
     int come_back_time_;
     SDL_Rect frame_clip_[THREAT_FRAME_NUM];
     int width_frame_;

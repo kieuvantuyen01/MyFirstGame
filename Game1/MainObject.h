@@ -44,6 +44,7 @@ public:
     void IncreaseMoney();
 
     void set_come_back_time (const int& cb_time) {come_back_time_ = cb_time;}
+    int GetMoneyCount() const {return money_count;}
 
 private:
 

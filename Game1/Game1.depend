@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1586359823 source:d:\btlon\game1\main.cpp
+1586447909 source:d:\btlon\game1\main.cpp
 	<iostream>
 	"CommonFunc.h"
 	"BaseObject.h"
@@ -9,6 +9,8 @@
 	"ThreatsObject.h"
 	"ExplosionObject.h"
 	"TextObject.h"
+	"PlayerPower.h"
+	"Geometric.h"
 
 1586093659 source:d:\btlon\game1\commonfunc.cpp
 	"CommonFunc.h"
@@ -28,11 +30,11 @@
 1585844234 d:\btlon\game1\baseobject.h
 	"CommonFunc.h"
 
-1586255559 source:d:\btlon\game1\game_map.cpp
+1586426332 source:d:\btlon\game1\game_map.cpp
 	"game_map.h"
 	"CommonFunc.h"
 
-1585881882 d:\btlon\game1\game_map.h
+1586426332 d:\btlon\game1\game_map.h
 	"CommonFunc.h"
 	"BaseObject.h"
 
@@ -40,7 +42,7 @@
 	"MainObject.h"
 	"BulletObject.h"
 
-1586264177 d:\btlon\game1\mainobject.h
+1586400926 d:\btlon\game1\mainobject.h
 	<vector>
 	"CommonFunc.h"
 	"BaseObject.h"
@@ -61,10 +63,10 @@
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586358058 source:d:\btlon\game1\threatsobject.cpp
+1586447909 source:d:\btlon\game1\threatsobject.cpp
 	"ThreatsObject.h"
 
-1586096442 d:\btlon\game1\threatsobject.h
+1586447183 d:\btlon\game1\threatsobject.h
 	"CommonFunc.h"
 	"BaseObject.h"
 	"BulletObject.h"
@@ -76,9 +78,22 @@
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586161755 source:d:\btlon\game1\textobject.cpp
+1586401974 source:d:\btlon\game1\textobject.cpp
 	"TextObject.h"
 
-1586162438 d:\btlon\game1\textobject.h
+1586402029 d:\btlon\game1\textobject.h
+	"CommonFunc.h"
+
+1586431993 d:\btlon\game1\playerpower.h
+	"BaseObject.h"
+	"CommonFunc.h"
+
+1586428074 source:d:\btlon\game1\playerpower.cpp
+	"PlayerPower.h"
+
+1586437560 source:d:\btlon\game1\geometric.cpp
+	"Geometric.h"
+
+1586437580 d:\btlon\game1\geometric.h
 	"CommonFunc.h"
 
