@@ -18,11 +18,12 @@ MainObject::MainObject()
     map_x_ = 0;
     map_y_ = 0;
     come_back_time_ = 0;
-    money_count = 0;
+    torch_count = 0;
     change_bullet_ = 0;
     change_dir_left_ = 0;
     change_dir_right_ = 0;
     double_jump_ = false;
+    won_ = false;
 }
 
 MainObject::~MainObject()
@@ -57,45 +58,13 @@ void MainObject::set_clips()
 {
     if (width_frame_ > 0 && height_frame_ > 0)
     {
-        frame_clip_[0].x = 0;
-        frame_clip_[0].y = 0;
-        frame_clip_[0].w = width_frame_;
-        frame_clip_[0].h = height_frame_;
-
-        frame_clip_[1].x = width_frame_;
-        frame_clip_[1].y = 0;
-        frame_clip_[1].w = width_frame_;
-        frame_clip_[1].h = height_frame_;
-
-        frame_clip_[2].x = 2*width_frame_;
-        frame_clip_[2].y = 0;
-        frame_clip_[2].w = width_frame_;
-        frame_clip_[2].h = height_frame_;
-
-        frame_clip_[3].x = 3*width_frame_;
-        frame_clip_[3].y = 0;
-        frame_clip_[3].w = width_frame_;
-        frame_clip_[3].h = height_frame_;
-
-        frame_clip_[4].x = 4*width_frame_;
-        frame_clip_[4].y = 0;
-        frame_clip_[4].w = width_frame_;
-        frame_clip_[4].h = height_frame_;
-
-        frame_clip_[5].x = 5*width_frame_;
-        frame_clip_[5].y = 0;
-        frame_clip_[5].w = width_frame_;
-        frame_clip_[5].h = height_frame_;
-
-        frame_clip_[6].x = 6*width_frame_;
-        frame_clip_[6].y = 0;
-        frame_clip_[6].w = width_frame_;
-        frame_clip_[6].h = height_frame_;
-
-        frame_clip_[7].x = 7*width_frame_;
-        frame_clip_[7].y = 0;
-        frame_clip_[7].w = width_frame_;
-        frame_clip_[7].h = height_frame_;
+        for (int i = 0; i < NUM_FRAME_PLAYER; i++)
+        {
+            frame_clip_[i].x = width_frame_*i;
+            frame_clip_[i].y = 0;
+            frame_clip_[i].w = width_frame_;
+            frame_clip_[i].h = height_frame_;
+        }
     }
 }
 
@@ -112,7 +81,7 @@ void MainObject::Show(SDL_Renderer* des)
         frame_ = 0;
     }
 
-    if (frame_ >= 8)
+    if (frame_ >= NUM_FRAME_PLAYER)
     {
         frame_ = 0;
     }
@@ -416,11 +385,11 @@ void MainObject::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y1][x2];
             int val2 = map_data.tile[y2][x2];
 
-            if (val1 == STATE_MONEY || val2 == STATE_MONEY)
+            if (val1 == STATE_TORCH || val2 == STATE_TORCH)
             {
                 map_data.tile[y1][x2] = 0;
                 map_data.tile[y2][x2] = 0;
-                IncreaseMoney();
+                IncreaseTorch();
             }
             else
             {
@@ -431,17 +400,21 @@ void MainObject::CheckToMap(Map& map_data)
                     x_val_ = 0;
                 }
             }
+            if (val1 == 19 || val2 == 19)
+            {
+                won_ = true;
+            }
         }
         else if (x_val_ < 0)
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y2][x1];
 
-            if (val1 == STATE_MONEY || val2 == STATE_MONEY)
+            if (val1 == STATE_TORCH || val2 == STATE_TORCH)
             {
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y2][x1] = 0;
-                IncreaseMoney();
+                IncreaseTorch();
             }
             else
             {
@@ -450,6 +423,10 @@ void MainObject::CheckToMap(Map& map_data)
                     x_pos_ = (x1+1)*TILE_SIZE;
                     x_val_ = 0;
                 }
+            }
+            if (val1 == 19 || val2 == 19)
+            {
+                won_ = true;
             }
         }
     }
@@ -470,11 +447,11 @@ void MainObject::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y2][x1];
             int val2 = map_data.tile[y2][x2];
 
-            if (val1 == STATE_MONEY || val2 == STATE_MONEY)
+            if (val1 == STATE_TORCH || val2 == STATE_TORCH)
             {
                 map_data.tile[y2][x1] = 0;
                 map_data.tile[y2][x2] = 0;
-                IncreaseMoney();
+                IncreaseTorch();
             }
             else
             {
@@ -490,17 +467,21 @@ void MainObject::CheckToMap(Map& map_data)
                     }
                 }
             }
+            if (val1 == 19 || val2 == 19)
+            {
+                won_ = true;
+            }
         }
         else if (y_val_ < 0)
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y1][x2];
 
-            if (val1 == STATE_MONEY || val2 == STATE_MONEY)
+            if (val1 == STATE_TORCH || val2 == STATE_TORCH)
             {
                 map_data.tile[y1][x1] = 0;
                 map_data.tile[y1][x2] = 0;
-                IncreaseMoney();
+                IncreaseTorch();
             }
             else
             {
@@ -509,6 +490,10 @@ void MainObject::CheckToMap(Map& map_data)
                     y_pos_ = (y1+1)*TILE_SIZE;
                     y_val_ = 0;
                 }
+            }
+            if (val1 == 19 || val2 == 19)
+            {
+                won_ = true;
             }
         }
     }
@@ -529,9 +514,9 @@ void MainObject::CheckToMap(Map& map_data)
     }
 }
 
-void MainObject::IncreaseMoney()
+void MainObject::IncreaseTorch()
 {
-    money_count++;
+    torch_count++;
 }
 void MainObject::UpdateImagePlayer(SDL_Renderer* des)
 {

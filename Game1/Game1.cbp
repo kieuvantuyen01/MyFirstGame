@@ -33,8 +33,6 @@
 		</Compiler>
 		<Unit filename="BaseObject.cpp" />
 		<Unit filename="BaseObject.h" />
-		<Unit filename="BossObject.cpp" />
-		<Unit filename="BossObject.h" />
 		<Unit filename="BulletObject.cpp" />
 		<Unit filename="BulletObject.h" />
 		<Unit filename="CommonFunc.cpp" />
@@ -51,8 +49,8 @@
 		<Unit filename="Menu.h" />
 		<Unit filename="PlayerPower.cpp" />
 		<Unit filename="PlayerPower.h" />
-		<Unit filename="TextObject.cpp" />
-		<Unit filename="TextObject.h" />
+		<Unit filename="Text.cpp" />
+		<Unit filename="Text.h" />
 		<Unit filename="ThreatsObject.cpp" />
 		<Unit filename="ThreatsObject.h" />
 		<Unit filename="game_map.cpp" />

@@ -2,7 +2,7 @@
 
 Menu::Menu()
 {
-    state_=SHOW_MENU;
+    state_ = SHOW_MENU;
     start_game_.SetText("LIBERATE THE SOUTH");
     help_.SetText("ADVISE");
     quit_.SetText("EXIT");
@@ -17,7 +17,7 @@ Menu::Menu()
     help_content_2.SetColor(Text::WHITE_TEXT);
     help_content_3.SetColor(Text::WHITE_TEXT);
     back_.SetColor(Text::BLACK_TEXT);
-    is_show_=true;
+    is_show_ = true;
 }
 
 Menu::~Menu()
@@ -25,7 +25,7 @@ Menu::~Menu()
 
 }
 
-void Menu::CreateText(TTF_Font* font,SDL_Renderer* screen)
+void Menu::CreateText(TTF_Font * font, SDL_Renderer * screen)
 {
     start_game_.CreateText(screen, font);
     help_.CreateText(screen, font);
@@ -38,52 +38,52 @@ void Menu::CreateText(TTF_Font* font,SDL_Renderer* screen)
 
 void Menu::SetPostionText()
 {
-    SDL_Rect menu_pos=this->GetRect();
-    start_game_.setRect(menu_pos.x+500,menu_pos.y+400);
-    help_.setRect(menu_pos.x+580,menu_pos.y+450);
-    quit_.setRect(menu_pos.x+600,menu_pos.y+500);
-    help_content_.setRect(menu_pos.x+200,menu_pos.y+350);
-    help_content_2.setRect(menu_pos.x+200,menu_pos.y+400);
-    help_content_3.setRect(menu_pos.x+200,menu_pos.y+450);
-    back_.setRect(menu_pos.x+600,menu_pos.y+500);
+    SDL_Rect menu_pos = this -> GetRect();
+    start_game_.setRect(menu_pos.x + 500, menu_pos.y + 400);
+    help_.setRect(menu_pos.x + 580, menu_pos.y + 450);
+    quit_.setRect(menu_pos.x + 600, menu_pos.y + 500);
+    help_content_.setRect(menu_pos.x + 200, menu_pos.y + 350);
+    help_content_2.setRect(menu_pos.x + 200, menu_pos.y + 400);
+    help_content_3.setRect(menu_pos.x + 200, menu_pos.y + 450);
+    back_.setRect(menu_pos.x + 600, menu_pos.y + 500);
 }
 
-void Menu::CheckEvents(SDL_Event events,bool& is_quit,bool& is_show_score)
+void Menu::CheckEvents(SDL_Event events, bool & is_quit, bool & is_show_score)
 {
-    int x=events.motion.x;
-    int y=events.motion.y;
-    if(state_==SHOW_MENU)
+    int x = events.motion.x;
+    int y = events.motion.y;
+    if (state_ == SHOW_MENU)
     {
-        if(SDLCommonFunc::isInside(x,y,start_game_.GetRect()))
+        if (SDLCommonFunc::isInside(x, y, start_game_.GetRect())) //kiem tra ve chuot khi focus
         {
-            //focus Start Game
             start_game_.SetColor(Text::RED_TEXT);
-            if(events.motion.type==SDL_MOUSEBUTTONDOWN) //click start game
-                is_show_=false;
+            if (events.motion.type == SDL_MOUSEBUTTONDOWN)
+            {
+                is_show_ = false;
+            }
         }
         else
         {
             start_game_.SetColor(Text::WHITE_TEXT);
-            if(SDLCommonFunc::isInside(x,y,quit_.GetRect()))
+            if (SDLCommonFunc::isInside(x, y, quit_.GetRect()))
             {
-                //focus quit
                 quit_.SetColor(Text::RED_TEXT);
-                if(events.motion.type==SDL_MOUSEBUTTONDOWN) //click quit
+                if (events.motion.type == SDL_MOUSEBUTTONDOWN)
                 {
-                    is_show_=false;
-                    is_quit=true;
-                    is_show_score=false;
+                    is_show_ = false;
+                    is_quit = true;
+                    is_show_score = false;
                 }
             }
             else
             {
                 quit_.SetColor(Text::WHITE_TEXT);
-                if(SDLCommonFunc::isInside(x,y,help_.GetRect()))
+                if (SDLCommonFunc::isInside(x, y, help_.GetRect()))
                 {
                     help_.SetColor(Text::RED_TEXT);
-                    if(events.motion.type==SDL_MOUSEBUTTONDOWN)
+                    if (events.motion.type == SDL_MOUSEBUTTONDOWN)
                     {
-                        state_=SHOW_HELP;
+                        state_ = SHOW_HELP;
                     }
                 }
                 else
@@ -93,23 +93,27 @@ void Menu::CheckEvents(SDL_Event events,bool& is_quit,bool& is_show_score)
             }
         }
     }
-    else if(state_==SHOW_HELP)
+    else if (state_ == SHOW_HELP)
     {
-        if(SDLCommonFunc::isInside(x,y,back_.GetRect()))
+        if (SDLCommonFunc::isInside(x, y, back_.GetRect()))
         {
             back_.SetColor(Text::RED_TEXT);
-            if(events.motion.type==SDL_MOUSEBUTTONDOWN)
-                state_=SHOW_MENU;
+            if (events.motion.type == SDL_MOUSEBUTTONDOWN)
+            {
+                state_ = SHOW_MENU;
+            }
         }
         else
+        {
             back_.SetColor(Text::BLACK_TEXT);
+        }
     }
 
 }
 
-void Menu::RenderMenu(SDL_Renderer* des)
+void Menu::RenderMenu(SDL_Renderer * des)
 {
-    switch(state_)
+    switch (state_)
     {
     case SHOW_MENU:
     {

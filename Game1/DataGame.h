@@ -1,14 +1,14 @@
-#ifndef PLAYER_POWER_H_
-#define PLAYER_POWER_H_
+#ifndef DATA_GAME_H_
+#define DATA_GAME_H_
 
 #include "BaseObject.h"
 #include "CommonFunc.h"
 
-class PlayerPower : public BaseObject
+class DataGame : public BaseObject
 {
 public:
-    PlayerPower();
-    ~PlayerPower();
+    DataGame();
+    ~DataGame();
 
     void SetNum(const int& num) {number_ = num;}
     void AddPos(const int& xPos);
@@ -24,11 +24,11 @@ private:
 
 };
 
-class PlayerMoney : public BaseObject
+class PlayerTorch : public BaseObject
 {
 public:
-    PlayerMoney();
-    ~PlayerMoney();
+    PlayerTorch();
+    ~PlayerTorch();
 
     void Init(SDL_Renderer* screen);
     void SetPos(const int& x, const int& y) {x_pos_ = x, y_pos_ = y;};
@@ -41,4 +41,4 @@ private:
 };
 
 
-#endif // PLAYER_POWER_H_
+#endif // DATA_GAME_H_

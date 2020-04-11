@@ -28,6 +28,8 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 
+const int NUM_DIE = 3;
+
 const int COLOR_KEY_R = 167;
 const int COLOR_KEY_G = 175;
 const int COLOR_KEY_B = 180;
@@ -40,7 +42,7 @@ const int RENDER_DRAW_COLOR =  0xff;
 #define MAX_MAP_X 400
 #define MAX_MAP_Y 10
 
-#define STATE_MONEY 4
+#define STATE_TORCH 4
 
 typedef struct Input
 {
@@ -66,6 +68,7 @@ typedef struct Map // luu tru trang thai va vi tri cua cac o TileMap
 namespace SDLCommonFunc
 {
     bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
-    bool isInside(int& x,int& y,SDL_Rect object);
+    bool isInside(int& x, int& y, SDL_Rect object);
+    void waitUntilKeyPressed();
 }
 #endif // COMMON_FUNCTION_H_

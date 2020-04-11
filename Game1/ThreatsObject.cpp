@@ -49,45 +49,13 @@ void ThreatsObiect::set_clips()
 {
     if (width_frame_ > 0 && height_frame_ > 0)
     {
-        frame_clip_[0].x = 0;
-        frame_clip_[0].y = 0;
-        frame_clip_[0].w = width_frame_;
-        frame_clip_[0].h = height_frame_;
-
-        frame_clip_[1].x = width_frame_;
-        frame_clip_[1].y = 0;
-        frame_clip_[1].w = width_frame_;
-        frame_clip_[1].h = height_frame_;
-
-        frame_clip_[2].x = 2*width_frame_;
-        frame_clip_[2].y = 0;
-        frame_clip_[2].w = width_frame_;
-        frame_clip_[2].h = height_frame_;
-
-        frame_clip_[3].x = 3*width_frame_;
-        frame_clip_[3].y = 0;
-        frame_clip_[3].w = width_frame_;
-        frame_clip_[3].h = height_frame_;
-
-        frame_clip_[4].x = 4*width_frame_;
-        frame_clip_[4].y = 0;
-        frame_clip_[4].w = width_frame_;
-        frame_clip_[4].h = height_frame_;
-
-        frame_clip_[5].x = 5*width_frame_;
-        frame_clip_[5].y = 0;
-        frame_clip_[5].w = width_frame_;
-        frame_clip_[5].h = height_frame_;
-
-        frame_clip_[6].x = 6*width_frame_;
-        frame_clip_[6].y = 0;
-        frame_clip_[6].w = width_frame_;
-        frame_clip_[6].h = height_frame_;
-
-        frame_clip_[7].x = 7*width_frame_;
-        frame_clip_[7].y = 0;
-        frame_clip_[7].w = width_frame_;
-        frame_clip_[7].h = height_frame_;
+        for (int i = 0; i < THREAT_FRAME_NUM; i++)
+        {
+            frame_clip_[i].x = i*width_frame_;
+            frame_clip_[i].y = 0;
+            frame_clip_[i].w = width_frame_;
+            frame_clip_[i].h = height_frame_;
+        }
     }
 }
 
@@ -98,7 +66,7 @@ void ThreatsObiect::Show(SDL_Renderer* des)
         rect_.x = x_pos_ - map_x_;
         rect_.y = y_pos_ - map_y_;
         frame_++;
-        if (frame_ >= 8)
+        if (frame_ >= THREAT_FRAME_NUM)
         {
             frame_ = 0;
         }
@@ -198,7 +166,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y1][x2];
             int val2 = map_data.tile[y2][x2];
 
-            if ((val1 != BLANK_TILE && val1 != STATE_MONEY) || (val2 != BLANK_TILE && val2 != STATE_MONEY))
+            if ((val1 != BLANK_TILE && val1 != STATE_TORCH) || (val2 != BLANK_TILE && val2 != STATE_TORCH))
             {
                 x_pos_ = x2*TILE_SIZE; // Dung tai vi tri do -> vi tri bien cua nhan vat
                 x_pos_ -= width_frame_ + 1;
@@ -210,7 +178,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y2][x1];
 
-            if ((val1 != BLANK_TILE && val1 != STATE_MONEY) || (val2 != BLANK_TILE && val2 != STATE_MONEY))
+            if ((val1 != BLANK_TILE && val1 != STATE_TORCH) || (val2 != BLANK_TILE && val2 != STATE_TORCH))
             {
                 x_pos_ = (x1+1)*TILE_SIZE;
                 x_val_ = 0;
@@ -234,7 +202,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y2][x1];
             int val2 = map_data.tile[y2][x2];
 
-            if ((val1!= BLANK_TILE && val1 != STATE_MONEY) || (val2 != BLANK_TILE && val2 != STATE_MONEY))
+            if ((val1!= BLANK_TILE && val1 != STATE_TORCH) || (val2 != BLANK_TILE && val2 != STATE_TORCH))
             {
                 y_pos_ = y2*TILE_SIZE;
                 y_pos_ -= height_frame_+1;
@@ -247,7 +215,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y1][x2];
 
-            if ((val1 != BLANK_TILE && val1 != STATE_MONEY) || (val2!= BLANK_TILE && val2 != STATE_MONEY))
+            if ((val1 != BLANK_TILE && val1 != STATE_TORCH) || (val2!= BLANK_TILE && val2 != STATE_TORCH))
             {
                 y_pos_ = (y1+1)*TILE_SIZE;
                 y_val_ = 0;

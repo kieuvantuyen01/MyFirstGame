@@ -1,5 +1,5 @@
 
-#include "game_map.h"
+#include "Map.h"
 #include "CommonFunc.h"
 void GameMap::LoadMap(char* name)
 {

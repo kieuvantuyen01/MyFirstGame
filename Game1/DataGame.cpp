@@ -1,21 +1,21 @@
-#include "PlayerPower.h"
+#include "DataGame.h"
 
-PlayerPower::PlayerPower()
+DataGame::DataGame()
 {
     number_ = 0;
 }
 
-PlayerPower::~PlayerPower()
+DataGame::~DataGame()
 {
 
 }
 
-void PlayerPower::AddPos(const int& xp)
+void DataGame::AddPos(const int& xp)
 {
     pos_list_.push_back(xp);
 }
 
-void PlayerPower::Init(SDL_Renderer* screen)
+void DataGame::Init(SDL_Renderer* screen)
 {
     //bool ret =
     LoadImg("img/player_pw.png", screen);
@@ -33,7 +33,7 @@ void PlayerPower::Init(SDL_Renderer* screen)
     AddPos(100);
 }
 
-void PlayerPower::Show(SDL_Renderer* screen)
+void DataGame::Show(SDL_Renderer* screen)
 {
     for (int i = 0; i < pos_list_.size(); i++)
     {
@@ -43,13 +43,13 @@ void PlayerPower::Show(SDL_Renderer* screen)
     }
 }
 
-void PlayerPower::Decrease()
+void DataGame::Decrease()
 {
     number_ --;
     pos_list_.pop_back();
 }
 
-void PlayerPower::InitCrease()
+void DataGame::InitCrease()
 {
     number_++;
     int last_pos = pos_list_.back();
@@ -58,23 +58,23 @@ void PlayerPower::InitCrease()
 
 }
 
-PlayerMoney::PlayerMoney()
+PlayerTorch::PlayerTorch()
 {
     x_pos_ = 0;
     y_pos_ = 0;
 }
 
-PlayerMoney::~PlayerMoney()
+PlayerTorch::~PlayerTorch()
 {
 
 }
 
-void PlayerMoney::Init(SDL_Renderer* screen)
+void PlayerTorch::Init(SDL_Renderer* screen)
 {
     bool ret = LoadImg("img/torch.png", screen);
 }
 
-void PlayerMoney::Show(SDL_Renderer* screen)
+void PlayerTorch::Show(SDL_Renderer* screen)
 {
     rect_.x = x_pos_;
     rect_.y = y_pos_;

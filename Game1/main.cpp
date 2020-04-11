@@ -2,13 +2,13 @@
 #include<iostream>
 #include "CommonFunc.h"
 #include "BaseObject.h"
-#include "game_map.h"
+#include "Map.h"
 #include "MainObject.h"
 #include "ImpTimer.h"
 #include "ThreatsObject.h"
 #include "ExplosionObject.h"
 #include "Text.h"
-#include "PlayerPower.h"
+#include "DataGame.h"
 #include "Geometric.h"
 #include "Menu.h"
 
@@ -203,12 +203,12 @@ int main(int argc, char* argv[])
     p_player.LoadImg("img/player_right_.png", g_screen);
     p_player.set_clips();
 
-    PlayerPower player_power;
-    player_power.Init(g_screen);
+    DataGame game_data;
+    game_data.Init(g_screen);
 
-    PlayerMoney player_money;
-    player_money.Init(g_screen);
-    player_money.SetPos(SCREEN_WIDTH*0.5-300, 0);
+    PlayerTorch player_torch;
+    player_torch.Init(g_screen);
+    player_torch.SetPos(SCREEN_WIDTH*0.5-300, 0);
 
     std::vector<ThreatsObiect*>threats_list = MakeThreadList();
 
@@ -234,12 +234,12 @@ int main(int argc, char* argv[])
     Text time_game;
     time_game.SetColor(Text::YELLOW_TEXT);
 
-    Text mark_game;
-    mark_game.SetColor(Text::YELLOW_TEXT);
-    UINT mark_value = 0;
+    Text score_game;
+    score_game.SetColor(Text::YELLOW_TEXT);
+    UINT score_value = 0;
 
-    Text money_game;
-    money_game.SetColor(Text::YELLOW_TEXT);
+    Text torch_game;
+    torch_game.SetColor(Text::YELLOW_TEXT);
 
     bool is_quit = false;
     bool is_show_score=true;
@@ -249,7 +249,7 @@ int main(int argc, char* argv[])
 	menu_game.SetPostionText();
 
 	BaseObject score_message;
-	score_message.setRect(200,150);
+	score_message.setRect(380, 90);
 	bool ret=score_message.LoadImg("img/score.png",g_screen);
 	if(!ret) return -1;
 
@@ -315,8 +315,8 @@ int main(int argc, char* argv[])
         ColorData color_data2{0, 0, 0};
         Geometric::RenderOutline(outline_size, color_data2, g_screen);
 
-        player_power.Show(g_screen);
-        player_money.Show(g_screen);
+        game_data.Show(g_screen);
+        player_torch.Show(g_screen);
 
         for (int i = 0; i < threats_list.size(); i++)
         {
@@ -364,13 +364,13 @@ int main(int argc, char* argv[])
                     }
                     Mix_PlayChannel(-1, g_sound_ex_main, 0);
                     num_die++;
-                    if (num_die <= 3)
+                    if (num_die <= NUM_DIE)
                     {
                         p_player.setRect(0, 0);
                         p_player.set_come_back_time(60);
                         SDL_Delay(1000);
-                        player_power.Decrease();
-                        player_power.Render(g_screen);
+                        game_data.Decrease();
+                        game_data.Render(g_screen);
                         continue;
                     }
                     else
@@ -378,14 +378,6 @@ int main(int argc, char* argv[])
                         is_show_score = true;
                         p_threat->Free();
                         is_quit = true;
- //                           close();
-//                        if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
-//                        {
-//                            p_threat->Free();
-//                            close();
-//                            SDL_Quit();
-//                            return 0;
-//                        }
                     }
                 }
             }
@@ -413,7 +405,7 @@ int main(int argc, char* argv[])
                         bool bCol = SDLCommonFunc::CheckCollision(bRect, tRect);
                         if (bCol)
                         {
-                            mark_value ++;
+                            score_value ++;
                             int frame_exp_width = exp_threat.get_frame_width();
                             int frame_exp_height = exp_threat.get_frame_height();
                             for (int ex = 0; ex < NUM_FRAME_EXP; ex++)
@@ -442,11 +434,7 @@ int main(int argc, char* argv[])
         if (val_time <= 0)
         {
             is_show_score = true;
-            if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
-            {
-                is_quit = true;
-                break;
-            }
+            is_quit = true;
         }
         else
         {
@@ -458,20 +446,20 @@ int main(int argc, char* argv[])
             time_game.RenderText(g_screen, SCREEN_WIDTH-200, 15);
         }
 
-        std::string val_str_mark = std::to_string(mark_value);
-        std::string strMark("MARK: ");
-        strMark += val_str_mark;
+        std::string val_str_score = std::to_string(score_value);
+        std::string strScore("SCORE: ");
+        strScore += val_str_score;
 
-        mark_game.SetText(strMark);
-        mark_game.LoadFromRenderText(font_time, g_screen);
-        mark_game.RenderText(g_screen, SCREEN_WIDTH*0.5 - 50, 15);
+        score_game.SetText(strScore);
+        score_game.LoadFromRenderText(font_time, g_screen);
+        score_game.RenderText(g_screen, SCREEN_WIDTH*0.5 - 50, 15);
 
-        int money_count = p_player.GetMoneyCount();
-        std::string money_str = std::to_string(money_count);
+        int torch_count = p_player.GetTorchCount();
+        std::string torch_str = std::to_string(torch_count);
 
-        money_game.SetText(money_str);
-        money_game.LoadFromRenderText(font_time, g_screen);
-        money_game.RenderText(g_screen, SCREEN_WIDTH*0.5-250, 15);
+        torch_game.SetText(torch_str);
+        torch_game.LoadFromRenderText(font_time, g_screen);
+        torch_game.RenderText(g_screen, SCREEN_WIDTH*0.5-250, 15);
 
         SDL_RenderPresent(g_screen);
 
@@ -497,20 +485,20 @@ int main(int argc, char* argv[])
 
     threats_list.clear();
     Mix_HaltMusic();
-    if(is_show_score)
-	{
-		mark_game.SetText(std::to_string(mark_value));
-		mark_game.CreateText(g_screen,font_time);
-		score_message.Render(g_screen);
-//                            mark_game.SetText(to_string(mark_value));
-//                            mark_game.LoadFromRenderText(font_time, g_screen);
-//                            mark_game.RenderText(g_screen, SCREEN_WIDTH*0.5, SCREEN_HEIGHT/2);
-		mark_game.setRect(score_message.GetRect().x+190,score_message.GetRect().y+250);
-		mark_game.Render(g_screen);
-		SDL_RenderPresent(g_screen);
-		Mix_PlayMusic(g_end,-1);
-		SDL_Delay(180000);
-	}
+    bool won_ = p_player.getRes();
+    if(is_show_score || won_)
+    {
+        score_game.SetText(std::to_string(score_value));
+        score_game.CreateText(g_screen,font_time);
+        score_message.Render(g_screen);
+
+        score_game.setRect(score_message.GetRect().x+380, score_message.GetRect().y+92);
+        score_game.Render(g_screen);
+        SDL_RenderPresent(g_screen);
+        Mix_PlayMusic(g_end,-1);
+        SDLCommonFunc::waitUntilKeyPressed();
+        //SDL_Delay(18000);
+    }
 
     close();
     return 0;

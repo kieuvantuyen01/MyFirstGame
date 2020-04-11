@@ -10,6 +10,7 @@
 #define MAX_FALL_SPEED 10
 #define PLAYER_SPEED 8
 #define PLAYER_JUMP_VAL 18
+#define NUM_FRAME_PLAYER 8
 class MainObject : public BaseObject
 {
 public:
@@ -42,14 +43,15 @@ public:
     std::vector<BulletObject*> get_bullet_list() const {return p_bullet_list_;}
     void HandleBullet(SDL_Renderer* des);
     void RemoveBullet(const int& idx);
-    void IncreaseMoney();
+    void IncreaseTorch();
 
     void set_come_back_time (const int& cb_time) {come_back_time_ = cb_time;}
-    int GetMoneyCount() const {return money_count;}
+    int GetTorchCount() const {return torch_count;}
+    bool getRes() const {return won_;}
 
 private:
 
-    int money_count;
+    int torch_count;
     std::vector<BulletObject*> p_bullet_list_;
     float x_val_;
     float y_val_;
@@ -70,6 +72,8 @@ private:
     int frame_;
     int status_;
     bool on_ground_;
+
+    bool won_;
 
     int map_x_;
     int map_y_;
