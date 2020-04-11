@@ -9,7 +9,7 @@
 #include<SDL_mixer.h>
 #include<SDL_ttf.h>
 
-#include "TextObject.h"
+//#include "TextObject.h"
 
 static SDL_Window* g_window = NULL;
 static SDL_Renderer* g_screen = NULL;
@@ -20,7 +20,7 @@ static Mix_Chunk* g_sound_bullet[3];
 static Mix_Chunk* g_sound_explosion = NULL;
 static Mix_Chunk* g_sound_ex_main = NULL;
 static Mix_Music* g_sound = NULL;
-static Mix_Chunk* g_end = NULL;
+static Mix_Music* g_end = NULL;
 
 //Screen
 const int FRAME_PER_SECOND = 25; //fps

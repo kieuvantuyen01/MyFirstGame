@@ -69,7 +69,7 @@ bool InitData()
         {
             return false;
         }
-        g_end = Mix_LoadWAV("sound/ncbtndt.wav");
+        g_end = Mix_LoadMUS("sound/ncbtndt.wav");
         g_sound = Mix_LoadMUS("sound/gpmn.wav");
         g_sound_bullet[0] = Mix_LoadWAV("sound/Laser.wav");
         g_sound_bullet[1] = Mix_LoadWAV("sound/Fire.wav");
@@ -116,8 +116,8 @@ void close()
     g_sound_bullet[1] = NULL;
     Mix_FreeChunk(g_sound_bullet[2]);
     g_sound_bullet[2] = NULL;
-    Mix_FreeChunk(g_end);
-    g_sound_bullet[0] = NULL;
+    Mix_FreeMusic(g_end);
+    g_end = NULL;
     Mix_FreeChunk(g_sound_explosion);
     g_sound_explosion = NULL;
     Mix_FreeChunk(g_sound_ex_main);
@@ -376,13 +376,16 @@ int main(int argc, char* argv[])
                     else
                     {
                         is_show_score = true;
-                        if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
-                        {
-                            p_threat->Free();
-                            close();
-                            SDL_Quit();
-                            return 0;
-                        }
+                        p_threat->Free();
+                        is_quit = true;
+ //                           close();
+//                        if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
+//                        {
+//                            p_threat->Free();
+//                            close();
+//                            SDL_Quit();
+//                            return 0;
+//                        }
                     }
                 }
             }
@@ -493,17 +496,20 @@ int main(int argc, char* argv[])
     }
 
     threats_list.clear();
-
+    Mix_HaltMusic();
     if(is_show_score)
 	{
-//		mark_game.SetText(to_string(score));
-//		score_text.CreateText(g_screen,font_time);
-//		score_message.Render(g_screen);
+		mark_game.SetText(std::to_string(mark_value));
+		mark_game.CreateText(g_screen,font_time);
+		score_message.Render(g_screen);
+//                            mark_game.SetText(to_string(mark_value));
+//                            mark_game.LoadFromRenderText(font_time, g_screen);
+//                            mark_game.RenderText(g_screen, SCREEN_WIDTH*0.5, SCREEN_HEIGHT/2);
 		mark_game.setRect(score_message.GetRect().x+190,score_message.GetRect().y+250);
 		mark_game.Render(g_screen);
 		SDL_RenderPresent(g_screen);
-		//Mix_PlayChannel(-1,g_end,0);
-		SDL_Delay(2500);
+		Mix_PlayMusic(g_end,-1);
+		SDL_Delay(180000);
 	}
 
     close();
