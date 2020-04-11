@@ -71,11 +71,11 @@ bool InitData()
         }
         g_end = Mix_LoadMUS("sound/ncbtndt.wav");
         g_sound = Mix_LoadMUS("sound/gpmn.wav");
-        g_sound_bullet[0] = Mix_LoadWAV("sound/Laser.wav");
-        g_sound_bullet[1] = Mix_LoadWAV("sound/Fire.wav");
-        g_sound_bullet[2] = Mix_LoadWAV("sound/Fire1.wav");
-        g_sound_explosion = Mix_LoadWAV("sound/Bomb1.wav");
-        g_sound_ex_main = Mix_LoadWAV("sound/Explosion+1.wav");
+        g_sound_bullet[0] = Mix_LoadWAV("sound/Fire0.wav");
+        g_sound_bullet[1] = Mix_LoadWAV("sound/Fire1.wav");
+        g_sound_bullet[2] = Mix_LoadWAV("sound/Fire2.wav");
+        g_sound_explosion = Mix_LoadWAV("sound/explosion.wav");
+        g_sound_ex_main = Mix_LoadWAV("sound/main_exp.wav");
 
         if (g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL
             || g_sound_explosion == NULL || g_sound_ex_main == NULL
