@@ -1,5 +1,4 @@
-//#include <SDL.h>
-//#include <SDL_image.h>
+
 #include<iostream>
 #include "CommonFunc.h"
 #include "BaseObject.h"
@@ -8,9 +7,10 @@
 #include "ImpTimer.h"
 #include "ThreatsObject.h"
 #include "ExplosionObject.h"
-#include "TextObject.h"
+#include "Text.h"
 #include "PlayerPower.h"
 #include "Geometric.h"
+#include "Menu.h"
 
 BaseObject g_background;
 TTF_Font* font_time = NULL;
@@ -64,6 +64,25 @@ bool InitData()
         {
             success = false;
         }
+
+        if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        {
+            return false;
+        }
+        g_end = Mix_LoadWAV("sound/ncbtndt.wav");
+        g_sound = Mix_LoadMUS("sound/gpmn.wav");
+        g_sound_bullet[0] = Mix_LoadWAV("sound/Laser.wav");
+        g_sound_bullet[1] = Mix_LoadWAV("sound/Fire.wav");
+        g_sound_bullet[2] = Mix_LoadWAV("sound/Fire1.wav");
+        g_sound_explosion = Mix_LoadWAV("sound/Bomb1.wav");
+        g_sound_ex_main = Mix_LoadWAV("sound/Explosion+1.wav");
+
+        if (g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL
+            || g_sound_explosion == NULL || g_sound_ex_main == NULL
+            || g_sound == NULL || g_end == NULL)
+        {
+            return false;
+        }
     }
     return success;
 }
@@ -87,6 +106,25 @@ void close()
 
     SDL_DestroyWindow(g_window);
     g_window = NULL;
+
+    TTF_CloseFont(font_time);
+    font_time = NULL;
+
+    Mix_FreeChunk(g_sound_bullet[0]);
+    g_sound_bullet[0] = NULL;
+    Mix_FreeChunk(g_sound_bullet[1]);
+    g_sound_bullet[1] = NULL;
+    Mix_FreeChunk(g_sound_bullet[2]);
+    g_sound_bullet[2] = NULL;
+    Mix_FreeChunk(g_end);
+    g_sound_bullet[0] = NULL;
+    Mix_FreeChunk(g_sound_explosion);
+    g_sound_explosion = NULL;
+    Mix_FreeChunk(g_sound_ex_main);
+    g_sound_ex_main = NULL;
+
+    Mix_FreeMusic(g_sound);
+    g_sound = NULL;
 
     IMG_Quit();
     SDL_Quit();
@@ -193,17 +231,47 @@ int main(int argc, char* argv[])
     int num_die = 0;
 
     //Time text
-    TextObject time_game;
-    time_game.SetColor(TextObject::YELLOW_TEXT);
+    Text time_game;
+    time_game.SetColor(Text::YELLOW_TEXT);
 
-    TextObject mark_game;
-    mark_game.SetColor(TextObject::YELLOW_TEXT);
+    Text mark_game;
+    mark_game.SetColor(Text::YELLOW_TEXT);
     UINT mark_value = 0;
 
-    TextObject money_game;
-    money_game.SetColor(TextObject::YELLOW_TEXT);
+    Text money_game;
+    money_game.SetColor(Text::YELLOW_TEXT);
 
     bool is_quit = false;
+    bool is_show_score=true;
+
+    Menu menu_game;
+	menu_game.LoadImg("img/menu.png", g_screen);
+	menu_game.SetPostionText();
+
+	BaseObject score_message;
+	score_message.setRect(200,150);
+	bool ret=score_message.LoadImg("img/score.png",g_screen);
+	if(!ret) return -1;
+
+	while(menu_game.is_show_)
+	{
+		while(SDL_PollEvent(&g_event)!=0)
+		{
+			if(g_event.type==SDL_QUIT)
+			{
+				menu_game.is_show_=false;
+				is_quit=true;
+				is_show_score=false;
+			}
+			menu_game.CheckEvents(g_event,is_quit,is_show_score);
+		}
+		SDL_SetRenderDrawColor(g_screen,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR);
+		menu_game.CreateText(font_time, g_screen);
+		menu_game.RenderMenu(g_screen);
+		SDL_RenderPresent(g_screen);
+		SDL_Delay(100);
+	}
+
     while(!is_quit)
     {
         fps_timer.start();
@@ -212,10 +280,16 @@ int main(int argc, char* argv[])
             if (g_event.type == SDL_QUIT)
             {
                 is_quit = true;
+                is_show_score=false;
             }
 
-            p_player.HandelInputAction(g_event, g_screen);
+            p_player.HandelInputAction(g_event, g_sound_bullet, g_screen);
         }
+        if(Mix_PlayingMusic()==0)
+		{
+			Mix_PlayMusic(g_sound,-1);
+		}
+
         SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
         SDL_RenderClear(g_screen);
 
@@ -285,11 +359,10 @@ int main(int argc, char* argv[])
 
                         exp_main.set_frame(ex);
                         exp_main.setRect(x_pos, y_pos);
-                        SDL_Delay(100);
                         exp_main.Show(g_screen);
                         SDL_RenderPresent(g_screen);
                     }
-
+                    Mix_PlayChannel(-1, g_sound_ex_main, 0);
                     num_die++;
                     if (num_die <= 3)
                     {
@@ -302,6 +375,7 @@ int main(int argc, char* argv[])
                     }
                     else
                     {
+                        is_show_score = true;
                         if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
                         {
                             p_threat->Free();
@@ -351,6 +425,7 @@ int main(int argc, char* argv[])
                             p_player.RemoveBullet(r);
                             obj_threat->Free();
                             threats_list.erase(threats_list.begin()+t);
+                            Mix_PlayChannel(-1, g_sound_explosion, 0);
                         }
                     }
                 }
@@ -363,6 +438,7 @@ int main(int argc, char* argv[])
         Uint32 val_time = 304 - time_val;
         if (val_time <= 0)
         {
+            is_show_score = true;
             if (MessageBoxW(NULL, L"GAME OVER", L"Infor", MB_OK | MB_ICONSTOP) == IDOK)
             {
                 is_quit = true;
@@ -417,6 +493,18 @@ int main(int argc, char* argv[])
     }
 
     threats_list.clear();
+
+    if(is_show_score)
+	{
+//		mark_game.SetText(to_string(score));
+//		score_text.CreateText(g_screen,font_time);
+//		score_message.Render(g_screen);
+		mark_game.setRect(score_message.GetRect().x+190,score_message.GetRect().y+250);
+		mark_game.Render(g_screen);
+		SDL_RenderPresent(g_screen);
+		//Mix_PlayChannel(-1,g_end,0);
+		SDL_Delay(2500);
+	}
 
     close();
     return 0;

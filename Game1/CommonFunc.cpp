@@ -1,4 +1,6 @@
 #include "CommonFunc.h"
+#include "BaseObject.h"
+
 
 bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2)
 {
@@ -84,5 +86,14 @@ bool SDLCommonFunc::CheckCollision(const SDL_Rect& object1, const SDL_Rect& obje
         return true;
     }
 
+    return false;
+}
+
+bool SDLCommonFunc::isInside(int& x, int& y, SDL_Rect object)
+{
+	if(x >= object.x && x <= object.x+object.w && y >= object.y && y <= object.y + object.h)
+    {
+        return true;
+    }
     return false;
 }

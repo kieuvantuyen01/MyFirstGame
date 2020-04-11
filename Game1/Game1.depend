@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1586447909 source:d:\btlon\game1\main.cpp
+1586587795 source:d:\btlon\game1\main.cpp
 	<iostream>
 	"CommonFunc.h"
 	"BaseObject.h"
@@ -8,14 +8,16 @@
 	"ImpTimer.h"
 	"ThreatsObject.h"
 	"ExplosionObject.h"
-	"TextObject.h"
+	"Text.h"
 	"PlayerPower.h"
 	"Geometric.h"
+	"Menu.h"
 
-1586093659 source:d:\btlon\game1\commonfunc.cpp
+1586576718 source:d:\btlon\game1\commonfunc.cpp
 	"CommonFunc.h"
+	"BaseObject.h"
 
-1586255559 d:\btlon\game1\commonfunc.h
+1586587425 d:\btlon\game1\commonfunc.h
 	<windows.h>
 	<string>
 	<vector>
@@ -23,11 +25,12 @@
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<SDL_ttf.h>
+	"TextObject.h"
 
 1585925073 source:d:\btlon\game1\baseobject.cpp
 	"BaseObject.h"
 
-1585844234 d:\btlon\game1\baseobject.h
+1586566797 d:\btlon\game1\baseobject.h
 	"CommonFunc.h"
 
 1586426332 source:d:\btlon\game1\game_map.cpp
@@ -38,11 +41,11 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586357950 source:d:\btlon\game1\mainobject.cpp
+1586481620 source:d:\btlon\game1\mainobject.cpp
 	"MainObject.h"
 	"BulletObject.h"
 
-1586400926 d:\btlon\game1\mainobject.h
+1586453229 d:\btlon\game1\mainobject.h
 	<vector>
 	"CommonFunc.h"
 	"BaseObject.h"
@@ -54,12 +57,10 @@
 
 1585889687 d:\btlon\game1\imptimer.h
 
-1586354975 source:d:\btlon\game1\bulletobject.cpp
-	<random>
+1586498852 source:d:\btlon\game1\bulletobject.cpp
 	"BulletObject.h"
 
-1586354975 d:\btlon\game1\bulletobject.h
-	<random>
+1586489199 d:\btlon\game1\bulletobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
@@ -78,11 +79,13 @@
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586401974 source:d:\btlon\game1\textobject.cpp
+1586570461 source:d:\btlon\game1\textobject.cpp
 	"TextObject.h"
+	"BaseObject.h"
 
-1586402029 d:\btlon\game1\textobject.h
+1586566241 d:\btlon\game1\textobject.h
 	"CommonFunc.h"
+	"BaseObject.h"
 
 1586431993 d:\btlon\game1\playerpower.h
 	"BaseObject.h"
@@ -96,4 +99,33 @@
 
 1586437580 d:\btlon\game1\geometric.h
 	"CommonFunc.h"
+
+1586451167 source:d:\btlon\game1\bossobject.cpp
+	"BossObject.h"
+
+1586450547 d:\btlon\game1\bossobject.h
+	"BaseObject.h"
+	"CommonFunc.h"
+	"BulletObject.h"
+
+1586587861 d:\btlon\game1\text.h
+	"CommonFunc.h"
+	"BaseObject.h"
+
+1586588038 source:d:\btlon\game1\menu.cpp
+	"Menu.h"
+
+1586588022 d:\btlon\game1\menu.h
+	"CommonFunc.h"
+	"Text.h"
+
+1586587152 d:\btlon\game1\textobj.h
+	"CommonFunc.h"
+	"BaseObject.h"
+
+1586570925 source:d:\btlon\game1\textobj.cpp
+	"TextObj.h"
+
+1586587991 source:d:\btlon\game1\text.cpp
+	"Text.h"
 

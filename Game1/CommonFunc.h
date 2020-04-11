@@ -9,9 +9,18 @@
 #include<SDL_mixer.h>
 #include<SDL_ttf.h>
 
+#include "TextObject.h"
+
 static SDL_Window* g_window = NULL;
 static SDL_Renderer* g_screen = NULL;
 static SDL_Event g_event;
+
+//Audio
+static Mix_Chunk* g_sound_bullet[3];
+static Mix_Chunk* g_sound_explosion = NULL;
+static Mix_Chunk* g_sound_ex_main = NULL;
+static Mix_Music* g_sound = NULL;
+static Mix_Chunk* g_end = NULL;
 
 //Screen
 const int FRAME_PER_SECOND = 25; //fps
@@ -57,5 +66,6 @@ typedef struct Map // luu tru trang thai va vi tri cua cac o TileMap
 namespace SDLCommonFunc
 {
     bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
+    bool isInside(int& x,int& y,SDL_Rect object);
 }
 #endif // COMMON_FUNCTION_H_

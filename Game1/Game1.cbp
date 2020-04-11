@@ -33,6 +33,8 @@
 		</Compiler>
 		<Unit filename="BaseObject.cpp" />
 		<Unit filename="BaseObject.h" />
+		<Unit filename="BossObject.cpp" />
+		<Unit filename="BossObject.h" />
 		<Unit filename="BulletObject.cpp" />
 		<Unit filename="BulletObject.h" />
 		<Unit filename="CommonFunc.cpp" />
@@ -45,6 +47,8 @@
 		<Unit filename="ImpTimer.h" />
 		<Unit filename="MainObject.cpp" />
 		<Unit filename="MainObject.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="PlayerPower.cpp" />
 		<Unit filename="PlayerPower.h" />
 		<Unit filename="TextObject.cpp" />

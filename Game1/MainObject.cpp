@@ -129,7 +129,7 @@ void MainObject::Show(SDL_Renderer* des)
     }
 }
 
-void MainObject::HandelInputAction(SDL_Event events, SDL_Renderer* screen)
+void MainObject::HandelInputAction(SDL_Event events, Mix_Chunk* bullet_sound[3], SDL_Renderer* screen)
 {
     if (events.type == SDL_KEYDOWN)
     {
@@ -214,12 +214,15 @@ void MainObject::HandelInputAction(SDL_Event events, SDL_Renderer* screen)
             {
             case 0:
                 p_bullet->set_bullet_type(BulletObject::PLAYER_BULLET);
+                Mix_PlayChannel(-1, bullet_sound[0], 0);
                 break;
             case 1:
                 p_bullet->set_bullet_type(BulletObject::GRENADE_BULLET);
+                Mix_PlayChannel(-1, bullet_sound[1], 0);
                 break;
             case 2:
                 p_bullet->set_bullet_type(BulletObject::MINE_BULLET);
+                Mix_PlayChannel(-1, bullet_sound[2], 0);
                 break;
             }
 

@@ -24,7 +24,8 @@ public:
     };
     bool LoadImg(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* des);
-    void HandelInputAction(SDL_Event events, SDL_Renderer* screen);
+    void HandelInputAction(SDL_Event events, Mix_Chunk* bullet_sound[3],
+                           SDL_Renderer* screen);
     void set_clips();
 
     void DoPlayer(Map& map_data);

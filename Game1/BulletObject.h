@@ -1,7 +1,6 @@
 #ifndef BULLET_OBJECT_H_
 #define BULLET_OBJECT_H_
 
-#include <random>
 #include "BaseObject.h"
 #include "CommonFunc.h"
 
@@ -48,7 +47,6 @@ public:
 
     void HandleMove(const int& x_border, const int& y_border);
     bool LoadImgBullet(SDL_Renderer* des);
-    unsigned int GetRandomBullet(int &tmp);
 
 private:
     int x_val_;

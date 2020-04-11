@@ -1,34 +1,17 @@
-#include "TextObject.h"
 
-TextObject::TextObject()
-{
-    text_color_.r = 255;
-    text_color_.g = 255;
-    text_color_.b = 255;
-    texture_ = NULL;
-}
+#include "Text.h"
 
-TextObject::~TextObject()
+Text::Text()
 {
 
 }
 
-bool TextObject::LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen)
+Text::~Text()
 {
-    SDL_Surface* text_surface = TTF_RenderText_Solid(font, str_val_.c_str(), text_color_);
-    if (text_surface)
-    {
-        texture_ = SDL_CreateTextureFromSurface(screen, text_surface);
-        width_ = text_surface->w;
-        height_ = text_surface->h;
 
-        SDL_FreeSurface(text_surface);
-    }
-
-    return texture_!= NULL;
 }
 
-void TextObject::Free()
+void Text::Free()
 {
     if (texture_ != NULL)
     {
@@ -37,14 +20,14 @@ void TextObject::Free()
     }
 }
 
-void TextObject::SetColor(Uint8 red, Uint8 green, Uint8 blue)
+void Text::SetColor(Uint8 red, Uint8 green, Uint8 blue)
 {
     text_color_.r = red;
     text_color_.g = green;
     text_color_.b = blue;
 }
 
-void TextObject::SetColor(int type)
+void Text::SetColor(int type)
 {
     if (type == RED_TEXT)
     {
@@ -68,7 +51,19 @@ void TextObject::SetColor(int type)
     }
 }
 
-void TextObject::RenderText(SDL_Renderer* screen,
+bool Text::CreateText( SDL_Renderer* screen, TTF_Font* font)
+{
+	SDL_Surface* temp=TTF_RenderText_Solid(font,text_val_.c_str(),text_color_);
+	if(temp==NULL) return false;
+	SetObject(SDL_CreateTextureFromSurface(screen,temp));
+	if(this->GetObject()==NULL) return false;
+	this->SetWidHei(temp->w,temp->h);
+
+	SDL_FreeSurface(temp);
+	return true;
+}
+
+void Text::RenderText(SDL_Renderer* screen,
                     int xp, int yp,
                     SDL_Rect* clip,
                     double angle,
@@ -83,4 +78,19 @@ void TextObject::RenderText(SDL_Renderer* screen,
     }
 
     SDL_RenderCopyEx(screen, texture_, clip, &renderQuad, angle, center, flip);
+}
+
+bool Text::LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen)
+{
+    SDL_Surface* text_surface = TTF_RenderText_Solid(font, text_val_.c_str(), text_color_);
+    if (text_surface)
+    {
+        texture_ = SDL_CreateTextureFromSurface(screen, text_surface);
+        width_ = text_surface->w;
+        height_ = text_surface->h;
+
+        SDL_FreeSurface(text_surface);
+    }
+
+    return texture_!= NULL;
 }

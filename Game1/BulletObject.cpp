@@ -1,4 +1,3 @@
-#include<random>
 #include "BulletObject.h"
 
 BulletObject::BulletObject()
@@ -12,11 +11,6 @@ BulletObject::BulletObject()
 BulletObject::~BulletObject()
 {
 
-}
-unsigned int BulletObject::GetRandomBullet(int &tmp)
-{
-    if (tmp+1 > 3) tmp = 0;
-    return BulletType(tmp);
 }
 
 bool BulletObject::LoadImgBullet(SDL_Renderer* des)
