@@ -4,7 +4,7 @@
 #include "BaseObject.h"
 #include "Map.h"
 #include "MainObject.h"
-#include "ImpTimer.h"
+#include "Timer.h"
 #include "ThreatsObject.h"
 #include "ExplosionObject.h"
 #include "Text.h"
@@ -12,8 +12,8 @@
 #include "Geometric.h"
 #include "Menu.h"
 
-BaseObject g_background;
-TTF_Font* font_time = NULL;
+BaseObject gBackground;
+TTF_Font* gFont = NULL;
 
 bool InitData()
 {
@@ -59,8 +59,8 @@ bool InitData()
             success = false;
         }
 
-        font_time = TTF_OpenFont("font/dlxfont_.ttf", 15);
-        if (font_time == NULL)
+        gFont = TTF_OpenFont("font/dlxfont_.ttf", 15);
+        if (gFont == NULL)
         {
             success = false;
         }
@@ -69,8 +69,8 @@ bool InitData()
         {
             return false;
         }
-        g_end = Mix_LoadMUS("sound/ncbtndt.wav");
-        g_sound = Mix_LoadMUS("sound/gpmn.wav");
+        g_sound_end = Mix_LoadMUS("sound/ncbtndt.wav");
+        g_sound_start = Mix_LoadMUS("sound/gpmn.wav");
         g_sound_bullet[0] = Mix_LoadWAV("sound/Fire0.wav");
         g_sound_bullet[1] = Mix_LoadWAV("sound/Fire1.wav");
         g_sound_bullet[2] = Mix_LoadWAV("sound/Fire2.wav");
@@ -79,7 +79,7 @@ bool InitData()
 
         if (g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL
             || g_sound_explosion == NULL || g_sound_ex_main == NULL
-            || g_sound == NULL || g_end == NULL)
+            || g_sound_start == NULL || g_sound_end == NULL)
         {
             return false;
         }
@@ -89,7 +89,7 @@ bool InitData()
 
 bool LoadBackground()
 {
-    bool ret = g_background.LoadImg("img/background.png", g_screen);
+    bool ret = gBackground.LoadImg("img/background.png", g_screen);
     if (ret == false)
     {
         std::cout << "Can not Load Background: " << SDL_GetError() << std::endl;
@@ -100,15 +100,15 @@ bool LoadBackground()
 
 void close()
 {
-    g_background.Free();
+    gBackground.Free();
     SDL_DestroyRenderer(g_screen);
     g_screen = NULL;
 
     SDL_DestroyWindow(g_window);
     g_window = NULL;
 
-    TTF_CloseFont(font_time);
-    font_time = NULL;
+    TTF_CloseFont(gFont);
+    gFont = NULL;
 
     Mix_FreeChunk(g_sound_bullet[0]);
     g_sound_bullet[0] = NULL;
@@ -116,15 +116,15 @@ void close()
     g_sound_bullet[1] = NULL;
     Mix_FreeChunk(g_sound_bullet[2]);
     g_sound_bullet[2] = NULL;
-    Mix_FreeMusic(g_end);
-    g_end = NULL;
+    Mix_FreeMusic(g_sound_end);
+    g_sound_end = NULL;
     Mix_FreeChunk(g_sound_explosion);
     g_sound_explosion = NULL;
     Mix_FreeChunk(g_sound_ex_main);
     g_sound_ex_main = NULL;
 
-    Mix_FreeMusic(g_sound);
-    g_sound = NULL;
+    Mix_FreeMusic(g_sound_start);
+    g_sound_start = NULL;
 
     IMG_Quit();
     SDL_Quit();
@@ -155,6 +155,25 @@ std::vector<ThreatsObiect*> MakeThreadList()
         }
     }
 
+    ThreatsObiect* plane_threats = new ThreatsObiect[20];
+    for (int i = 0; i < 20; i++)
+    {
+        ThreatsObiect* p_threat = (plane_threats+i);
+        if (p_threat != NULL)
+        {
+            p_threat->LoadImg("img/plane_left.png", g_screen);
+            p_threat->set_clips();
+            p_threat->set_type_move(ThreatsObiect::FLY_THREAT);
+            p_threat->set_x_pos(600 + i*900);
+            p_threat->set_y_pos(200);
+
+            p_threat->set_input_left(0);
+
+            BulletObject* p_bullet = new BulletObject[1];
+            p_threat->InitBullet(p_bullet, g_screen);
+            list_threats.push_back(p_threat);
+        }
+    }
 
 
     ThreatsObiect* threat_objs = new ThreatsObiect[20];
@@ -180,7 +199,7 @@ std::vector<ThreatsObiect*> MakeThreadList()
 }
 int main(int argc, char* argv[])
 {
-    ImpTimer fps_timer;
+    Timer fps_timer;
 
     if (InitData() == false)
     {
@@ -208,7 +227,7 @@ int main(int argc, char* argv[])
 
     PlayerTorch player_torch;
     player_torch.Init(g_screen);
-    player_torch.SetPos(SCREEN_WIDTH*0.5-300, 0);
+    player_torch.SetPos(20, 100);
 
     std::vector<ThreatsObiect*>threats_list = MakeThreadList();
 
@@ -266,7 +285,7 @@ int main(int argc, char* argv[])
 			menu_game.CheckEvents(g_event,is_quit,is_show_score);
 		}
 		SDL_SetRenderDrawColor(g_screen,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR);
-		menu_game.CreateText(font_time, g_screen);
+		menu_game.CreateText(gFont, g_screen);
 		menu_game.RenderMenu(g_screen);
 		SDL_RenderPresent(g_screen);
 		SDL_Delay(100);
@@ -285,15 +304,15 @@ int main(int argc, char* argv[])
 
             p_player.HandelInputAction(g_event, g_sound_bullet, g_screen);
         }
-        if(Mix_PlayingMusic()==0)
+        if(Mix_PlayingMusic() == 0)
 		{
-			Mix_PlayMusic(g_sound,-1);
+			Mix_PlayMusic(g_sound_start, -1);
 		}
 
         SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
         SDL_RenderClear(g_screen);
 
-        g_background.Render(g_screen, NULL);
+        gBackground.Render(g_screen, NULL);
 
         Map map_data = game_map.getMap();
 
@@ -307,11 +326,11 @@ int main(int argc, char* argv[])
         game_map.DrawMap(g_screen);
 
         //Draw Geometric
-        GeometricFormat rectangle_size{0, 0, SCREEN_WIDTH, 40};
+        GeometricFormat rectangle_size{0, 0, SCREEN_WIDTH/4, SCREEN_HEIGHT/4};
         ColorData color_data1{237, 28, 36};
         Geometric::RenderRectangle(rectangle_size, color_data1, g_screen);
 
-        GeometricFormat outline_size(1, 1, SCREEN_WIDTH, 38);
+        GeometricFormat outline_size(1, 1, SCREEN_WIDTH/4, SCREEN_HEIGHT/4-2);
         ColorData color_data2{0, 0, 0};
         Geometric::RenderOutline(outline_size, color_data2, g_screen);
 
@@ -442,8 +461,8 @@ int main(int argc, char* argv[])
             str_time += str_val;
 
             time_game.SetText(str_time);
-            time_game.LoadFromRenderText(font_time, g_screen);
-            time_game.RenderText(g_screen, SCREEN_WIDTH-200, 15);
+            time_game.LoadFromRenderText(gFont, g_screen);
+            time_game.RenderText(g_screen, 20, 15);
         }
 
         std::string val_str_score = std::to_string(score_value);
@@ -451,15 +470,15 @@ int main(int argc, char* argv[])
         strScore += val_str_score;
 
         score_game.SetText(strScore);
-        score_game.LoadFromRenderText(font_time, g_screen);
-        score_game.RenderText(g_screen, SCREEN_WIDTH*0.5 - 50, 15);
+        score_game.LoadFromRenderText(gFont, g_screen);
+        score_game.RenderText(g_screen, 20, 65);
 
         int torch_count = p_player.GetTorchCount();
         std::string torch_str = std::to_string(torch_count);
 
         torch_game.SetText(torch_str);
-        torch_game.LoadFromRenderText(font_time, g_screen);
-        torch_game.RenderText(g_screen, SCREEN_WIDTH*0.5-250, 15);
+        torch_game.LoadFromRenderText(gFont, g_screen);
+        torch_game.RenderText(g_screen, 120, 115);
 
         SDL_RenderPresent(g_screen);
 
@@ -489,13 +508,13 @@ int main(int argc, char* argv[])
     if(is_show_score || won_)
     {
         score_game.SetText(std::to_string(score_value));
-        score_game.CreateText(g_screen,font_time);
+        score_game.CreateText(g_screen, gFont);
         score_message.Render(g_screen);
 
         score_game.setRect(score_message.GetRect().x+380, score_message.GetRect().y+92);
         score_game.Render(g_screen);
         SDL_RenderPresent(g_screen);
-        Mix_PlayMusic(g_end,-1);
+        Mix_PlayMusic(g_sound_end, -1);
         SDLCommonFunc::waitUntilKeyPressed();
         //SDL_Delay(18000);
     }

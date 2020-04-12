@@ -116,4 +116,12 @@ void BulletObject::HandleMove(const int& x_border, const int& y_border)
             is_move_ = false;
         }
     }
+    else
+    {
+        rect_.y += y_val_;
+        if (rect_.y > y_border)
+        {
+            is_move_ = false;
+        }
+    }
 }

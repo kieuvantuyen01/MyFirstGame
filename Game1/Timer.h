@@ -1,11 +1,11 @@
-#ifndef IMP_TIMER_H_
-#define IMP_TIMER_H_
+#ifndef TIMER_H_
+#define TIMER_H_
 
-class ImpTimer
+class Timer
 {
 public:
-    ImpTimer();
-    ~ImpTimer();
+    Timer();
+    ~Timer();
 
     void start();
     void stop();
@@ -24,4 +24,4 @@ private:
     bool is_paused_;
     bool is_started_;
 };
-#endif // IMP_TIMER_H_
+#endif // TIMER_H_

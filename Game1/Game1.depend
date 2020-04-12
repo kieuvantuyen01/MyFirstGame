@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1586624096 source:d:\btlon\game1\main.cpp
+1586665767 source:d:\btlon\game1\main.cpp
 	<iostream>
 	"CommonFunc.h"
 	"BaseObject.h"
 	"Map.h"
 	"MainObject.h"
-	"ImpTimer.h"
+	"Timer.h"
 	"ThreatsObject.h"
 	"ExplosionObject.h"
 	"Text.h"
@@ -17,7 +17,7 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586624096 d:\btlon\game1\commonfunc.h
+1586661183 d:\btlon\game1\commonfunc.h
 	<windows.h>
 	<string>
 	<vector>
@@ -56,17 +56,17 @@
 
 1585889687 d:\btlon\game1\imptimer.h
 
-1586498852 source:d:\btlon\game1\bulletobject.cpp
+1586659618 source:d:\btlon\game1\bulletobject.cpp
 	"BulletObject.h"
 
 1586489199 d:\btlon\game1\bulletobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586621977 source:d:\btlon\game1\threatsobject.cpp
+1586661006 source:d:\btlon\game1\threatsobject.cpp
 	"ThreatsObject.h"
 
-1586447183 d:\btlon\game1\threatsobject.h
+1586660919 d:\btlon\game1\threatsobject.h
 	"CommonFunc.h"
 	"BaseObject.h"
 	"BulletObject.h"
@@ -128,10 +128,10 @@
 1586587991 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
-1586622848 source:d:\btlon\game1\datagame.cpp
+1586666235 source:d:\btlon\game1\datagame.cpp
 	"DataGame.h"
 
-1586622697 d:\btlon\game1\datagame.h
+1586661416 d:\btlon\game1\datagame.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
@@ -142,4 +142,10 @@
 1586623009 d:\btlon\game1\map.h
 	"CommonFunc.h"
 	"BaseObject.h"
+
+1586659435 source:d:\btlon\game1\timer.cpp
+	"Timer.h"
+	"CommonFunc.h"
+
+1586659347 d:\btlon\game1\timer.h
 

@@ -19,8 +19,8 @@ static SDL_Event g_event;
 static Mix_Chunk* g_sound_bullet[3];
 static Mix_Chunk* g_sound_explosion = NULL;
 static Mix_Chunk* g_sound_ex_main = NULL;
-static Mix_Music* g_sound = NULL;
-static Mix_Music* g_end = NULL;
+static Mix_Music* g_sound_start = NULL;
+static Mix_Music* g_sound_end = NULL;
 
 //Screen
 const int FRAME_PER_SECOND = 25; //fps

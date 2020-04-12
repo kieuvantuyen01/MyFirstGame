@@ -11,7 +11,7 @@ public:
     ~DataGame();
 
     void SetNum(const int& num) {number_ = num;}
-    void AddPos(const int& xPos);
+    void SetPos(const int& xPos);
     void Show(SDL_Renderer* screen);
     void Init(SDL_Renderer* screen);// thiet lap vi tri ban dau
 

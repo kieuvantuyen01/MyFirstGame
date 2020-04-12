@@ -1,3 +1,6 @@
+
+/* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VA CO CHINH SUA THEM */
+
 #include "ThreatsObject.h"
 
 ThreatsObiect::ThreatsObiect()
@@ -207,7 +210,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
                 y_pos_ = y2*TILE_SIZE;
                 y_pos_ -= height_frame_+1;
                 y_val_ = 0;
-                on_ground_ = true;
+                if (!is_fly_) on_ground_ = true;
             }
         }
         else if (y_val_ < 0)
@@ -224,7 +227,9 @@ void ThreatsObiect::CheckToMap(Map& map_data)
     }
 
     x_pos_ += x_val_;
+    if (is_fly_) y_val_ = 0;
     y_pos_ += y_val_;
+
     if (x_pos_ < 0)
     {
         x_pos_ = 0;
@@ -245,7 +250,7 @@ void ThreatsObiect::ImpMoveType(SDL_Renderer* screen)
     {
         //
     }
-    else
+    else if (type_move_ == MOVE_IN_SPACE_THREAT)
     {
         if (on_ground_ == true)
         {
@@ -270,23 +275,47 @@ void ThreatsObiect::ImpMoveType(SDL_Renderer* screen)
             }
         }
     }
+    else
+    {
+        is_fly_ = true;
+        on_ground_ = false;
+        if (input_type_.left_ == 1)
+        {
+            LoadImg("img/plane_left.png", screen);
+        }
+    }
+
 }
 
 void ThreatsObiect::InitBullet(BulletObject* p_bullet, SDL_Renderer* screen)
 {
     if (p_bullet != NULL)
     {
-        p_bullet->set_bullet_type(BulletObject::TANK_BULLET);
-        bool ret = p_bullet->LoadImgBullet(screen);
-
-        if (ret)
+        if (type_move_ == STATIC_THREAT)
         {
-            p_bullet->set_is_move(true);
-            p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
-            p_bullet->setRect(rect_.x-30, y_pos_+65); // hien thi tren man hinh kich thuoc 1280
-            p_bullet->set_x_val(20);//set toc do
-            bullet_list_.push_back(p_bullet);
+            p_bullet->set_bullet_type(BulletObject::TANK_BULLET);
+            bool ret = p_bullet->LoadImgBullet(screen);
+
+            if (ret)
+            {
+                p_bullet->set_is_move(true);
+                p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
+            }
         }
+        else
+        {
+            p_bullet->set_bullet_type(BulletObject::PLAYER_BULLET);
+            bool ret = p_bullet->LoadImgBullet(screen);
+
+            if (ret)
+            {
+                p_bullet->set_is_move(true);
+                p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
+            }
+        }
+        p_bullet->setRect(rect_.x-30, y_pos_+65); // hien thi tren man hinh kich thuoc 1280
+        p_bullet->set_x_val(20);//set toc do
+        bullet_list_.push_back(p_bullet);
     }
 }
 

@@ -10,7 +10,7 @@ DataGame::~DataGame()
 
 }
 
-void DataGame::AddPos(const int& xp)
+void DataGame::SetPos(const int& xp)
 {
     pos_list_.push_back(xp);
 }
@@ -28,9 +28,9 @@ void DataGame::Init(SDL_Renderer* screen)
     {
         pos_list_.clear();
     }
-    AddPos(20);
-    AddPos(60);
-    AddPos(100);
+    SetPos(160);
+    SetPos(200);
+    SetPos(240);
 }
 
 void DataGame::Show(SDL_Renderer* screen)
@@ -38,7 +38,7 @@ void DataGame::Show(SDL_Renderer* screen)
     for (int i = 0; i < pos_list_.size(); i++)
     {
         rect_.x = pos_list_.at(i);
-        rect_.y = 0;
+        rect_.y = 50;
         Render(screen);
     }
 }

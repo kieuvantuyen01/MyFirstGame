@@ -1,6 +1,6 @@
-#include "ImpTimer.h"
+#include "Timer.h"
 #include "CommonFunc.h"
-ImpTimer::ImpTimer()
+Timer::Timer()
 {
     start_tick_ = 0;
     paused_tick_ = 0;
@@ -8,25 +8,25 @@ ImpTimer::ImpTimer()
     is_paused_ = false;
 }
 
-ImpTimer::~ImpTimer()
+Timer::~Timer()
 {
 
 }
 
-void ImpTimer::start()
+void Timer::start()
 {
     is_started_ = true;
     is_paused_ = false;
     start_tick_ = SDL_GetTicks();
 }
 
-void ImpTimer::stop()
+void Timer::stop()
 {
     is_paused_ = false;
     is_started_ = false;
 }
 
-void ImpTimer::paused()
+void Timer::paused()
 {
     if (is_started() == true && is_paused_ == false)
     {
@@ -35,7 +35,7 @@ void ImpTimer::paused()
     }
 }
 
-void ImpTimer::unpaused()
+void Timer::unpaused()
 {
     if (is_paused_ == true)
     {
@@ -45,7 +45,7 @@ void ImpTimer::unpaused()
     }
 }
 
-int ImpTimer::get_ticks()
+int Timer::get_ticks()
 {
     if (is_started_ == true)
     {
@@ -61,12 +61,12 @@ int ImpTimer::get_ticks()
     return 0;
 }
 
-bool ImpTimer::is_started()
+bool Timer::is_started()
 {
     return is_started_;
 }
 
-bool ImpTimer::is_paused()
+bool Timer::is_paused()
 {
     return is_paused_;
 }
