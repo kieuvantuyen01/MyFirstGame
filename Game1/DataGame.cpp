@@ -51,7 +51,7 @@ void DataGame::Decrease()
 
 void DataGame::InitCrease()
 {
-    number_++;
+    number_ ++;
     int last_pos = pos_list_.back();
     last_pos += 40;
     pos_list_.push_back(last_pos);

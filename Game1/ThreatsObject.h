@@ -24,8 +24,8 @@ public:
         MOVE_IN_SPACE_THREAT = 1,
         FLY_THREAT = 2,
     };
-    void set_x_val(const float xVal) {x_val_ = xVal;}
-    void set_y_val(const float yVal) {y_val_ = yVal;}
+    void set_x_val(const float xVal) {x_speed_ = xVal;}
+    void set_y_val(const float yVal) {y_speed_ = yVal;}
 
     void set_x_pos(const float xp) {x_pos_ = xp;}
     void set_y_pos(const float yp) {y_pos_ = yp;}
@@ -46,7 +46,7 @@ public:
     void InitThreats();
     void set_type_move(const int& typeMove) {type_move_ = typeMove;}
     void SetAnimationPos(const int& pos_a, const int& pos_b) {animation_a_ = pos_a; animation_b_ = pos_b;}
-    void set_input_left(const int&ipLeft) {input_type_.left_ = ipLeft;}
+    void set_input_left(const int& ipLeft) {input_type_.left_ = ipLeft;}
     void ImpMoveType(SDL_Renderer* screen); // ham xu ly cac van de di chuyen
     SDL_Rect GetRectFrame();
 
@@ -54,15 +54,15 @@ public:
     void set_bullet_list(const std::vector<BulletObject*>& bl_list) {bullet_list_ = bl_list;}
 
     void InitBullet(BulletObject* p_bullet, SDL_Renderer* screen);
-    void MakeBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);
+    void GenerateBullet(SDL_Renderer* screen, const int& x_limit, const int& y_limit);
     void RemoveBullet(const int& idx);
 
 private:
 
     int map_x_;
     int map_y_;
-    float x_val_;
-    float y_val_;
+    float x_speed_;
+    float y_speed_;
     float x_pos_;
     float y_pos_;
     bool on_ground_;

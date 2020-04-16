@@ -24,7 +24,7 @@ public:
         WALK_LEFT = 2,
     };
     bool LoadImg(std::string path, SDL_Renderer* screen);
-    void Show(SDL_Renderer* des);
+    void Show(SDL_Renderer* renderer);
     void HandelInputAction(SDL_Event events, Mix_Chunk* bullet_sound[3],
                            SDL_Renderer* screen);
     void set_clips();
@@ -33,7 +33,7 @@ public:
     void CheckToMap(Map& map_data);
     void SetMapXY(const int map_x, const int map_y){map_x_ = map_x; map_y_ = map_y;}
     void CenterEntityOnMap(Map& map_data);
-    void UpdateImagePlayer(SDL_Renderer* des);
+    void UpdateImagePlayer(SDL_Renderer* renderer);
     SDL_Rect GetRectFrame();
 
     void set_bullet_list(std::vector<BulletObject*>bullet_list)
@@ -41,13 +41,13 @@ public:
         p_bullet_list_ = bullet_list;
     }
     std::vector<BulletObject*> get_bullet_list() const {return p_bullet_list_;}
-    void HandleBullet(SDL_Renderer* des);
+    void HandleBullet(SDL_Renderer* renderer);
     void RemoveBullet(const int& idx);
     void IncreaseTorch();
 
     void set_come_back_time (const int& cb_time) {come_back_time_ = cb_time;}
     int GetTorchCount() const {return torch_count;}
-    bool getRes() const {return won_;}
+    bool getRes();
 
 private:
 

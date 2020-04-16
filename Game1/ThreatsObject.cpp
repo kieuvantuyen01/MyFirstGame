@@ -1,12 +1,10 @@
 
-/* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VA CO CHINH SUA THEM */
-
 #include "ThreatsObject.h"
 
 ThreatsObiect::ThreatsObiect()
 {
-    x_val_ = 0;
-    y_val_ = 0;
+    x_speed_ = 0;
+    y_speed_ = 0;
     x_pos_ = 0.0;
     y_pos_ = 0.0;
     width_frame_ = 0;
@@ -83,20 +81,20 @@ void ThreatsObiect::DoPlayer(Map& gMap)
 {
     if (come_back_time_ == 0)
     {
-        x_val_ = 0;
-        y_val_ += THREAT_GRAVITY_SPEED;
-        if (y_val_ >= THREAD_MAX_FALL_SPEED)
+        x_speed_ = 0;
+        y_speed_ += THREAT_GRAVITY_SPEED;
+        if (y_speed_ >= THREAD_MAX_FALL_SPEED)
         {
-            y_val_ = THREAD_MAX_FALL_SPEED;
+            y_speed_ = THREAD_MAX_FALL_SPEED;
         }
 
         if (input_type_.left_ == 1)
         {
-            x_val_ -= THREAT_SPEED;
+            x_speed_ -= THREAT_SPEED;
         }
         else if (input_type_.right_ == 1)
         {
-            x_val_ += THREAT_SPEED;
+            x_speed_ += THREAT_SPEED;
         }
 
         CheckToMap(gMap);
@@ -113,8 +111,8 @@ void ThreatsObiect::DoPlayer(Map& gMap)
 
 void ThreatsObiect::InitThreats()
 {
-    x_val_ = 0;
-    y_val_ = 0;
+    x_speed_ = 0;
+    y_speed_ = 0;
     if (x_pos_ > 256)
     {
         x_pos_ -= 256;
@@ -144,6 +142,7 @@ void ThreatsObiect::RemoveBullet(const int& idx)
         }
     }
 }
+/* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VA CO CHINH SUA THEM */
 
 void ThreatsObiect::CheckToMap(Map& map_data)
 {
@@ -156,15 +155,15 @@ void ThreatsObiect::CheckToMap(Map& map_data)
     //Check for hozirontal
     int height_min = height_frame_ < TILE_SIZE ? height_frame_ : TILE_SIZE;
 
-    x1 = (x_pos_ + x_val_)/TILE_SIZE;
-    x2 = (x_pos_ + x_val_ + width_frame_ - 1)/TILE_SIZE;
+    x1 = (x_pos_ + x_speed_)/TILE_SIZE;
+    x2 = (x_pos_ + x_speed_ + width_frame_ - 1)/TILE_SIZE;
 
     y1 = y_pos_/TILE_SIZE;
     y2 = (y_pos_ + height_min - 1)/TILE_SIZE;
 
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
     {
-        if (x_val_ > 0) //main object is moving to right
+        if (x_speed_ > 0) //main object is moving to right
         {
             int val1 = map_data.tile[y1][x2];
             int val2 = map_data.tile[y2][x2];
@@ -173,10 +172,10 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             {
                 x_pos_ = x2*TILE_SIZE; // Dung tai vi tri do -> vi tri bien cua nhan vat
                 x_pos_ -= width_frame_ + 1;
-                x_val_ = 0;
+                x_speed_ = 0;
             }
         }
-        else if (x_val_ < 0)
+        else if (x_speed_ < 0)
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y2][x1];
@@ -184,7 +183,7 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             if ((val1 != BLANK_TILE && val1 != STATE_TORCH) || (val2 != BLANK_TILE && val2 != STATE_TORCH))
             {
                 x_pos_ = (x1+1)*TILE_SIZE;
-                x_val_ = 0;
+                x_speed_ = 0;
             }
         }
     }
@@ -195,12 +194,12 @@ void ThreatsObiect::CheckToMap(Map& map_data)
     x1 = (x_pos_)/TILE_SIZE;
     x2 = (x_pos_+width_min)/TILE_SIZE;
 
-    y1 = (y_pos_+y_val_)/TILE_SIZE;
-    y2 = (y_pos_+y_val_+height_frame_-1)/TILE_SIZE;
+    y1 = (y_pos_+y_speed_)/TILE_SIZE;
+    y2 = (y_pos_+y_speed_+height_frame_-1)/TILE_SIZE;
 
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
     {
-        if (y_val_ > 0)
+        if (y_speed_ > 0)
         {
             int val1 = map_data.tile[y2][x1];
             int val2 = map_data.tile[y2][x2];
@@ -209,11 +208,14 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             {
                 y_pos_ = y2*TILE_SIZE;
                 y_pos_ -= height_frame_+1;
-                y_val_ = 0;
-                if (!is_fly_) on_ground_ = true;
+                y_speed_ = 0;
+                if (!is_fly_)
+                {
+                    on_ground_ = true;
+                }
             }
         }
-        else if (y_val_ < 0)
+        else if (y_speed_ < 0)
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y1][x2];
@@ -221,14 +223,14 @@ void ThreatsObiect::CheckToMap(Map& map_data)
             if ((val1 != BLANK_TILE && val1 != STATE_TORCH) || (val2!= BLANK_TILE && val2 != STATE_TORCH))
             {
                 y_pos_ = (y1+1)*TILE_SIZE;
-                y_val_ = 0;
+                y_speed_ = 0;
             }
         }
     }
 
-    x_pos_ += x_val_;
-    if (is_fly_) y_val_ = 0;
-    y_pos_ += y_val_;
+    x_pos_ += x_speed_;
+    if (is_fly_) y_speed_ = 0;
+    y_pos_ += y_speed_;
 
     if (x_pos_ < 0)
     {
@@ -294,32 +296,27 @@ void ThreatsObiect::InitBullet(BulletObject* p_bullet, SDL_Renderer* screen)
         if (type_move_ == STATIC_THREAT)
         {
             p_bullet->set_bullet_type(BulletObject::TANK_BULLET);
-            bool ret = p_bullet->LoadImgBullet(screen);
-
-            if (ret)
-            {
-                p_bullet->set_is_move(true);
-                p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
-            }
+            p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
         }
-        else
+        else if (type_move_ == FLY_THREAT)
         {
-            p_bullet->set_bullet_type(BulletObject::PLAYER_BULLET);
-            bool ret = p_bullet->LoadImgBullet(screen);
+            p_bullet->set_bullet_type(BulletObject::BOMB_BULLET);
+            p_bullet->set_bullet_dir(BulletObject::DIR_DOWN_LEFT);
+        }
 
-            if (ret)
-            {
-                p_bullet->set_is_move(true);
-                p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
-            }
+        bool ret = p_bullet->LoadImgBullet(screen);
+        if (!ret)
+        {
+            return;
         }
         p_bullet->setRect(rect_.x-30, y_pos_+65); // hien thi tren man hinh kich thuoc 1280
         p_bullet->set_x_val(20);//set toc do
+        p_bullet->set_is_move(true);
         bullet_list_.push_back(p_bullet);
     }
 }
 
-void ThreatsObiect::MakeBullet(SDL_Renderer* screen, const int& x_litmit, const int& y_limit)
+void ThreatsObiect::GenerateBullet(SDL_Renderer* screen, const int& x_litmit, const int& y_limit)
 {
     for (int i = 0; i < bullet_list_.size(); i++)
     {

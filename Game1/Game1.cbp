@@ -43,8 +43,6 @@
 		<Unit filename="ExplosionObject.h" />
 		<Unit filename="Geometric.cpp" />
 		<Unit filename="Geometric.h" />
-		<Unit filename="ImpTimer.cpp" />
-		<Unit filename="ImpTimer.h" />
 		<Unit filename="MainObject.cpp" />
 		<Unit filename="MainObject.h" />
 		<Unit filename="Map.cpp" />
@@ -55,6 +53,8 @@
 		<Unit filename="Text.h" />
 		<Unit filename="ThreatsObject.cpp" />
 		<Unit filename="ThreatsObject.h" />
+		<Unit filename="Timer.cpp" />
+		<Unit filename="Timer.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

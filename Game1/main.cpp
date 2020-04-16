@@ -1,5 +1,7 @@
 
 #include<iostream>
+#include<cstdlib>
+#include<ctime>
 #include "CommonFunc.h"
 #include "BaseObject.h"
 #include "Map.h"
@@ -37,10 +39,10 @@ bool InitData()
     }
     else
     {
-        g_screen = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED);
+        g_screen = SDL_CreateRenderer(g_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (g_screen == NULL)
         {
-            std::cout << "Can not render screen: " << SDL_GetError() << std::endl;
+            std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
             success = false;
         }
         else
@@ -116,8 +118,6 @@ void close()
     g_sound_bullet[1] = NULL;
     Mix_FreeChunk(g_sound_bullet[2]);
     g_sound_bullet[2] = NULL;
-    Mix_FreeMusic(g_sound_end);
-    g_sound_end = NULL;
     Mix_FreeChunk(g_sound_explosion);
     g_sound_explosion = NULL;
     Mix_FreeChunk(g_sound_ex_main);
@@ -125,6 +125,8 @@ void close()
 
     Mix_FreeMusic(g_sound_start);
     g_sound_start = NULL;
+    Mix_FreeMusic(g_sound_end);
+    g_sound_end = NULL;
 
     IMG_Quit();
     SDL_Quit();
@@ -133,7 +135,7 @@ void close()
 std::vector<ThreatsObiect*> MakeThreadList()
 {
     std::vector<ThreatsObiect*> list_threats;
-
+    srand(time(0));
 
     ThreatsObiect* dynamic_threats = new ThreatsObiect[20];
     for (int i = 0; i < 20; i++)
@@ -141,10 +143,11 @@ std::vector<ThreatsObiect*> MakeThreadList()
         ThreatsObiect* p_threat = (dynamic_threats+i);
         if (p_threat != NULL)
         {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
             p_threat->LoadImg("img/threat_left.png", g_screen);
             p_threat->set_clips();
             p_threat->set_type_move(ThreatsObiect::MOVE_IN_SPACE_THREAT);
-            p_threat->set_x_pos(500 + i*500);
+            p_threat->set_x_pos(500 + i*rand_y_*2 + 400);
             p_threat->set_y_pos(200);
 
             int pos1 = p_threat->get_x_pos() - 60;
@@ -161,11 +164,12 @@ std::vector<ThreatsObiect*> MakeThreadList()
         ThreatsObiect* p_threat = (plane_threats+i);
         if (p_threat != NULL)
         {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
             p_threat->LoadImg("img/plane_left.png", g_screen);
             p_threat->set_clips();
             p_threat->set_type_move(ThreatsObiect::FLY_THREAT);
-            p_threat->set_x_pos(600 + i*900);
-            p_threat->set_y_pos(200);
+            p_threat->set_x_pos(600 + i*rand_y_*3 + 700);
+            p_threat->set_y_pos(rand_y_);
 
             p_threat->set_input_left(0);
 
@@ -183,9 +187,10 @@ std::vector<ThreatsObiect*> MakeThreadList()
         ThreatsObiect* p_threat = (threat_objs + i);
         if (p_threat != NULL)
         {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
             p_threat->LoadImg("img/threat_level.png", g_screen);
             p_threat->set_clips();
-            p_threat->set_x_pos(700 + i*1200);
+            p_threat->set_x_pos(700 + i*rand_y_*3 + 750);
             p_threat->set_y_pos(250);
             p_threat->set_type_move(ThreatsObiect::STATIC_THREAT);
             p_threat->set_input_left(0);
@@ -269,22 +274,27 @@ int main(int argc, char* argv[])
 
 	BaseObject score_message;
 	score_message.setRect(380, 90);
-	bool ret=score_message.LoadImg("img/score.png",g_screen);
-	if(!ret) return -1;
+	bool sret = score_message.LoadImg("img/score.png", g_screen);
+	if(!sret) return -1;
+
+	if(Mix_PlayingMusic() == 0)
+    {
+        Mix_PlayMusic(g_sound_start, -1);
+    }
 
 	while(menu_game.is_show_)
 	{
-		while(SDL_PollEvent(&g_event)!=0)
+		while(SDL_PollEvent(&g_event) != 0)
 		{
-			if(g_event.type==SDL_QUIT)
+			if(g_event.type == SDL_QUIT)
 			{
-				menu_game.is_show_=false;
-				is_quit=true;
-				is_show_score=false;
+				menu_game.is_show_ = false;
+				is_quit = true;
+				is_show_score = false;
 			}
-			menu_game.CheckEvents(g_event,is_quit,is_show_score);
+			menu_game.CheckEvents(g_event, is_quit, is_show_score);
 		}
-		SDL_SetRenderDrawColor(g_screen,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR,RENDER_DRAW_COLOR);
+		SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
 		menu_game.CreateText(gFont, g_screen);
 		menu_game.RenderMenu(g_screen);
 		SDL_RenderPresent(g_screen);
@@ -304,10 +314,7 @@ int main(int argc, char* argv[])
 
             p_player.HandelInputAction(g_event, g_sound_bullet, g_screen);
         }
-        if(Mix_PlayingMusic() == 0)
-		{
-			Mix_PlayMusic(g_sound_start, -1);
-		}
+
 
         SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
         SDL_RenderClear(g_screen);
@@ -320,7 +327,6 @@ int main(int argc, char* argv[])
         p_player.SetMapXY(map_data.start_x_, map_data.start_y_);
         p_player.DoPlayer(map_data);
         p_player.Show(g_screen);
-
 
         game_map.SetMap(map_data);
         game_map.DrawMap(g_screen);
@@ -345,7 +351,7 @@ int main(int argc, char* argv[])
                 p_threat->SetMapXY(map_data.start_x_, map_data.start_y_);
                 p_threat->ImpMoveType(g_screen);
                 p_threat->DoPlayer(map_data);
-                p_threat->MakeBullet(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
+                p_threat->GenerateBullet(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
                 p_threat->Show(g_screen);
 
                 SDL_Rect rect_player = p_player.GetRectFrame();
@@ -446,8 +452,17 @@ int main(int argc, char* argv[])
             }
         }
 
+        bool won_ = p_player.getRes();
+        if (won_)
+        {
+            is_show_score = true;
+            is_quit = true;
+            bool sret = score_message.LoadImg("img/happy.png", g_screen);
+            if(!sret) return -1;
+        }
+
         //Show game time
-        std::string str_time = "TIME: ";
+        std::string str_time = "TIME LEFT: ";
         Uint32 time_val = SDL_GetTicks()/1000; //thoi gian hien tai
         Uint32 val_time = 304 - time_val;
         if (val_time <= 0)
@@ -504,8 +519,8 @@ int main(int argc, char* argv[])
 
     threats_list.clear();
     Mix_HaltMusic();
-    bool won_ = p_player.getRes();
-    if(is_show_score || won_)
+
+    if(is_show_score)
     {
         score_game.SetText(std::to_string(score_value));
         score_game.CreateText(g_screen, gFont);

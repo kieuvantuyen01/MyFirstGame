@@ -22,11 +22,11 @@ public:
 private:
     int state_;
     Text start_game_;
-    Text help_;
-    Text quit_;
-    Text help_content_;
-    Text help_content_2;
-    Text help_content_3;
+    Text advise_;
+    Text exit_;
+    Text advise_content_;
+    Text advise_content_2;
+    Text advise_content_3;
     Text back_;
 };
 

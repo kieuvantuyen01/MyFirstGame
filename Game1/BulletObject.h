@@ -27,8 +27,9 @@ public:
     {
         GRENADE_BULLET = 50,
         MINE_BULLET = 51,
-        PLAYER_BULLET = 52,
+        GUN_BULLET = 52,
         TANK_BULLET = 53,
+        BOMB_BULLET = 54,
     };
 
     void set_x_val(const int& xVal) {x_val_ = xVal;}

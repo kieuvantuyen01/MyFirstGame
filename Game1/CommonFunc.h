@@ -9,8 +9,6 @@
 #include<SDL_mixer.h>
 #include<SDL_ttf.h>
 
-//#include "TextObject.h"
-
 static SDL_Window* g_window = NULL;
 static SDL_Renderer* g_screen = NULL;
 static SDL_Event g_event;
@@ -44,7 +42,7 @@ const int RENDER_DRAW_COLOR =  0xff;
 
 #define STATE_TORCH 4
 
-typedef struct Input
+struct Input
 {
     int left_;
     int right_;
@@ -52,7 +50,7 @@ typedef struct Input
     int down_;
     int jump_;
 };
-typedef struct Map // luu tru trang thai va vi tri cua cac o TileMap
+struct Map // luu tru trang thai va vi tri cua cac o TileMap
 {
     // vi tri cua o Tile Mat
     int start_x_;
@@ -69,6 +67,7 @@ namespace SDLCommonFunc
 {
     bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
     bool isInside(int& x, int& y, SDL_Rect object);
+    int MakeRandValue(const int& val_ = 400);
     void waitUntilKeyPressed();
 }
 #endif // COMMON_FUNCTION_H_

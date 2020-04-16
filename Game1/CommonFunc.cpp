@@ -101,11 +101,24 @@ bool SDLCommonFunc::isInside(int& x, int& y, SDL_Rect object)
 void SDLCommonFunc::waitUntilKeyPressed()
 {
     SDL_Event e;
-    while (true) {
+    while (true)
+    {
         if ( SDL_WaitEvent(&e) != 0 &&
-             (e.type == SDL_KEYDOWN || e.type == SDL_QUIT) )
+        (e.type == SDL_KEYDOWN || e.type == SDL_QUIT))
+        {
             return;
+        }
         SDL_Delay(100);
         SDL_Quit();
     }
+}
+
+int SDLCommonFunc::MakeRandValue(const int& val_)
+{
+    int rand_y_ = rand() % val_;
+    if (rand_y_ > SCREEN_HEIGHT - 200)
+    {
+        rand_y_ = SCREEN_HEIGHT*0.3;
+    }
+    return rand_y_;
 }

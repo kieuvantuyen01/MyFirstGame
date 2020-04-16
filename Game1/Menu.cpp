@@ -4,18 +4,18 @@ Menu::Menu()
 {
     state_ = SHOW_MENU;
     start_game_.SetText("LIBERATE THE SOUTH");
-    help_.SetText("ADVISE");
-    quit_.SetText("EXIT");
-    help_content_.SetText("USE FOUR NAVIGATION KEYS TO MOVE ");
-    help_content_2.SetText("LEFT CLICK = SHOOT, RIGHT CLICK = JUMP");
-    help_content_3.SetText("Z, X = SHORT DIRECTION, C = CHANGE SHOOTING");
+    advise_.SetText("ADVISE");
+    exit_.SetText("EXIT");
+    advise_content_.SetText("USE FOUR NAVIGATION KEYS TO MOVE ");
+    advise_content_2.SetText("LEFT CLICK = SHOOT, RIGHT CLICK = JUMP");
+    advise_content_3.SetText("Z, X = SHORT DIRECTION, C = CHANGE SHOOTING");
     back_.SetText("BACK");
     start_game_.SetColor(Text::WHITE_TEXT);
-    help_.SetColor(Text::WHITE_TEXT);
-    quit_.SetColor(Text::WHITE_TEXT);
-    help_content_.SetColor(Text::WHITE_TEXT);
-    help_content_2.SetColor(Text::WHITE_TEXT);
-    help_content_3.SetColor(Text::WHITE_TEXT);
+    advise_.SetColor(Text::WHITE_TEXT);
+    exit_.SetColor(Text::WHITE_TEXT);
+    advise_content_.SetColor(Text::WHITE_TEXT);
+    advise_content_2.SetColor(Text::WHITE_TEXT);
+    advise_content_3.SetColor(Text::WHITE_TEXT);
     back_.SetColor(Text::BLACK_TEXT);
     is_show_ = true;
 }
@@ -28,11 +28,11 @@ Menu::~Menu()
 void Menu::CreateText(TTF_Font * font, SDL_Renderer * screen)
 {
     start_game_.CreateText(screen, font);
-    help_.CreateText(screen, font);
-    quit_.CreateText(screen, font);
-    help_content_.CreateText(screen, font);
-    help_content_2.CreateText(screen, font);
-    help_content_3.CreateText(screen, font);
+    advise_.CreateText(screen, font);
+    exit_.CreateText(screen, font);
+    advise_content_.CreateText(screen, font);
+    advise_content_2.CreateText(screen, font);
+    advise_content_3.CreateText(screen, font);
     back_.CreateText(screen, font);
 }
 
@@ -40,11 +40,11 @@ void Menu::SetPostionText()
 {
     SDL_Rect menu_pos = this -> GetRect();
     start_game_.setRect(menu_pos.x + 500, menu_pos.y + 400);
-    help_.setRect(menu_pos.x + 580, menu_pos.y + 450);
-    quit_.setRect(menu_pos.x + 600, menu_pos.y + 500);
-    help_content_.setRect(menu_pos.x + 200, menu_pos.y + 350);
-    help_content_2.setRect(menu_pos.x + 200, menu_pos.y + 400);
-    help_content_3.setRect(menu_pos.x + 200, menu_pos.y + 450);
+    advise_.setRect(menu_pos.x + 580, menu_pos.y + 450);
+    exit_.setRect(menu_pos.x + 600, menu_pos.y + 500);
+    advise_content_.setRect(menu_pos.x + 200, menu_pos.y + 350);
+    advise_content_2.setRect(menu_pos.x + 200, menu_pos.y + 400);
+    advise_content_3.setRect(menu_pos.x + 200, menu_pos.y + 450);
     back_.setRect(menu_pos.x + 600, menu_pos.y + 500);
 }
 
@@ -65,9 +65,9 @@ void Menu::CheckEvents(SDL_Event events, bool & is_quit, bool & is_show_score)
         else
         {
             start_game_.SetColor(Text::WHITE_TEXT);
-            if (SDLCommonFunc::isInside(x, y, quit_.GetRect()))
+            if (SDLCommonFunc::isInside(x, y, exit_.GetRect()))
             {
-                quit_.SetColor(Text::RED_TEXT);
+                exit_.SetColor(Text::RED_TEXT);
                 if (events.motion.type == SDL_MOUSEBUTTONDOWN)
                 {
                     is_show_ = false;
@@ -77,10 +77,10 @@ void Menu::CheckEvents(SDL_Event events, bool & is_quit, bool & is_show_score)
             }
             else
             {
-                quit_.SetColor(Text::WHITE_TEXT);
-                if (SDLCommonFunc::isInside(x, y, help_.GetRect()))
+                exit_.SetColor(Text::WHITE_TEXT);
+                if (SDLCommonFunc::isInside(x, y, advise_.GetRect()))
                 {
-                    help_.SetColor(Text::RED_TEXT);
+                    advise_.SetColor(Text::RED_TEXT);
                     if (events.motion.type == SDL_MOUSEBUTTONDOWN)
                     {
                         state_ = SHOW_HELP;
@@ -88,7 +88,7 @@ void Menu::CheckEvents(SDL_Event events, bool & is_quit, bool & is_show_score)
                 }
                 else
                 {
-                    help_.SetColor(Text::WHITE_TEXT);
+                    advise_.SetColor(Text::WHITE_TEXT);
                 }
             }
         }
@@ -119,16 +119,16 @@ void Menu::RenderMenu(SDL_Renderer * des)
     {
         Render(des);
         start_game_.Render(des);
-        help_.Render(des);
-        quit_.Render(des);
+        advise_.Render(des);
+        exit_.Render(des);
         break;
     }
     case SHOW_HELP:
     {
         Render(des);
-        help_content_.Render(des);
-        help_content_2.Render(des);
-        help_content_3.Render(des);
+        advise_content_.Render(des);
+        advise_content_2.Render(des);
+        advise_content_3.Render(des);
         back_.Render(des);
         break;
     }

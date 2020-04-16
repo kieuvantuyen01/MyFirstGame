@@ -68,9 +68,9 @@ void MainObject::set_clips()
     }
 }
 
-void MainObject::Show(SDL_Renderer* des)
+void MainObject::Show(SDL_Renderer* renderer)
 {
-    UpdateImagePlayer(des);
+    UpdateImagePlayer(renderer);
 
     if (input_type_.left_ == 1 || input_type_.right_ == 1)
     {
@@ -90,11 +90,11 @@ void MainObject::Show(SDL_Renderer* des)
         rect_.x = x_pos_ - map_x_; // tru di luong ban do bi cuon di
         rect_.y = y_pos_ - map_y_;
 
-        SDL_Rect* current_clip = &frame_clip_[frame_];
+        SDL_Rect* currentClip = &frame_clip_[frame_];
 
         SDL_Rect renderQuad = {rect_.x, rect_.y, width_frame_, height_frame_};
 
-        SDL_RenderCopy(des, p_object_, current_clip, &renderQuad);
+        SDL_RenderCopy(renderer, p_object_, currentClip, &renderQuad);
     }
 }
 
@@ -182,7 +182,7 @@ void MainObject::HandelInputAction(SDL_Event events, Mix_Chunk* bullet_sound[3],
             switch(change_bullet_)
             {
             case 0:
-                p_bullet->set_bullet_type(BulletObject::PLAYER_BULLET);
+                p_bullet->set_bullet_type(BulletObject::GUN_BULLET);
                 Mix_PlayChannel(-1, bullet_sound[0], 0);
                 break;
             case 1:
@@ -245,7 +245,7 @@ void MainObject::HandelInputAction(SDL_Event events, Mix_Chunk* bullet_sound[3],
     }
 }
 
-void MainObject::HandleBullet(SDL_Renderer* des)
+void MainObject::HandleBullet(SDL_Renderer* renderer)
 {
     for (int i = 0; i < p_bullet_list_.size(); i++)
     {
@@ -255,7 +255,7 @@ void MainObject::HandleBullet(SDL_Renderer* des)
             if (p_bullet->get_is_move() == true)
             {
                 p_bullet->HandleMove(SCREEN_WIDTH, SCREEN_HEIGHT);
-                p_bullet->Render(des);
+                p_bullet->Render(renderer);
             }
             else
             {
@@ -518,28 +518,33 @@ void MainObject::IncreaseTorch()
 {
     torch_count++;
 }
-void MainObject::UpdateImagePlayer(SDL_Renderer* des)
+void MainObject::UpdateImagePlayer(SDL_Renderer* renderer)
 {
     if (on_ground_ == true)
     {
         if (status_ == WALK_LEFT)
         {
-            LoadImg("img/player_left_.png", des);
+            LoadImg("img/player_left_.png", renderer);
         }
         else
         {
-            LoadImg("img/player_right_.png", des);
+            LoadImg("img/player_right_.png", renderer);
         }
     }
     else
     {
         if (status_ == WALK_LEFT)
         {
-            LoadImg("img/jump_left.png", des);
+            LoadImg("img/jump_left.png", renderer);
         }
         else
         {
-            LoadImg("img/jump_right.png", des);
+            LoadImg("img/jump_right.png", renderer);
         }
     }
+}
+
+bool MainObject::getRes()
+{
+    return won_;
 }

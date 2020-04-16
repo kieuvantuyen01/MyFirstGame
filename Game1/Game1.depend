@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1586665767 source:d:\btlon\game1\main.cpp
+1586797830 source:d:\btlon\game1\main.cpp
 	<iostream>
+	<cstdlib>
+	<ctime>
 	"CommonFunc.h"
 	"BaseObject.h"
 	"Map.h"
@@ -13,11 +15,11 @@
 	"Geometric.h"
 	"Menu.h"
 
-1586624096 source:d:\btlon\game1\commonfunc.cpp
+1586796361 source:d:\btlon\game1\commonfunc.cpp
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586661183 d:\btlon\game1\commonfunc.h
+1586794553 d:\btlon\game1\commonfunc.h
 	<windows.h>
 	<string>
 	<vector>
@@ -29,7 +31,7 @@
 1585925073 source:d:\btlon\game1\baseobject.cpp
 	"BaseObject.h"
 
-1586566797 d:\btlon\game1\baseobject.h
+1586917813 d:\btlon\game1\baseobject.h
 	"CommonFunc.h"
 
 1586426332 source:d:\btlon\game1\game_map.cpp
@@ -40,11 +42,11 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586622535 source:d:\btlon\game1\mainobject.cpp
+1586968978 source:d:\btlon\game1\mainobject.cpp
 	"MainObject.h"
 	"BulletObject.h"
 
-1586622535 d:\btlon\game1\mainobject.h
+1586968994 d:\btlon\game1\mainobject.h
 	<vector>
 	"CommonFunc.h"
 	"BaseObject.h"
@@ -56,17 +58,17 @@
 
 1585889687 d:\btlon\game1\imptimer.h
 
-1586659618 source:d:\btlon\game1\bulletobject.cpp
+1586698944 source:d:\btlon\game1\bulletobject.cpp
 	"BulletObject.h"
 
-1586489199 d:\btlon\game1\bulletobject.h
+1586698944 d:\btlon\game1\bulletobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586661006 source:d:\btlon\game1\threatsobject.cpp
+1586797183 source:d:\btlon\game1\threatsobject.cpp
 	"ThreatsObject.h"
 
-1586660919 d:\btlon\game1\threatsobject.h
+1586797183 d:\btlon\game1\threatsobject.h
 	"CommonFunc.h"
 	"BaseObject.h"
 	"BulletObject.h"
@@ -96,7 +98,7 @@
 1586437560 source:d:\btlon\game1\geometric.cpp
 	"Geometric.h"
 
-1586437580 d:\btlon\game1\geometric.h
+1586710371 d:\btlon\game1\geometric.h
 	"CommonFunc.h"
 
 1586451167 source:d:\btlon\game1\bossobject.cpp
@@ -111,10 +113,10 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586623324 source:d:\btlon\game1\menu.cpp
+1586968619 source:d:\btlon\game1\menu.cpp
 	"Menu.h"
 
-1586588022 d:\btlon\game1\menu.h
+1586968619 d:\btlon\game1\menu.h
 	"CommonFunc.h"
 	"Text.h"
 
@@ -128,7 +130,7 @@
 1586587991 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
-1586666235 source:d:\btlon\game1\datagame.cpp
+1586765927 source:d:\btlon\game1\datagame.cpp
 	"DataGame.h"
 
 1586661416 d:\btlon\game1\datagame.h

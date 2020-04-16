@@ -28,9 +28,13 @@ bool BulletObject::LoadImgBullet(SDL_Renderer* des)
     {
         ret = LoadImg("img/mine_bullet.png", des);
     }
-    else
+    else if (bullet_type_ == GUN_BULLET)
     {
         ret = LoadImg("img/player_bullet.png", des);
+    }
+    else
+    {
+        ret = LoadImg("img/bomb_bullet.png", des);
     }
     return ret;
 }
