@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1586797830 source:d:\btlon\game1\main.cpp
+1587144543 source:d:\btlon\game1\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -15,11 +15,11 @@
 	"Geometric.h"
 	"Menu.h"
 
-1586796361 source:d:\btlon\game1\commonfunc.cpp
+1587044458 source:d:\btlon\game1\commonfunc.cpp
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586794553 d:\btlon\game1\commonfunc.h
+1587144259 d:\btlon\game1\commonfunc.h
 	<windows.h>
 	<string>
 	<vector>
@@ -27,6 +27,7 @@
 	<SDL_image.h>
 	<SDL_mixer.h>
 	<SDL_ttf.h>
+	<fstream>
 
 1585925073 source:d:\btlon\game1\baseobject.cpp
 	"BaseObject.h"
@@ -42,7 +43,7 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1586968978 source:d:\btlon\game1\mainobject.cpp
+1587057579 source:d:\btlon\game1\mainobject.cpp
 	"MainObject.h"
 	"BulletObject.h"
 
@@ -61,14 +62,14 @@
 1586698944 source:d:\btlon\game1\bulletobject.cpp
 	"BulletObject.h"
 
-1586698944 d:\btlon\game1\bulletobject.h
+1587144531 d:\btlon\game1\bulletobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586797183 source:d:\btlon\game1\threatsobject.cpp
+1587126003 source:d:\btlon\game1\threatsobject.cpp
 	"ThreatsObject.h"
 
-1586797183 d:\btlon\game1\threatsobject.h
+1587046194 d:\btlon\game1\threatsobject.h
 	"CommonFunc.h"
 	"BaseObject.h"
 	"BulletObject.h"
@@ -109,14 +110,14 @@
 	"CommonFunc.h"
 	"BulletObject.h"
 
-1586587861 d:\btlon\game1\text.h
+1587007161 d:\btlon\game1\text.h
 	"CommonFunc.h"
 	"BaseObject.h"
 
 1586968619 source:d:\btlon\game1\menu.cpp
 	"Menu.h"
 
-1586968619 d:\btlon\game1\menu.h
+1587015642 d:\btlon\game1\menu.h
 	"CommonFunc.h"
 	"Text.h"
 
@@ -137,11 +138,11 @@
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1586623067 source:d:\btlon\game1\map.cpp
+1587118320 source:d:\btlon\game1\map.cpp
 	"Map.h"
 	"CommonFunc.h"
 
-1586623009 d:\btlon\game1\map.h
+1587118088 d:\btlon\game1\map.h
 	"CommonFunc.h"
 	"BaseObject.h"
 
@@ -150,4 +151,18 @@
 	"CommonFunc.h"
 
 1586659347 d:\btlon\game1\timer.h
+
+1587045797 source:d:\btlon\game1\sdluntils.cpp
+	"SDLUntils.h"
+
+1587045861 d:\btlon\game1\sdluntils.h
+	<iostream>
+	"CommonFunc.h"
+	"Text.h"
+	"MainObject.h"
+	"BulletObject.h"
+	"ThreatsObject.h"
+	"DataGame.h"
+	<cstdlib>
+	<ctime>
 

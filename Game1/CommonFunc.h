@@ -8,17 +8,20 @@
 #include<SDL_image.h>
 #include<SDL_mixer.h>
 #include<SDL_ttf.h>
+#include<fstream>
 
-static SDL_Window* g_window = NULL;
-static SDL_Renderer* g_screen = NULL;
-static SDL_Event g_event;
+//Global Var
+static TTF_Font* gFont = NULL;
+static SDL_Window* gWindow = NULL;
+static SDL_Renderer* gScreen = NULL;
+static SDL_Event gEvent;
 
 //Audio
-static Mix_Chunk* g_sound_bullet[3];
-static Mix_Chunk* g_sound_explosion = NULL;
-static Mix_Chunk* g_sound_ex_main = NULL;
-static Mix_Music* g_sound_start = NULL;
-static Mix_Music* g_sound_end = NULL;
+static Mix_Chunk* gSound_bullet[3];
+static Mix_Chunk* gSound_explosion = NULL;
+static Mix_Chunk* gSound_ex_main = NULL;
+static Mix_Music* gSound_start = NULL;
+static Mix_Music* gSound_end = NULL;
 
 //Screen
 const int FRAME_PER_SECOND = 25; //fps
@@ -26,6 +29,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 
+//
 const int NUM_DIE = 3;
 
 const int COLOR_KEY_R = 167;
@@ -35,12 +39,14 @@ const int COLOR_KEY_B = 180;
 const int RENDER_DRAW_COLOR =  0xff;
 
 #define BLANK_TILE 0
-#define TILE_SIZE 64
+#define STATE_TORCH 4
 
+#define TILE_SIZE 64
 #define MAX_MAP_X 400
 #define MAX_MAP_Y 10
 
-#define STATE_TORCH 4
+#define MAX_TIME_GAME 304
+#define MAX_ENEMIES_GAME 60
 
 struct Input
 {

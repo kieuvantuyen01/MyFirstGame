@@ -142,6 +142,7 @@ void ThreatsObiect::RemoveBullet(const int& idx)
         }
     }
 }
+
 /* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VA CO CHINH SUA THEM */
 
 void ThreatsObiect::CheckToMap(Map& map_data)

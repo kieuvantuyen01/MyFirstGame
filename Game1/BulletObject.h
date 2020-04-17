@@ -6,7 +6,6 @@
 
 class BulletObject : public BaseObject
 {
-
 public:
     BulletObject();
     ~BulletObject();

@@ -1,10 +1,11 @@
 
 #include "Map.h"
 #include "CommonFunc.h"
+
 void GameMap::LoadMap(char* name)
 {
-    FILE* fp = fopen(name, "rb");
-    if (!fp)
+    std::ifstream input(name);
+    if (!input)
     {
         return;
     }
@@ -15,7 +16,7 @@ void GameMap::LoadMap(char* name)
     {
         for (int j = 0; j < MAX_MAP_X; j++)
         {
-           fscanf(fp, "%d", &game_map_.tile[i][j]);
+           input >> game_map_.tile[i][j];
            int val = game_map_.tile[i][j];
            if (val > 0)
            {
@@ -37,31 +38,30 @@ void GameMap::LoadMap(char* name)
     game_map_.start_x_ = 0; // vi tri bat dau cua ban do
     game_map_.start_y_ = 0;
 
-    game_map_.file_name_ = name; // luu lai de dung cho lan sau
-    fclose(fp);
+    input.close();
 }
 
-void GameMap::LoadTiles(SDL_Renderer* screen)
+void GameMap::SetTiles(SDL_Renderer* screen)
 {
-    char file_img[30];
-    FILE* fp = NULL;// kiem tra cac anh
+    std::string file_name = "";
 
     for (int i = 0; i < MAX_TILES; i++)
     {
-        sprintf(file_img, "map/%d.png", i);
+        file_name = "map/" + std::to_string(i) + ".png" ;
 
-        fp = fopen(file_img, "rb");
-        if (!fp)
+        std::ifstream input(file_name);
+        if (!input)
         {
             continue;
         }
 
-        fclose(fp);
+        input.close();
 
-        tile_mat[i].LoadImg(file_img, screen);
+        tile_mat[i].LoadImg(file_name, screen);
     }
 }
 
+/* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VE CACH FILL ANH */
 
 void GameMap::DrawMap(SDL_Renderer* screen) // fill cac hinh anh vao o Tile Mat
 {

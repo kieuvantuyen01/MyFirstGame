@@ -17,7 +17,7 @@ public:
         YELLOW_TEXT = 3,
 	};
 	bool LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen);
-	void SetText(const std::string& text) {text_val_=text;}
+	void SetText(const std::string& text) {text_val_ = text;}
 	void SetColor(Uint8 red, Uint8 green, Uint8 blue);
     void SetColor(int type);
 
@@ -26,7 +26,7 @@ public:
 
     void Free();
 
-	bool CreateText(SDL_Renderer* screen,TTF_Font* font);
+	bool CreateText(SDL_Renderer* screen, TTF_Font* font);
 	void RenderText(SDL_Renderer* screen,
                     int xp, int yp,
                     SDL_Rect* clip = NULL,

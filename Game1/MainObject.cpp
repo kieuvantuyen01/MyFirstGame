@@ -361,6 +361,9 @@ void MainObject::CenterEntityOnMap(Map& map_data)
         map_data.start_y_ = map_data.max_y_-SCREEN_HEIGHT;
     }
 }
+
+/* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VA CO CHINH SUA THEM */
+
 void MainObject::CheckToMap(Map& map_data)
 {
     int x1 = 0;

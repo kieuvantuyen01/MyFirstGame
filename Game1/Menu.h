@@ -15,7 +15,7 @@ public:
         SHOW_MENU,
         SHOW_HELP
     };
-    void CreateText(TTF_Font* font,SDL_Renderer* screen);
+    void CreateText(TTF_Font* font, SDL_Renderer* screen);
     void SetPostionText();
     void RenderMenu(SDL_Renderer* des);
     void CheckEvents(SDL_Event events, bool& is_quit, bool& is_show_score);
