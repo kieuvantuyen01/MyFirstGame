@@ -1,8 +1,11 @@
-#ifndef DATA_GAME_H_
-#define DATA_GAME_H_
+
+/* LOP XU LY THONG SO GAME */
+
+#ifndef DATA_GAME_H
+#define DATA_GAME_H
 
 #include "BaseObject.h"
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 
 class DataGame : public BaseObject
 {
@@ -10,16 +13,16 @@ public:
     DataGame();
     ~DataGame();
 
-    void SetNum(const int& num) {number_ = num;}
-    void SetPos(const int& xPos);
+    void SetNumLife(const int& num) {number_life_ = num;}
+    void SetPosition(const int& xPos);
     void Show(SDL_Renderer* screen);
-    void Init(SDL_Renderer* screen);// thiet lap vi tri ban dau
+    void Init(SDL_Renderer* screen);
 
     void InitCrease();
     void Decrease();
 
 private:
-    int number_; // so mang
+    int number_life_;
     std::vector<int> pos_list_;
 
 };
@@ -31,7 +34,7 @@ public:
     ~PlayerTorch();
 
     void Init(SDL_Renderer* screen);
-    void SetPos(const int& x, const int& y) {x_pos_ = x, y_pos_ = y;};
+    void SetPosition(const int& x, const int& y) {x_pos_ = x, y_pos_ = y;};
     void Show(SDL_Renderer* screen);
 
 
@@ -41,4 +44,4 @@ private:
 };
 
 
-#endif // DATA_GAME_H_
+#endif // DATA_GAME_H

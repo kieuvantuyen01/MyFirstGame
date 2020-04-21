@@ -1,4 +1,6 @@
 
+/*LOP XU LY HIEN THI CHU*/
+
 #include "Text.h"
 
 Text::Text()
@@ -53,13 +55,19 @@ void Text::SetColor(int type)
 
 bool Text::CreateText( SDL_Renderer* screen, TTF_Font* font)
 {
-	SDL_Surface* temp=TTF_RenderText_Solid(font,text_val_.c_str(),text_color_);
-	if(temp==NULL) return false;
-	SetObject(SDL_CreateTextureFromSurface(screen,temp));
-	if(this->GetObject()==NULL) return false;
-	this->SetWidHei(temp->w,temp->h);
+	SDL_Surface* loadedSurface = TTF_RenderText_Solid(font, text_val_.c_str(), text_color_);
+	if(loadedSurface == NULL)
+    {
+        return false;
+    }
+	SetObject(SDL_CreateTextureFromSurface(screen, loadedSurface));
+	if(this->GetObject() == NULL)
+    {
+        return false;
+    }
+	this->SetWidthHeight(loadedSurface->w, loadedSurface->h);
 
-	SDL_FreeSurface(temp);
+	SDL_FreeSurface(loadedSurface);
 	return true;
 }
 
@@ -80,6 +88,7 @@ void Text::RenderText(SDL_Renderer* screen,
     SDL_RenderCopyEx(screen, texture_, clip, &renderQuad, angle, center, flip);
 }
 
+//Tuong tu voi Create Texture
 bool Text::LoadFromRenderText(TTF_Font* font, SDL_Renderer* screen)
 {
     SDL_Surface* text_surface = TTF_RenderText_Solid(font, text_val_.c_str(), text_color_);

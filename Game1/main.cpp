@@ -1,14 +1,15 @@
+
 /* KHAI BAO THU VIEN */
+
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 #include "BaseObject.h"
 #include "Map.h"
 #include "MainObject.h"
-#include "Timer.h"
-#include "ThreatsObject.h"
-#include "ExplosionObject.h"
+#include "Enemy.h"
+#include "Explosion.h"
 #include "Text.h"
 #include "DataGame.h"
 #include "Geometric.h"
@@ -140,74 +141,74 @@ void close()
 
 /* HAM TAO VA XU LY ENEMIES*/
 
-std::vector<ThreatsObiect*> MakeThreadList()
+std::vector<EnemiesObiect*> MakeEnemiesList()
 {
-    std::vector<ThreatsObiect*> list_threats;
+    std::vector<EnemiesObiect*> listEnemies;
     srand(time(0));
 
-    ThreatsObiect* dynamic_threats = new ThreatsObiect[20];
+    EnemiesObiect* soldier_enemies = new EnemiesObiect[20];
     for (int i = 0; i < 20; i++)
     {
-        ThreatsObiect* p_threat = (dynamic_threats+i);
-        if (p_threat != NULL)
+        EnemiesObiect* pEnemy = (soldier_enemies+i);
+        if (pEnemy != NULL)
         {
             int rand_y_ = SDLCommonFunc::MakeRandValue();
-            p_threat->LoadImg("img/threat_left.png", gScreen);
-            p_threat->set_clips();
-            p_threat->set_type_move(ThreatsObiect::MOVE_IN_SPACE_THREAT);
-            p_threat->set_x_pos(500 + i*rand_y_*2 + 400);
-            p_threat->set_y_pos(200);
+            pEnemy->LoadImg("img/enemy_left.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_type_move(EnemiesObiect::MOVE_IN_SPACE_ENEMY);
+            pEnemy->set_x_pos(500 + i*rand_y_*2 + 400);
+            pEnemy->set_y_pos(200);
 
-            int pos1 = p_threat->get_x_pos() - 60;
-            int pos2 = p_threat->get_x_pos() + 60;
-            p_threat->SetAnimationPos(pos1, pos2);
-            p_threat->set_input_left(1);
-            list_threats.push_back(p_threat);
+            int pos1 = pEnemy->get_x_pos() - 60;
+            int pos2 = pEnemy->get_x_pos() + 60;
+            pEnemy->SetAnimationPos(pos1, pos2);
+            pEnemy->set_input_left(1);
+            listEnemies.push_back(pEnemy);
         }
     }
 
-    ThreatsObiect* plane_threats = new ThreatsObiect[20];
+    EnemiesObiect* plane_enemies = new EnemiesObiect[20];
     for (int i = 0; i < 20; i++)
     {
-        ThreatsObiect* p_threat = (plane_threats+i);
-        if (p_threat != NULL)
+        EnemiesObiect* pEnemy = (plane_enemies+i);
+        if (pEnemy != NULL)
         {
             int rand_y_ = SDLCommonFunc::MakeRandValue();
-            p_threat->LoadImg("img/plane_left.png", gScreen);
-            p_threat->set_clips();
-            p_threat->set_type_move(ThreatsObiect::FLY_THREAT);
-            p_threat->set_x_pos(600 + i*rand_y_*3 + 700);
-            p_threat->set_y_pos(rand_y_);
+            pEnemy->LoadImg("img/plane_left.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_type_move(EnemiesObiect::FLY_ENEMY);
+            pEnemy->set_x_pos(600 + i*rand_y_*3 + 700);
+            pEnemy->set_y_pos(rand_y_);
 
-            p_threat->set_input_left(0);
+            pEnemy->set_input_left(0);
 
-            BulletObject* p_bullet = new BulletObject[1];
-            p_threat->InitBullet(p_bullet, gScreen);
-            list_threats.push_back(p_threat);
+            Bullet* p_bullet = new Bullet[1];
+            pEnemy->InitBullet(p_bullet, gScreen);
+            listEnemies.push_back(pEnemy);
         }
     }
 
-    ThreatsObiect* threat_objs = new ThreatsObiect[20];
+    EnemiesObiect* tank_enemies = new EnemiesObiect[20];
 
     for (int i = 0; i < 20; i++)
     {
-        ThreatsObiect* p_threat = (threat_objs + i);
-        if (p_threat != NULL)
+        EnemiesObiect* pEnemy = (tank_enemies + i);
+        if (pEnemy != NULL)
         {
             int rand_y_ = SDLCommonFunc::MakeRandValue();
-            p_threat->LoadImg("img/threat_level.png", gScreen);
-            p_threat->set_clips();
-            p_threat->set_x_pos(700 + i*rand_y_*3 + 750);
-            p_threat->set_y_pos(250);
-            p_threat->set_type_move(ThreatsObiect::STATIC_THREAT);
-            p_threat->set_input_left(0);
+            pEnemy->LoadImg("img/enemy_tank.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_x_pos(700 + i*rand_y_*3 + 750);
+            pEnemy->set_y_pos(250);
+            pEnemy->set_type_move(EnemiesObiect::STATIC_ENEMY);
+            pEnemy->set_input_left(0);
 
-            BulletObject* p_bullet = new BulletObject[1];
-            p_threat->InitBullet(p_bullet, gScreen);
-            list_threats.push_back(p_threat);
+            Bullet* p_bullet = new Bullet[1];
+            pEnemy->InitBullet(p_bullet, gScreen);
+            listEnemies.push_back(pEnemy);
         }
     }
-    return list_threats;
+    return listEnemies;
 }
 
 /* HAM MAIN */
@@ -215,8 +216,8 @@ std::vector<ThreatsObiect*> MakeThreadList()
 int main(int argc, char* argv[])
 {
     // Bien xu ly FPS
-    //Thuat toan nay tham khao tren kenh phattrienphanmem123az.com
-    Timer fps_timer;
+    Uint32 start_frame_time_;
+    Uint32 theory_frame_time_;
 
     // Kiem tra viec khoi tao SDL va Background
 
@@ -232,16 +233,15 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-
     //Khoi tao va Load Ban do Game
     GameMap game_map;
-    game_map.LoadMap("map/map01.dat");
+    game_map.LoadMap("map/map01.map");
     game_map.SetTiles(gScreen);
 
     //Khoi tao va Load nhan vat chinh
     MainObject p_player;
     p_player.LoadImg("img/player_right_.png", gScreen);
-    p_player.set_clips();
+    p_player.SetClips();
 
     //Khoi tao bien quan ly quan ly cac thong so game
     DataGame game_data;
@@ -250,20 +250,20 @@ int main(int argc, char* argv[])
     //Khoi tao bien quan ly Duoc
     PlayerTorch player_torch;
     player_torch.Init(gScreen);
-    player_torch.SetPos(20, 100);
+    player_torch.SetPosition(20, 100);
 
-    std::vector<ThreatsObiect*>threats_list = MakeThreadList();
+    std::vector<EnemiesObiect*>enemies_list = MakeEnemiesList();
 
     //Khoi tao bien xu ly va cham
-    ExplosionObject exp_threat;
-    bool tRet = exp_threat.LoadImg("img/exp.png", gScreen);
+    Explosion expEnemy;
+    bool tRet = expEnemy.LoadImg("img/exp.png", gScreen);
     if (!tRet)
     {
         return -1;
     }
-    exp_threat.set_clip();
+    expEnemy.set_clip();
 
-    ExplosionObject exp_main;
+    Explosion exp_main;
     bool mRet = exp_main.LoadImg("img/exp1.png", gScreen);
     if (!mRet)
     {
@@ -330,7 +330,8 @@ int main(int argc, char* argv[])
 	//Tai Game
     while(!is_quit)
     {
-        fps_timer.start();
+        //Lay thoi gian bat dau cua mot frame
+        start_frame_time_ = SDL_GetTicks();
         while(SDL_PollEvent(&gEvent) != 0)
         {
             if (gEvent.type == SDL_QUIT)
@@ -339,7 +340,7 @@ int main(int argc, char* argv[])
                 is_show_score = false;
             }
             //Xu ly trang thai ban dau cua nhan vat
-            p_player.HandelInputAction(gEvent, gSound_bullet, gScreen);
+            p_player.ImpInputAction(gEvent, gSound_bullet, gScreen);
         }
 
 
@@ -352,72 +353,72 @@ int main(int argc, char* argv[])
         Map map_data = game_map.getMap();
 
         //Hien thi nhan vat
-        p_player.HandleBullet(gScreen);
-        p_player.SetMapXY(map_data.start_x_, map_data.start_y_);
+        p_player.ImpBullet(gScreen);
+        p_player.SetPlayerMap(map_data.start_x_, map_data.start_y_);
         p_player.DoPlayer(map_data);
-        p_player.Show(gScreen);
+        p_player.ShowAnimation(gScreen);
 
         //Hien thi ban do Game
         game_map.SetMap(map_data);
         game_map.DrawMap(gScreen);
 
         //Ve khung chua cac thong so game
-        GeometricFormat rectangle_size{0, 0, SCREEN_WIDTH/4, SCREEN_HEIGHT/4};
-        ColorData color_data1{237, 28, 36};
-        Geometric::RenderRectangle(rectangle_size, color_data1, gScreen);
+        RectFormat rectangle_size{0, 0, SCREEN_WIDTH/4, SCREEN_HEIGHT/4};
+        ColorData color1{237, 28, 36};
+        Geometric::RenderRectangle(rectangle_size, color1, gScreen);
 
-        GeometricFormat outline_size(1, 1, SCREEN_WIDTH/4, SCREEN_HEIGHT/4-2);
-        ColorData color_data2{0, 0, 0};
-        Geometric::RenderOutline(outline_size, color_data2, gScreen);
+        RectFormat outline_size(1, 1, SCREEN_WIDTH/4, SCREEN_HEIGHT/4-2);
+        ColorData color2{0, 0, 0};
+        Geometric::RenderOutline(outline_size, color2, gScreen);
 
         //Hien thi thong so Game
         game_data.Show(gScreen);
         player_torch.Show(gScreen);
 
         //Xu ly va cham
-        for (int i = 0; i < threats_list.size(); i++)
+        for (int i = 0; i < enemies_list.size(); i++)
         {
             //Xu ly vi tri cua nhan vat, cho nhan vat di chuyen, tao dan ban va hien thi
-            ThreatsObiect* p_threat = threats_list.at(i);
-            if (p_threat != NULL)
+            EnemiesObiect* pEnemy = enemies_list.at(i);
+            if (pEnemy != NULL)
             {
-                p_threat->SetMapXY(map_data.start_x_, map_data.start_y_);
-                p_threat->ImpMoveType(gScreen);
-                p_threat->DoPlayer(map_data);
-                p_threat->GenerateBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
-                p_threat->Show(gScreen);
+                pEnemy->SetMapXY(map_data.start_x_, map_data.start_y_);
+                pEnemy->ImpMoveType(gScreen);
+                pEnemy->DoEnemy(map_data);
+                pEnemy->GenerateBullet(gScreen, SCREEN_WIDTH, SCREEN_HEIGHT);
+                pEnemy->Show(gScreen);
 
                 //kiem tra va cham giua nhan vat game va dan cua cac Enemies
-                SDL_Rect rect_player = p_player.GetRectFrame();
+                SDL_Rect rect_player = p_player.GetFrameRect();
                 bool bCol1 = false;
-                std::vector<BulletObject*> tBullet_list = p_threat->get_bullet_list();
+                std::vector<Bullet*> tBullet_list = pEnemy->get_bullet_list();
                 for (int idx1 = 0; idx1 < tBullet_list.size(); idx1++)
                 {
-                    BulletObject* pt_bullet = tBullet_list.at(idx1);
+                    Bullet* pt_bullet = tBullet_list.at(idx1);
                     if (pt_bullet)
                     {
                         bCol1 = SDLCommonFunc::CheckCollision(pt_bullet->GetRect(), rect_player);
                         if (bCol1)
                         {
-                            p_threat->RemoveBullet(idx1);
+                            pEnemy->RemoveBullet(idx1);
                             break;
                         }
                     }
                 }
 
                 //Kiem tra va cham giua nhan vat game va enemies
-                SDL_Rect rect_threat = p_threat->GetRectFrame();
-                bool bCol2 = SDLCommonFunc::CheckCollision(rect_player, rect_threat);
+                SDL_Rect rect_enemy = pEnemy->GetRectFrame();
+                bool bCol2 = SDLCommonFunc::CheckCollision(rect_player, rect_enemy);
 
                 if (bCol1 || bCol2)
                 {
                     int fr_exp_width = exp_main.get_frame_width();
                     int fr_exp_height = exp_main.get_frame_height();
-                    for (int idx2 = 0; idx2 < NUM_FRAME_EXP; idx2++)
+                    for (int idx2 = 0; idx2 < NUM_FRAME_EXPLOSION; idx2++)
                     {
                         //Dat frame hinh vao tam cua vu no
-                        int x_pos = (p_player.GetRect().x + p_player.GetRectFrame().w*0.5) - fr_exp_width*0.5;
-                        int y_pos = (p_player.GetRect().y + p_player.GetRectFrame().h*0.5) - fr_exp_height*0.5;
+                        int x_pos = (p_player.GetRect().x + p_player.GetFrameRect().w*0.5) - fr_exp_width*0.5;
+                        int y_pos = (p_player.GetRect().y + p_player.GetFrameRect().h*0.5) - fr_exp_height*0.5;
 
                         exp_main.set_frame(idx2);
                         exp_main.setRect(x_pos, y_pos);
@@ -431,7 +432,7 @@ int main(int argc, char* argv[])
                     if (num_die <= NUM_DIE)
                     {
                         p_player.setRect(0, 0);
-                        p_player.set_come_back_time(60);
+                        p_player.SetComeBackTime(60);
                         SDL_Delay(1000);
                         game_data.Decrease();
                         game_data.Render(gScreen);
@@ -440,7 +441,7 @@ int main(int argc, char* argv[])
                     else
                     {
                         is_show_score = true;
-                        p_threat->Free();
+                        pEnemy->Free();
                         is_quit = true;
                     }
                 }
@@ -448,45 +449,45 @@ int main(int argc, char* argv[])
         }
 
         //Kiem tra va cham giua dan nhan vat va cac enemies
-        std::vector<BulletObject*> bullet_arr = p_player.get_bullet_list();
+        std::vector<Bullet*> bullet_arr = p_player.get_bullet_list();
         for (int i = 0; i < bullet_arr.size(); i++)
         {
-            BulletObject* p_bullet = bullet_arr.at(i);
+            Bullet* p_bullet = bullet_arr.at(i);
             if (p_bullet != NULL)
             {
-                for (int j = 0; j < threats_list.size(); j++)
+                for (int j = 0; j < enemies_list.size(); j++)
                 {
-                    ThreatsObiect* obj_threat = threats_list.at(j);
-                    if (obj_threat != NULL)
+                    EnemiesObiect* objEnemy = enemies_list.at(j);
+                    if (objEnemy != NULL)
                     {
-                        SDL_Rect tRect;
-                        tRect.x = obj_threat->GetRect().x;
-                        tRect.y = obj_threat->GetRect().y;
+                        SDL_Rect eRect;
+                        eRect.x = objEnemy->GetRect().x;
+                        eRect.y = objEnemy->GetRect().y;
                         //Lay mot frame cua Enemies
-                        tRect.w = obj_threat->get_width_frame();
-                        tRect.h = obj_threat->get_height_frame();
+                        eRect.w = objEnemy->get_width_frame();
+                        eRect.h = objEnemy->get_height_frame();
 
                         SDL_Rect bRect = p_bullet->GetRect();
 
-                        bool bCol = SDLCommonFunc::CheckCollision(bRect, tRect);
+                        bool bCol = SDLCommonFunc::CheckCollision(bRect, eRect);
                         if (bCol)
                         {
                             score_value ++;
-                            int frame_exp_width = exp_threat.get_frame_width();
-                            int frame_exp_height = exp_threat.get_frame_height();
-                            for (int ex = 0; ex < NUM_FRAME_EXP; ex++)
+                            int frame_exp_width = expEnemy.get_frame_width();
+                            int frame_exp_height = expEnemy.get_frame_height();
+                            for (int idx = 0; idx < NUM_FRAME_EXPLOSION; idx++)
                             {
                                 // dat frame vao tam cua vu no
                                 int x_pos = p_bullet->GetRect().x - frame_exp_width*0.5;
                                 int y_pos = p_bullet->GetRect().y - frame_exp_height*0.5;
 
-                                exp_threat.set_frame(ex);
-                                exp_threat.setRect(x_pos, y_pos);
-                                exp_threat.Show(gScreen);
+                                expEnemy.set_frame(idx);
+                                expEnemy.setRect(x_pos, y_pos);
+                                expEnemy.Show(gScreen);
                             }
                             p_player.RemoveBullet(i);
-                            obj_threat->Free();
-                            threats_list.erase(threats_list.begin()+j);
+                            objEnemy->Free();
+                            enemies_list.erase(enemies_list.begin()+j);
                             Mix_PlayChannel(-1, gSound_explosion, 0);
                         }
                     }
@@ -494,7 +495,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        bool won_ = p_player.getRes();
+        bool won_ = p_player.GetRes();
         if (won_)
         {
             is_show_score = true;
@@ -525,7 +526,7 @@ int main(int argc, char* argv[])
 
         //Hien thi so enemies con lai
         std::string val_str_score = std::to_string(MAX_ENEMIES_GAME - score_value);
-        std::string strScore("ENEMIES: ");
+        std::string strScore("ENEMY: ");
         strScore += val_str_score;
         score_game.SetText(strScore);
         score_game.LoadFromRenderText(gFont, gScreen);
@@ -543,30 +544,24 @@ int main(int argc, char* argv[])
         SDL_RenderPresent(gScreen);
 
         //Xu ly khung hinh tren giay FPS
-        int real_imp_time = fps_timer.get_ticks();
-        int time_one_frame = 1000/FRAME_PER_SECOND; //don vi ms
-
-        if (real_imp_time < time_one_frame)
-        {
-            int delay_time = time_one_frame - real_imp_time;
-            if (delay_time >= 0)
-            {
-                SDL_Delay(delay_time);
-            }
-        }
+        theory_frame_time_ = SDL_GetTicks() - start_frame_time_;
+		if (theory_frame_time_ < real_frame_time_)
+		{
+			SDL_Delay(real_frame_time_ - theory_frame_time_);
+		}
     }
 
     //Xoa cac con tro lien quan den dan ban
-    for (int i = 0; i < threats_list.size(); i++)
+    for (int i = 0; i < enemies_list.size(); i++)
     {
-        ThreatsObiect* p_threat = threats_list.at(i);
-        if (p_threat)
+        EnemiesObiect* pEnemy = enemies_list.at(i);
+        if (pEnemy)
         {
-            p_threat->Free();
-            p_threat = NULL;
+            pEnemy->Free();
+            pEnemy = NULL;
         }
     }
-    threats_list.clear();
+    enemies_list.clear();
 
     //Dung phat nhac
     Mix_HaltMusic();

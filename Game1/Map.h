@@ -1,15 +1,17 @@
+
+/* LOP XU LY BAN DO GAME*/
+
 #ifndef MAP_H
 #define MAP_H
 
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 #include "BaseObject.h"
 
-#define MAX_TILES 20
-class TileMat: public BaseObject
+class Tile: public BaseObject
 {
 public:
-    TileMat() {;}
-    ~TileMat() {;}
+    Tile();
+    ~Tile();
 };
 
 class GameMap
@@ -25,6 +27,6 @@ public:
     void SetMap(Map& map_data) {game_map_ = map_data;}
 private:
     Map game_map_;
-    TileMat tile_mat[MAX_TILES];
+    Tile tile_map_[MAX_TILES];
 };
 #endif // GAME_MAP_H

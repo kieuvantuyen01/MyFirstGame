@@ -39,8 +39,10 @@
 		<Unit filename="CommonFunc.h" />
 		<Unit filename="DataGame.cpp" />
 		<Unit filename="DataGame.h" />
-		<Unit filename="ExplosionObject.cpp" />
-		<Unit filename="ExplosionObject.h" />
+		<Unit filename="Enemy.cpp" />
+		<Unit filename="Enemy.h" />
+		<Unit filename="Explosion.cpp" />
+		<Unit filename="Explosion.h" />
 		<Unit filename="Geometric.cpp" />
 		<Unit filename="Geometric.h" />
 		<Unit filename="MainObject.cpp" />
@@ -51,10 +53,6 @@
 		<Unit filename="Menu.h" />
 		<Unit filename="Text.cpp" />
 		<Unit filename="Text.h" />
-		<Unit filename="ThreatsObject.cpp" />
-		<Unit filename="ThreatsObject.h" />
-		<Unit filename="Timer.cpp" />
-		<Unit filename="Timer.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

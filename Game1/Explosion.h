@@ -1,16 +1,19 @@
-#ifndef EXPLOSION_OBJECT_H_
-#define EXPLOSION_OBJECT_H_
+
+/* LOP XU LY VU NO*/
+
+#ifndef EXPLOSION_H
+#define EXPLOSION_H
 
 #include "BaseObject.h"
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 
-#define NUM_FRAME_EXP 8
+#define NUM_FRAME_EXPLOSION 8
 
-class ExplosionObject : public BaseObject
+class Explosion : public BaseObject
 {
 public:
-    ExplosionObject();
-    ~ExplosionObject();
+    Explosion();
+    ~Explosion();
 
 public:
     void set_clip();
@@ -20,14 +23,13 @@ public:
     int get_frame_width () const {return frame_width_;}
     int get_frame_height() const {return frame_height_;}
 
-
 private:
     int frame_width_;
     int frame_height_;
 
-    unsigned int frame_; // quan ly xem dang o frame thu bao nhieu
-    SDL_Rect frame_clip_[8];
-
+    //Quan ly xem dang o frame thu bao nhieu
+    unsigned int frame_;
+    SDL_Rect frame_clip_[NUM_FRAME_EXPLOSION];
 };
 
-#endif // EXPLOSION_OBJECT_H_
+#endif // EXPLOSION_H

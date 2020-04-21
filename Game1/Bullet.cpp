@@ -1,6 +1,9 @@
-#include "BulletObject.h"
 
-BulletObject::BulletObject()
+/* LOP XU LY DAN */
+
+#include "Bullet.h"
+
+Bullet::Bullet()
 {
     x_val_ = 0;
     y_val_ = 0;
@@ -8,12 +11,12 @@ BulletObject::BulletObject()
     bullet_type_ = GRENADE_BULLET;
 }
 
-BulletObject::~BulletObject()
+Bullet::~Bullet()
 {
 
 }
 
-bool BulletObject::LoadImgBullet(SDL_Renderer* des)
+bool Bullet::LoadImgBullet(SDL_Renderer* des)
 {
     bool ret = false;
     if (bullet_type_ == TANK_BULLET)
@@ -38,11 +41,13 @@ bool BulletObject::LoadImgBullet(SDL_Renderer* des)
     }
     return ret;
 }
-void BulletObject::HandleMove(const int& x_border, const int& y_border)
+
+void Bullet::ImpMove(const int& x_border, const int& y_border)
 {
+    // vi tri cua cac doi tuong ke thua trong BaseObject
     if (bullet_dir_ == DIR_RIGHT)
     {
-        rect_.x += x_val_; // vi tri cua cac doi tuong ke thua trong baseObject
+        rect_.x += x_val_;
         if (rect_.x > x_border)
         {
             is_move_ = false;
@@ -50,7 +55,7 @@ void BulletObject::HandleMove(const int& x_border, const int& y_border)
     }
     else if (bullet_dir_ == DIR_LEFT)
     {
-        rect_.x -= x_val_; // vi tri cua cac doi tuong ke thua trong baseObject
+        rect_.x -= x_val_;
         if (rect_.x < 0)
         {
             is_move_ = false;

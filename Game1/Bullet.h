@@ -1,14 +1,17 @@
-#ifndef BULLET_OBJECT_H_
-#define BULLET_OBJECT_H_
+
+/* LOP XU LY DAN */
+
+#ifndef BULLET_H
+#define BULLET_H
 
 #include "BaseObject.h"
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 
-class BulletObject : public BaseObject
+class Bullet : public BaseObject
 {
 public:
-    BulletObject();
-    ~BulletObject();
+    Bullet();
+    ~Bullet();
 
     enum BulletDir
     {
@@ -45,7 +48,7 @@ public:
     void set_bullet_type (const unsigned int& bulletType) {bullet_type_ = bulletType;}
     unsigned int get_bullet_type () const {return bullet_type_;}
 
-    void HandleMove(const int& x_border, const int& y_border);
+    void ImpMove(const int& x_border, const int& y_border);
     bool LoadImgBullet(SDL_Renderer* des);
 
 private:
@@ -55,4 +58,5 @@ private:
     unsigned int bullet_dir_;
     unsigned int bullet_type_;
 };
-#endif // BULLET_OBJECT_H_
+
+#endif // BULLET_H

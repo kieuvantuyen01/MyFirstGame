@@ -1,6 +1,18 @@
 
+/* LOP XU LY BAN DO GAME*/
+
 #include "Map.h"
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
+
+Tile::Tile()
+{
+
+}
+
+Tile::~Tile()
+{
+
+}
 
 void GameMap::LoadMap(char* name)
 {
@@ -20,9 +32,10 @@ void GameMap::LoadMap(char* name)
            int val = game_map_.tile[i][j];
            if (val > 0)
            {
+               // Lay vi tri
                if (j > game_map_.max_x_)
                {
-                   game_map_.max_x_ = j; // lay vi tri
+                   game_map_.max_x_ = j;
                }
                if (i > game_map_.max_y_)
                {
@@ -32,10 +45,12 @@ void GameMap::LoadMap(char* name)
         }
     }
 
-    game_map_.max_x_ = (game_map_.max_x_+1)*TILE_SIZE; // vi tri toi da cua ban do
+    // vi tri toi da cua ban do
+    game_map_.max_x_ = (game_map_.max_x_+1)*TILE_SIZE;
     game_map_.max_y_ = (game_map_.max_y_+1)*TILE_SIZE;
 
-    game_map_.start_x_ = 0; // vi tri bat dau cua ban do
+    // vi tri bat dau cua ban do
+    game_map_.start_x_ = 0;
     game_map_.start_y_ = 0;
 
     input.close();
@@ -57,13 +72,13 @@ void GameMap::SetTiles(SDL_Renderer* screen)
 
         input.close();
 
-        tile_mat[i].LoadImg(file_name, screen);
+        tile_map_[i].LoadImg(file_name, screen);
     }
 }
 
 /* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VE CACH FILL ANH */
-
-void GameMap::DrawMap(SDL_Renderer* screen) // fill cac hinh anh vao o Tile Mat
+// fill cac hinh anh vao o Tile Mat
+void GameMap::DrawMap(SDL_Renderer* screen)
 {
     int x1 = 0;
     int x2 = 0;
@@ -74,7 +89,8 @@ void GameMap::DrawMap(SDL_Renderer* screen) // fill cac hinh anh vao o Tile Mat
     int map_x = 0;
     int map_y = 0;
 
-    map_x = game_map_.start_x_/TILE_SIZE; // xac dinh xem dang o o thu bao nhieu de fill
+    // xac dinh xem dang o o thu bao nhieu de fill
+    map_x = game_map_.start_x_/TILE_SIZE;
     x1 = (game_map_.start_x_%TILE_SIZE)*-1;
     x2 = x1 + SCREEN_WIDTH + (x1 == 0 ? 0 : TILE_SIZE);
 
@@ -90,8 +106,8 @@ void GameMap::DrawMap(SDL_Renderer* screen) // fill cac hinh anh vao o Tile Mat
             int val = game_map_.tile[map_y][map_x];
             if (val > 0)
             {
-                tile_mat[val].setRect(j, i);
-                tile_mat[val].Render(screen);
+                tile_map_[val].setRect(j, i);
+                tile_map_[val].Render(screen);
             }
             map_x++;
         }

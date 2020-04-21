@@ -1,8 +1,11 @@
+
+/* LOP CO SO DE LOAD ANH */
+
 #include "BaseObject.h"
 
 BaseObject::BaseObject()
 {
-    p_object_ = NULL;
+    object_ = NULL;
     rect_.x = 0;
     rect_.y = 0;
     rect_.w = 0;
@@ -17,39 +20,38 @@ BaseObject::~BaseObject()
 bool BaseObject::LoadImg(std::string path, SDL_Renderer* screen)
 {
     Free();
-    SDL_Texture* new_texture = NULL;
-    SDL_Surface* load_surface = IMG_Load(path.c_str());
-    if (load_surface != NULL)
+    SDL_Texture* newTexture = NULL;
+    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+    if (loadedSurface != NULL)
     {
-        SDL_SetColorKey(load_surface, SDL_TRUE, SDL_MapRGB(load_surface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
-        new_texture = SDL_CreateTextureFromSurface(screen, load_surface);
-        if (new_texture != NULL)
+        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
+        newTexture = SDL_CreateTextureFromSurface(screen, loadedSurface);
+        if (newTexture != NULL)
         {
-            rect_.w = load_surface->w;
-            rect_.h = load_surface->h;
+            rect_.w = loadedSurface->w;
+            rect_.h = loadedSurface->h;
         }
-
-        SDL_FreeSurface(load_surface);
+        SDL_FreeSurface(loadedSurface);
     }
 
-    p_object_ = new_texture;
+    object_ = newTexture;
 
-    return p_object_ != NULL;
+    return object_ != NULL;
 }
 
 void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip)
 {
-    SDL_Rect renderquad = {rect_.x, rect_.y, rect_.w, rect_.h};
+    SDL_Rect renderQuad = {rect_.x, rect_.y, rect_.w, rect_.h};
 
-    SDL_RenderCopy(des, p_object_, clip, &renderquad);
+    SDL_RenderCopy(des, object_, clip, &renderQuad);
 }
 
 void BaseObject::Free()
 {
-    if (p_object_ != NULL)
+    if (object_ != NULL)
     {
-        SDL_DestroyTexture(p_object_);
-        p_object_ = NULL;
+        SDL_DestroyTexture(object_);
+        object_ = NULL;
         rect_.w = 0;
         rect_.h = 0;
     }

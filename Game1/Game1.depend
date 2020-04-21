@@ -1,25 +1,24 @@
 # depslib dependency file v1.0
-1587144543 source:d:\btlon\game1\main.cpp
+1587487876 source:d:\btlon\game1\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
-	"CommonFunc.h"
+	"GeneralFunction.h"
 	"BaseObject.h"
 	"Map.h"
 	"MainObject.h"
-	"Timer.h"
-	"ThreatsObject.h"
-	"ExplosionObject.h"
+	"Enemy.h"
+	"Explosion.h"
 	"Text.h"
 	"DataGame.h"
 	"Geometric.h"
 	"Menu.h"
 
-1587044458 source:d:\btlon\game1\commonfunc.cpp
+1587463615 source:d:\btlon\game1\commonfunc.cpp
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1587144259 d:\btlon\game1\commonfunc.h
+1587479613 d:\btlon\game1\commonfunc.h
 	<windows.h>
 	<string>
 	<vector>
@@ -29,11 +28,11 @@
 	<SDL_ttf.h>
 	<fstream>
 
-1585925073 source:d:\btlon\game1\baseobject.cpp
+1587287195 source:d:\btlon\game1\baseobject.cpp
 	"BaseObject.h"
 
-1586917813 d:\btlon\game1\baseobject.h
-	"CommonFunc.h"
+1587486467 d:\btlon\game1\baseobject.h
+	"GeneralFunction.h"
 
 1586426332 source:d:\btlon\game1\game_map.cpp
 	"game_map.h"
@@ -43,15 +42,15 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1587057579 source:d:\btlon\game1\mainobject.cpp
+1587487478 source:d:\btlon\game1\mainobject.cpp
 	"MainObject.h"
-	"BulletObject.h"
+	"Bullet.h"
 
-1586968994 d:\btlon\game1\mainobject.h
+1587486485 d:\btlon\game1\mainobject.h
 	<vector>
-	"CommonFunc.h"
+	"GeneralFunction.h"
 	"BaseObject.h"
-	"BulletObject.h"
+	"Bullet.h"
 
 1585900048 source:d:\btlon\game1\imptimer.cpp
 	"ImpTimer.h"
@@ -59,25 +58,25 @@
 
 1585889687 d:\btlon\game1\imptimer.h
 
-1586698944 source:d:\btlon\game1\bulletobject.cpp
+1587171805 source:d:\btlon\game1\bulletobject.cpp
 	"BulletObject.h"
 
-1587144531 d:\btlon\game1\bulletobject.h
+1587375091 d:\btlon\game1\bulletobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
-1587126003 source:d:\btlon\game1\threatsobject.cpp
+1587476096 source:d:\btlon\game1\threatsobject.cpp
 	"ThreatsObject.h"
 
-1587046194 d:\btlon\game1\threatsobject.h
+1587476096 d:\btlon\game1\threatsobject.h
 	"CommonFunc.h"
 	"BaseObject.h"
 	"BulletObject.h"
 
-1586100736 source:d:\btlon\game1\explosionobject.cpp
+1587214325 source:d:\btlon\game1\explosionobject.cpp
 	"ExplosionObject.h"
 
-1586100736 d:\btlon\game1\explosionobject.h
+1587214262 d:\btlon\game1\explosionobject.h
 	"BaseObject.h"
 	"CommonFunc.h"
 
@@ -96,11 +95,11 @@
 1586622395 source:d:\btlon\game1\playerpower.cpp
 	"PlayerPower.h"
 
-1586437560 source:d:\btlon\game1\geometric.cpp
+1587217631 source:d:\btlon\game1\geometric.cpp
 	"Geometric.h"
 
-1586710371 d:\btlon\game1\geometric.h
-	"CommonFunc.h"
+1587486493 d:\btlon\game1\geometric.h
+	"GeneralFunction.h"
 
 1586451167 source:d:\btlon\game1\bossobject.cpp
 	"BossObject.h"
@@ -110,15 +109,15 @@
 	"CommonFunc.h"
 	"BulletObject.h"
 
-1587007161 d:\btlon\game1\text.h
-	"CommonFunc.h"
+1587486490 d:\btlon\game1\text.h
+	"GeneralFunction.h"
 	"BaseObject.h"
 
-1586968619 source:d:\btlon\game1\menu.cpp
+1587484624 source:d:\btlon\game1\menu.cpp
 	"Menu.h"
 
-1587015642 d:\btlon\game1\menu.h
-	"CommonFunc.h"
+1587486488 d:\btlon\game1\menu.h
+	"GeneralFunction.h"
 	"Text.h"
 
 1586587152 d:\btlon\game1\textobj.h
@@ -128,22 +127,22 @@
 1586570925 source:d:\btlon\game1\textobj.cpp
 	"TextObj.h"
 
-1586587991 source:d:\btlon\game1\text.cpp
+1587484282 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
-1586765927 source:d:\btlon\game1\datagame.cpp
+1587373250 source:d:\btlon\game1\datagame.cpp
 	"DataGame.h"
 
-1586661416 d:\btlon\game1\datagame.h
+1587486479 d:\btlon\game1\datagame.h
 	"BaseObject.h"
-	"CommonFunc.h"
+	"GeneralFunction.h"
 
-1587118320 source:d:\btlon\game1\map.cpp
+1587486496 source:d:\btlon\game1\map.cpp
 	"Map.h"
-	"CommonFunc.h"
+	"GeneralFunction.h"
 
-1587118088 d:\btlon\game1\map.h
-	"CommonFunc.h"
+1587486482 d:\btlon\game1\map.h
+	"GeneralFunction.h"
 	"BaseObject.h"
 
 1586659435 source:d:\btlon\game1\timer.cpp
@@ -165,4 +164,56 @@
 	"DataGame.h"
 	<cstdlib>
 	<ctime>
+
+1587287224 source:d:\btlon\game1\explosion.cpp
+	"Explosion.h"
+
+1587486476 d:\btlon\game1\explosion.h
+	"BaseObject.h"
+	"GeneralFunction.h"
+
+1587304455 d:\btlon\game1\ltexture.h
+	"CommonFunc.h"
+
+1587465142 d:\btlon\game1\sdl_untils.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"CommonFunc.h"
+	"BaseObject.h"
+	"ThreatsObject.h"
+	"Text.h"
+	<vector>
+
+1587465099 source:d:\btlon\game1\sdl_untils.cpp
+	"SDL_Untils.h"
+
+1587487884 source:d:\btlon\game1\enemy.cpp
+	"Enemy.h"
+
+1587487876 d:\btlon\game1\enemy.h
+	"GeneralFunction.h"
+	"BaseObject.h"
+	"Bullet.h"
+
+1587487449 source:d:\btlon\game1\bullet.cpp
+	"Bullet.h"
+
+1587487449 d:\btlon\game1\bullet.h
+	"BaseObject.h"
+	"GeneralFunction.h"
+
+1587487894 d:\btlon\game1\generalfunction.h
+	<windows.h>
+	<string>
+	<vector>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<fstream>
+
+1587486456 source:d:\btlon\game1\generalfunction.cpp
+	"GeneralFunction.h"
+	"BaseObject.h"
 

@@ -1,16 +1,19 @@
+
+/*LOP XU LY KHU VUC HIEN THI DATA GAME*/
+
 #ifndef GEOMETRIC_H
 #define GEOMETRIC_H
 
-#include "CommonFunc.h"
+#include "GeneralFunction.h"
 
-struct GeometricFormat
+struct RectFormat
 {
     int left_;
     int top_;
     int width_;
     int height_;
 
-    GeometricFormat(int left, int top, int width, int height)
+    RectFormat(int left, int top, int width, int height)
     {
         left_ = left;
         top_ = top;
@@ -36,8 +39,8 @@ struct ColorData
 class Geometric
 {
 public:
-    static void RenderRectangle(const GeometricFormat& geo_size, const ColorData& color_data, SDL_Renderer* screen);
-    static void RenderOutline(const GeometricFormat& geo_size, const ColorData& color_data, SDL_Renderer* screen);
+    static void RenderRectangle(const RectFormat& rect_size, const ColorData& color_data, SDL_Renderer* screen);
+    static void RenderOutline(const RectFormat& rect_size, const ColorData& color_data, SDL_Renderer* screen);
 };
 
 #endif // GEOMETRIC_H
