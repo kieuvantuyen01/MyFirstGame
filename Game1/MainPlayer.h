@@ -1,19 +1,19 @@
 
 /*LOP XU LY NHAN VAT CHINH*/
 
-#ifndef MAIN_OBJECT_H
-#define MAIN_OBJECT_H
+#ifndef MAIN_PLAYER_H
+#define MAIN_PLAYER_H
 
 #include <vector>
 #include "GeneralFunction.h"
 #include "BaseObject.h"
 #include "Bullet.h"
 
-class MainObject : public BaseObject
+class MainPlayer : public BaseObject
 {
 public:
-    MainObject();
-    ~MainObject();
+    MainPlayer();
+    ~MainPlayer();
 
     bool LoadImg(std::string path, SDL_Renderer* screen);
     void ShowAnimation(SDL_Renderer* renderer);
@@ -30,9 +30,9 @@ public:
 
     void SetBulletList(std::vector<Bullet*>bullet_list)
     {
-        p_bullet_list_ = bullet_list;
+        pBullet_list_ = bullet_list;
     }
-    std::vector<Bullet*> get_bullet_list() const {return p_bullet_list_;}
+    std::vector<Bullet*> get_bullet_list() const {return pBullet_list_;}
     void ImpBullet(SDL_Renderer* renderer);
     void RemoveBullet(const int& x);
     void IncreaseTorch();
@@ -51,7 +51,7 @@ public:
 private:
 
     int torch_count;
-    std::vector<Bullet*> p_bullet_list_;
+    std::vector<Bullet*> pBullet_list_;
     float x_val_;
     float y_val_;
 
@@ -69,7 +69,7 @@ private:
     SDL_Rect frame_clip_[NUM_FRAME_PLAYER];
     Input type_action_;
     int frame_;
-    int status_;
+    int state_;
     bool on_ground_;
 
     bool won_;
@@ -79,4 +79,4 @@ private:
 
     int come_back_time_;
 };
-#endif // MAIN_OBJECT_H
+#endif // MAIN_PLAYER_H

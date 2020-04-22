@@ -14,12 +14,12 @@ BaseObject::BaseObject()
 
 BaseObject::~BaseObject()
 {
-    Free();
+    Clean();
 }
 
 bool BaseObject::LoadImg(std::string path, SDL_Renderer* screen)
 {
-    Free();
+    Clean();
     SDL_Texture* newTexture = NULL;
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface != NULL)
@@ -46,7 +46,7 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip)
     SDL_RenderCopy(des, object_, clip, &renderQuad);
 }
 
-void BaseObject::Free()
+void BaseObject::Clean()
 {
     if (object_ != NULL)
     {

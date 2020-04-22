@@ -54,7 +54,9 @@ public:
 private:
     int x_val_;
     int y_val_;
+
     bool is_move_;
+
     unsigned int bullet_dir_;
     unsigned int bullet_type_;
 };

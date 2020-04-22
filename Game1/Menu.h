@@ -27,6 +27,7 @@ public:
 
 private:
     int action_;
+
     Text start_game_;
     Text advise_;
     Text exit_;
@@ -36,7 +37,6 @@ private:
     Text advise_content_3;
     Text back_;
 
-    SDL_Texture* mTexture;
 };
 
 #endif // MENU_H

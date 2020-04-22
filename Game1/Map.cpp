@@ -14,6 +14,7 @@ Tile::~Tile()
 
 }
 
+/*THAM KHAO TREN LAZYFOO + PHATTRIENPHANMEM123AZ VA CO BO SUNG */
 void GameMap::LoadMap(char* name)
 {
     std::ifstream input(name);
@@ -77,7 +78,7 @@ void GameMap::SetTiles(SDL_Renderer* screen)
 }
 
 /* THAM KHAO VIDEO HUONG DAN CUA ANH PASS PHAM VE CACH FILL ANH */
-// fill cac hinh anh vao o Tile Mat
+// fill cac hinh anh vao o Tile map
 void GameMap::DrawMap(SDL_Renderer* screen)
 {
     int x1 = 0;

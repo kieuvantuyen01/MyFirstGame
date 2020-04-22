@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1587487876 source:d:\btlon\game1\main.cpp
+1587532184 source:d:\btlon\game1\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
 	"GeneralFunction.h"
 	"BaseObject.h"
 	"Map.h"
-	"MainObject.h"
+	"MainPlayer.h"
 	"Enemy.h"
 	"Explosion.h"
 	"Text.h"
@@ -28,10 +28,10 @@
 	<SDL_ttf.h>
 	<fstream>
 
-1587287195 source:d:\btlon\game1\baseobject.cpp
+1587524222 source:d:\btlon\game1\baseobject.cpp
 	"BaseObject.h"
 
-1587486467 d:\btlon\game1\baseobject.h
+1587524191 d:\btlon\game1\baseobject.h
 	"GeneralFunction.h"
 
 1586426332 source:d:\btlon\game1\game_map.cpp
@@ -42,11 +42,11 @@
 	"CommonFunc.h"
 	"BaseObject.h"
 
-1587487478 source:d:\btlon\game1\mainobject.cpp
+1587523495 source:d:\btlon\game1\mainobject.cpp
 	"MainObject.h"
 	"Bullet.h"
 
-1587486485 d:\btlon\game1\mainobject.h
+1587523495 d:\btlon\game1\mainobject.h
 	<vector>
 	"GeneralFunction.h"
 	"BaseObject.h"
@@ -95,7 +95,7 @@
 1586622395 source:d:\btlon\game1\playerpower.cpp
 	"PlayerPower.h"
 
-1587217631 source:d:\btlon\game1\geometric.cpp
+1587525101 source:d:\btlon\game1\geometric.cpp
 	"Geometric.h"
 
 1587486493 d:\btlon\game1\geometric.h
@@ -113,10 +113,10 @@
 	"GeneralFunction.h"
 	"BaseObject.h"
 
-1587484624 source:d:\btlon\game1\menu.cpp
+1587525193 source:d:\btlon\game1\menu.cpp
 	"Menu.h"
 
-1587486488 d:\btlon\game1\menu.h
+1587525190 d:\btlon\game1\menu.h
 	"GeneralFunction.h"
 	"Text.h"
 
@@ -127,7 +127,7 @@
 1586570925 source:d:\btlon\game1\textobj.cpp
 	"TextObj.h"
 
-1587484282 source:d:\btlon\game1\text.cpp
+1587523926 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
 1587373250 source:d:\btlon\game1\datagame.cpp
@@ -137,11 +137,11 @@
 	"BaseObject.h"
 	"GeneralFunction.h"
 
-1587486496 source:d:\btlon\game1\map.cpp
+1587524377 source:d:\btlon\game1\map.cpp
 	"Map.h"
 	"GeneralFunction.h"
 
-1587486482 d:\btlon\game1\map.h
+1587517183 d:\btlon\game1\map.h
 	"GeneralFunction.h"
 	"BaseObject.h"
 
@@ -165,10 +165,10 @@
 	<cstdlib>
 	<ctime>
 
-1587287224 source:d:\btlon\game1\explosion.cpp
+1587532147 source:d:\btlon\game1\explosion.cpp
 	"Explosion.h"
 
-1587486476 d:\btlon\game1\explosion.h
+1587532147 d:\btlon\game1\explosion.h
 	"BaseObject.h"
 	"GeneralFunction.h"
 
@@ -199,11 +199,11 @@
 1587487449 source:d:\btlon\game1\bullet.cpp
 	"Bullet.h"
 
-1587487449 d:\btlon\game1\bullet.h
+1587532328 d:\btlon\game1\bullet.h
 	"BaseObject.h"
 	"GeneralFunction.h"
 
-1587487894 d:\btlon\game1\generalfunction.h
+1587532077 d:\btlon\game1\generalfunction.h
 	<windows.h>
 	<string>
 	<vector>
@@ -213,7 +213,17 @@
 	<SDL_ttf.h>
 	<fstream>
 
-1587486456 source:d:\btlon\game1\generalfunction.cpp
+1587524648 source:d:\btlon\game1\generalfunction.cpp
 	"GeneralFunction.h"
 	"BaseObject.h"
+
+1587532645 source:d:\btlon\game1\mainplayer.cpp
+	"MainPlayer.h"
+	"Bullet.h"
+
+1587532703 d:\btlon\game1\mainplayer.h
+	<vector>
+	"GeneralFunction.h"
+	"BaseObject.h"
+	"Bullet.h"
 

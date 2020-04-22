@@ -29,4 +29,4 @@ private:
     Map game_map_;
     Tile tile_map_[MAX_TILES];
 };
-#endif // GAME_MAP_H
+#endif // MAP_H

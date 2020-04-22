@@ -5,7 +5,6 @@
 
 Menu::Menu()
 {
-    mTexture = NULL;
     action_ = SHOW_MENU;
 
     start_game_.SetText("LIBERATE THE SOUTH");

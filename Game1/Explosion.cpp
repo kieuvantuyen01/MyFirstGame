@@ -28,7 +28,7 @@ bool Explosion::LoadImg(std::string path, SDL_Renderer* screen)
     return ret;
 }
 
-void Explosion::set_clip()
+void Explosion::setClip()
 {
     if (frame_width_ > 0 && frame_height_ > 0)
     {

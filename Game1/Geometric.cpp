@@ -16,3 +16,5 @@ void Geometric::RenderOutline(const RectFormat& geo_size, const ColorData& color
     SDL_SetRenderDrawColor(screen, color_data.red_, color_data.green_, color_data.blue_, 0xFF);
     SDL_RenderDrawRect(screen, &out_rect);
 }
+
+/*THAM KHAO CACH DUNG BIEN LUU DU LIEU DE HIEN THI THONG SO GAME TU ANH PASS PHAM*/

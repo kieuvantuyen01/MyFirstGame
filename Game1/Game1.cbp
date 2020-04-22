@@ -33,16 +33,16 @@
 		</Compiler>
 		<Unit filename="BaseObject.cpp" />
 		<Unit filename="BaseObject.h" />
-		<Unit filename="BulletObject.cpp" />
-		<Unit filename="BulletObject.h" />
-		<Unit filename="CommonFunc.cpp" />
-		<Unit filename="CommonFunc.h" />
+		<Unit filename="Bullet.cpp" />
+		<Unit filename="Bullet.h" />
 		<Unit filename="DataGame.cpp" />
 		<Unit filename="DataGame.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
 		<Unit filename="Explosion.cpp" />
 		<Unit filename="Explosion.h" />
+		<Unit filename="GeneralFunction.cpp" />
+		<Unit filename="GeneralFunction.h" />
 		<Unit filename="Geometric.cpp" />
 		<Unit filename="Geometric.h" />
 		<Unit filename="MainObject.cpp" />

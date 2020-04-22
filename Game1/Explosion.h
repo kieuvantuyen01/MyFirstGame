@@ -7,8 +7,6 @@
 #include "BaseObject.h"
 #include "GeneralFunction.h"
 
-#define NUM_FRAME_EXPLOSION 8
-
 class Explosion : public BaseObject
 {
 public:
@@ -16,8 +14,8 @@ public:
     ~Explosion();
 
 public:
-    void set_clip();
-    void set_frame(const int& fr) {frame_ = fr;}
+    void setClip();
+    void setFrame(const int& fr) {frame_ = fr;}
     virtual bool LoadImg(std::string path, SDL_Renderer* screen);
     void Show(SDL_Renderer* screen);
     int get_frame_width () const {return frame_width_;}

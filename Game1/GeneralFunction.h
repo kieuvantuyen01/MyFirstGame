@@ -68,6 +68,8 @@ const int RENDER_DRAW_COLOR =  0xff;
 
 #define BULLET_DISTANCE_MAX 400
 
+#define NUM_FRAME_EXPLOSION 8
+
 //Cac bien luu giu trang thai ban dau
 struct Input
 {
@@ -95,7 +97,7 @@ struct Map
 
 namespace SDLCommonFunc
 {
-    bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
+    bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b);
     bool isInside(int& x, int& y, SDL_Rect object);
     int MakeRandValue(const int& val_ = 400);
     void waitUntilKeyPressed();

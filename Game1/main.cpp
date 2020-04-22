@@ -7,7 +7,7 @@
 #include "GeneralFunction.h"
 #include "BaseObject.h"
 #include "Map.h"
-#include "MainObject.h"
+#include "MainPlayer.h"
 #include "Enemy.h"
 #include "Explosion.h"
 #include "Text.h"
@@ -109,7 +109,7 @@ bool LoadBackground()
 
 void close()
 {
-    gBackground.Free();
+    gBackground.Clean();
     SDL_DestroyRenderer(gScreen);
     gScreen = NULL;
 
@@ -238,20 +238,32 @@ int main(int argc, char* argv[])
     game_map.LoadMap("map/map01.map");
     game_map.SetTiles(gScreen);
 
-    //Khoi tao va Load nhan vat chinh
-    MainObject p_player;
-    p_player.LoadImg("img/player_right_.png", gScreen);
-    p_player.SetClips();
-
     //Khoi tao bien quan ly quan ly cac thong so game
     DataGame game_data;
     game_data.Init(gScreen);
+
+    //Khoi tao bien xu ly Load Menu
+    Menu menu_game;
+	menu_game.LoadImg("img/menu.png", gScreen);
+	menu_game.SetPostionText();
+
+	//Khoi tao bien xu ly thong bao diem
+	BaseObject score_message;
+	score_message.setRect(380, 90);
+	bool sret = score_message.LoadImg("img/score.png", gScreen);
+	if(!sret) return -1;
 
     //Khoi tao bien quan ly Duoc
     PlayerTorch player_torch;
     player_torch.Init(gScreen);
     player_torch.SetPosition(20, 100);
 
+    //Khoi tao va Load nhan vat chinh
+    MainPlayer p_player;
+    p_player.LoadImg("img/player_right_.png", gScreen);
+    p_player.SetClips();
+
+    //Load cac enemies
     std::vector<EnemiesObiect*>enemies_list = MakeEnemiesList();
 
     //Khoi tao bien xu ly va cham
@@ -261,7 +273,7 @@ int main(int argc, char* argv[])
     {
         return -1;
     }
-    expEnemy.set_clip();
+    expEnemy.setClip();
 
     Explosion exp_main;
     bool mRet = exp_main.LoadImg("img/exp1.png", gScreen);
@@ -269,7 +281,7 @@ int main(int argc, char* argv[])
     {
         return -1;
     }
-    exp_main.set_clip();
+    exp_main.setClip();
 
     int num_die = 0;
 
@@ -288,17 +300,6 @@ int main(int argc, char* argv[])
 
     bool is_quit = false;
     bool is_show_score=true;
-
-    //Khoi tao bien xu ly Load Menu
-    Menu menu_game;
-	menu_game.LoadImg("img/menu.png", gScreen);
-	menu_game.SetPostionText();
-
-	//Khoi tao bien xu ly thong bao diem
-	BaseObject score_message;
-	score_message.setRect(380, 90);
-	bool sret = score_message.LoadImg("img/score.png", gScreen);
-	if(!sret) return -1;
 
 	//Load nhac nen
 	if(Mix_PlayingMusic() == 0)
@@ -342,7 +343,6 @@ int main(int argc, char* argv[])
             //Xu ly trang thai ban dau cua nhan vat
             p_player.ImpInputAction(gEvent, gSound_bullet, gScreen);
         }
-
 
         SDL_SetRenderDrawColor(gScreen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
         SDL_RenderClear(gScreen);
@@ -420,7 +420,7 @@ int main(int argc, char* argv[])
                         int x_pos = (p_player.GetRect().x + p_player.GetFrameRect().w*0.5) - fr_exp_width*0.5;
                         int y_pos = (p_player.GetRect().y + p_player.GetFrameRect().h*0.5) - fr_exp_height*0.5;
 
-                        exp_main.set_frame(idx2);
+                        exp_main.setFrame(idx2);
                         exp_main.setRect(x_pos, y_pos);
                         exp_main.Show(gScreen);
                         SDL_RenderPresent(gScreen);
@@ -441,7 +441,7 @@ int main(int argc, char* argv[])
                     else
                     {
                         is_show_score = true;
-                        pEnemy->Free();
+                        pEnemy->Clean();
                         is_quit = true;
                     }
                 }
@@ -481,12 +481,12 @@ int main(int argc, char* argv[])
                                 int x_pos = p_bullet->GetRect().x - frame_exp_width*0.5;
                                 int y_pos = p_bullet->GetRect().y - frame_exp_height*0.5;
 
-                                expEnemy.set_frame(idx);
+                                expEnemy.setFrame(idx);
                                 expEnemy.setRect(x_pos, y_pos);
                                 expEnemy.Show(gScreen);
                             }
                             p_player.RemoveBullet(i);
-                            objEnemy->Free();
+                            objEnemy->Clean();
                             enemies_list.erase(enemies_list.begin()+j);
                             Mix_PlayChannel(-1, gSound_explosion, 0);
                         }
@@ -543,7 +543,7 @@ int main(int argc, char* argv[])
         //Update Screen
         SDL_RenderPresent(gScreen);
 
-        //Xu ly khung hinh tren giay FPS
+        //Xu ly khung hinh tren giay (FPS)
         theory_frame_time_ = SDL_GetTicks() - start_frame_time_;
 		if (theory_frame_time_ < real_frame_time_)
 		{
@@ -557,7 +557,7 @@ int main(int argc, char* argv[])
         EnemiesObiect* pEnemy = enemies_list.at(i);
         if (pEnemy)
         {
-            pEnemy->Free();
+            pEnemy->Clean();
             pEnemy = NULL;
         }
     }
