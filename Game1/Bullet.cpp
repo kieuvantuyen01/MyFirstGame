@@ -21,23 +21,23 @@ bool Bullet::LoadImgBullet(SDL_Renderer* des)
     bool ret = false;
     if (bullet_type_ == TANK_BULLET)
     {
-        ret = LoadImg("img/tank_bullet.png", des);
+        ret = LoadImg("assert/tank_bullet.png", des);
     }
     else if (bullet_type_ == GRENADE_BULLET)
     {
-        ret = LoadImg("img/grenade_bullet.png", des);
+        ret = LoadImg("assert/grenade_bullet.png", des);
     }
     else if (bullet_type_ == MINE_BULLET)
     {
-        ret = LoadImg("img/mine_bullet.png", des);
+        ret = LoadImg("assert/mine_bullet.png", des);
     }
     else if (bullet_type_ == GUN_BULLET)
     {
-        ret = LoadImg("img/player_bullet.png", des);
+        ret = LoadImg("assert/player_bullet.png", des);
     }
     else
     {
-        ret = LoadImg("img/bomb_bullet.png", des);
+        ret = LoadImg("assert/bomb_bullet.png", des);
     }
     return ret;
 }

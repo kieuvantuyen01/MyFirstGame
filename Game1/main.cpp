@@ -19,200 +19,15 @@
 BaseObject gBackground;
 
 /* HAM KHOI TAO SDL */
-bool Init()
-{
-    bool success = true;
-    int ret = SDL_Init(SDL_INIT_VIDEO);
-    if (ret < 0)
-    {
-        std::cout << "Can not Initialize: " << SDL_GetError() << std::endl;
-        return false;
-    }
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-
-    gWindow = SDL_CreateWindow("Game by Kieu Van Tuyen", SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED,
-                                SCREEN_WIDTH, SCREEN_HEIGHT,
-                                SDL_WINDOW_SHOWN);
-    if (gWindow == NULL)
-    {
-        std::cout << "Can not create Window: " << SDL_GetError() << std::endl;
-        success = false;
-    }
-    else
-    {
-        gScreen = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        if (gScreen == NULL)
-        {
-            std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
-            success = false;
-        }
-        else
-        {
-            SDL_SetRenderDrawColor(gScreen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-            int imgFlags = IMG_INIT_PNG;
-            if (!(IMG_Init(imgFlags) && imgFlags))
-            {
-                std::cout << "Can not Init IMG: " << SDL_GetError() << std::endl;
-                success = false;
-            }
-        }
-
-        //Khoi tao font chu
-        if (TTF_Init() == -1)
-        {
-            success = false;
-        }
-        gFont = TTF_OpenFont("font/dlxfont_.ttf", 15);
-        if (gFont == NULL)
-        {
-            success = false;
-        }
-
-        //Khoi tao trinh phat nhac
-        if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
-        {
-            return false;
-        }
-        gSound_end = Mix_LoadMUS("sound/ncbtndt.wav");
-        gSound_start = Mix_LoadMUS("sound/gpmn.wav");
-        gSound_bullet[0] = Mix_LoadWAV("sound/Fire0.wav");
-        gSound_bullet[1] = Mix_LoadWAV("sound/Fire1.wav");
-        gSound_bullet[2] = Mix_LoadWAV("sound/Fire2.wav");
-        gSound_explosion = Mix_LoadWAV("sound/explosion.wav");
-        gSound_ex_main = Mix_LoadWAV("sound/main_exp.wav");
-
-        if (gSound_bullet[0] == NULL || gSound_bullet[1] == NULL
-            || gSound_explosion == NULL || gSound_ex_main == NULL
-            || gSound_start == NULL || gSound_end == NULL)
-        {
-            return false;
-        }
-    }
-    return success;
-}
-
-/* HAM LOAD BACKGROUND */
-
-bool LoadBackground()
-{
-    bool ret = gBackground.LoadImg("img/background.png", gScreen);
-    if (ret == false)
-    {
-        std::cout << "Can not Load Background: " << SDL_GetError() << std::endl;
-        return false;
-    }
-    return true;
-}
-
-/* HAM HUY BIEN CON TRO VA THOAT */
-
-void close()
-{
-    gBackground.Clean();
-    SDL_DestroyRenderer(gScreen);
-    gScreen = NULL;
-
-    SDL_DestroyWindow(gWindow);
-    gWindow = NULL;
-
-    TTF_CloseFont(gFont);
-    gFont = NULL;
-
-    Mix_FreeChunk(gSound_bullet[0]);
-    gSound_bullet[0] = NULL;
-    Mix_FreeChunk(gSound_bullet[1]);
-    gSound_bullet[1] = NULL;
-    Mix_FreeChunk(gSound_bullet[2]);
-    gSound_bullet[2] = NULL;
-    Mix_FreeChunk(gSound_explosion);
-    gSound_explosion = NULL;
-    Mix_FreeChunk(gSound_ex_main);
-    gSound_ex_main = NULL;
-
-    Mix_FreeMusic(gSound_start);
-    gSound_start = NULL;
-    Mix_FreeMusic(gSound_end);
-    gSound_end = NULL;
-
-    IMG_Quit();
-    SDL_Quit();
-}
-
+bool Init();
 /* HAM TAO VA XU LY ENEMIES*/
 
-std::vector<EnemiesObiect*> MakeEnemiesList()
-{
-    std::vector<EnemiesObiect*> listEnemies;
-    srand(time(0));
+std::vector<EnemiesObiect*> MakeEnemiesList();
 
-    EnemiesObiect* soldier_enemies = new EnemiesObiect[20];
-    for (int i = 0; i < 20; i++)
-    {
-        EnemiesObiect* pEnemy = (soldier_enemies+i);
-        if (pEnemy != NULL)
-        {
-            int rand_y_ = SDLCommonFunc::MakeRandValue();
-            pEnemy->LoadImg("img/enemy_left.png", gScreen);
-            pEnemy->SetClips();
-            pEnemy->set_type_move(EnemiesObiect::MOVE_IN_SPACE_ENEMY);
-            pEnemy->set_x_pos(500 + i*rand_y_*2 + 400);
-            pEnemy->set_y_pos(200);
-
-            int pos1 = pEnemy->get_x_pos() - 60;
-            int pos2 = pEnemy->get_x_pos() + 60;
-            pEnemy->SetAnimationPos(pos1, pos2);
-            pEnemy->set_input_left(1);
-            listEnemies.push_back(pEnemy);
-        }
-    }
-
-    EnemiesObiect* plane_enemies = new EnemiesObiect[20];
-    for (int i = 0; i < 20; i++)
-    {
-        EnemiesObiect* pEnemy = (plane_enemies+i);
-        if (pEnemy != NULL)
-        {
-            int rand_y_ = SDLCommonFunc::MakeRandValue();
-            pEnemy->LoadImg("img/plane_left.png", gScreen);
-            pEnemy->SetClips();
-            pEnemy->set_type_move(EnemiesObiect::FLY_ENEMY);
-            pEnemy->set_x_pos(600 + i*rand_y_*3 + 700);
-            pEnemy->set_y_pos(rand_y_);
-
-            pEnemy->set_input_left(0);
-
-            Bullet* p_bullet = new Bullet[1];
-            pEnemy->InitBullet(p_bullet, gScreen);
-            listEnemies.push_back(pEnemy);
-        }
-    }
-
-    EnemiesObiect* tank_enemies = new EnemiesObiect[20];
-
-    for (int i = 0; i < 20; i++)
-    {
-        EnemiesObiect* pEnemy = (tank_enemies + i);
-        if (pEnemy != NULL)
-        {
-            int rand_y_ = SDLCommonFunc::MakeRandValue();
-            pEnemy->LoadImg("img/enemy_tank.png", gScreen);
-            pEnemy->SetClips();
-            pEnemy->set_x_pos(700 + i*rand_y_*3 + 750);
-            pEnemy->set_y_pos(250);
-            pEnemy->set_type_move(EnemiesObiect::STATIC_ENEMY);
-            pEnemy->set_input_left(0);
-
-            Bullet* p_bullet = new Bullet[1];
-            pEnemy->InitBullet(p_bullet, gScreen);
-            listEnemies.push_back(pEnemy);
-        }
-    }
-    return listEnemies;
-}
+/* HAM HUY BIEN CON TRO VA THOAT */
+void close();
 
 /* HAM MAIN */
-
 int main(int argc, char* argv[])
 {
     // Bien xu ly FPS
@@ -227,12 +42,6 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    if (LoadBackground() == false)
-    {
-        std::cout << "Can not load background: " << IMG_GetError() << std::endl;
-        return -1;
-    }
-
     //Khoi tao va Load Ban do Game
     GameMap game_map;
     game_map.LoadMap("map/map01.map");
@@ -244,13 +53,13 @@ int main(int argc, char* argv[])
 
     //Khoi tao bien xu ly Load Menu
     Menu menu_game;
-	menu_game.LoadImg("img/menu.png", gScreen);
+	menu_game.LoadImg("assert/menu.png", gScreen);
 	menu_game.SetPostionText();
 
 	//Khoi tao bien xu ly thong bao diem
 	BaseObject score_message;
 	score_message.setRect(380, 90);
-	bool sret = score_message.LoadImg("img/score.png", gScreen);
+	bool sret = score_message.LoadImg("assert/score.png", gScreen);
 	if(!sret) return -1;
 
     //Khoi tao bien quan ly Duoc
@@ -260,7 +69,7 @@ int main(int argc, char* argv[])
 
     //Khoi tao va Load nhan vat chinh
     MainPlayer p_player;
-    p_player.LoadImg("img/player_right_.png", gScreen);
+    p_player.LoadImg("assert/player_right_.png", gScreen);
     p_player.SetClips();
 
     //Load cac enemies
@@ -268,7 +77,7 @@ int main(int argc, char* argv[])
 
     //Khoi tao bien xu ly va cham
     Explosion expEnemy;
-    bool tRet = expEnemy.LoadImg("img/exp.png", gScreen);
+    bool tRet = expEnemy.LoadImg("assert/exp.png", gScreen);
     if (!tRet)
     {
         return -1;
@@ -276,7 +85,7 @@ int main(int argc, char* argv[])
     expEnemy.setClip();
 
     Explosion exp_main;
-    bool mRet = exp_main.LoadImg("img/exp1.png", gScreen);
+    bool mRet = exp_main.LoadImg("assert/exp1.png", gScreen);
     if (!mRet)
     {
         return -1;
@@ -500,7 +309,7 @@ int main(int argc, char* argv[])
         {
             is_show_score = true;
             is_quit = true;
-            bool sret = score_message.LoadImg("img/happy.png", gScreen);
+            bool sret = score_message.LoadImg("assert/happy.png", gScreen);
             if(!sret) return -1;
         }
 
@@ -584,4 +393,192 @@ int main(int argc, char* argv[])
     close();
 
     return 0;
+}
+
+/* HAM KHOI TAO SDL */
+bool Init()
+{
+    bool success = true;
+    int ret = SDL_Init(SDL_INIT_VIDEO);
+    if (ret < 0)
+    {
+        std::cout << "Can not Initialize: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
+    gWindow = SDL_CreateWindow("Game by Kieu Van Tuyen", SDL_WINDOWPOS_UNDEFINED,
+                                SDL_WINDOWPOS_UNDEFINED,
+                                SCREEN_WIDTH, SCREEN_HEIGHT,
+                                SDL_WINDOW_SHOWN);
+    if (gWindow == NULL)
+    {
+        std::cout << "Can not create Window: " << SDL_GetError() << std::endl;
+        success = false;
+    }
+    else
+    {
+        gScreen = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        if (gScreen == NULL)
+        {
+            std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
+            success = false;
+        }
+        else
+        {
+            SDL_SetRenderDrawColor(gScreen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init(imgFlags) && imgFlags))
+            {
+                std::cout << "Can not Init IMG: " << SDL_GetError() << std::endl;
+                success = false;
+            }
+        }
+
+        /* HAM LOAD BACKGROUND */
+        bool ret = gBackground.LoadImg("assert/background.png", gScreen);
+        if (ret == false)
+        {
+            std::cout << "Can not Load Background: " << SDL_GetError() << std::endl;
+            return false;
+        }
+
+        //Khoi tao font chu
+        if (TTF_Init() == -1)
+        {
+            success = false;
+        }
+        gFont = TTF_OpenFont("font/dlxfont_.ttf", 15);
+        if (gFont == NULL)
+        {
+            success = false;
+        }
+
+        //Khoi tao trinh phat nhac
+        if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        {
+            return false;
+        }
+        gSound_end = Mix_LoadMUS("sound/ncbtndt.wav");
+        gSound_start = Mix_LoadMUS("sound/gpmn.wav");
+        gSound_bullet[0] = Mix_LoadWAV("sound/bullet_0.wav");
+        gSound_bullet[1] = Mix_LoadWAV("sound/bullet_1.wav");
+        gSound_bullet[2] = Mix_LoadWAV("sound/bullet_2.wav");
+        gSound_explosion = Mix_LoadWAV("sound/enemy_exp.wav");
+        gSound_ex_main = Mix_LoadWAV("sound/main_exp.wav");
+
+        if (gSound_bullet[0] == NULL || gSound_bullet[1] == NULL
+            || gSound_explosion == NULL || gSound_ex_main == NULL
+            || gSound_start == NULL || gSound_end == NULL)
+        {
+            return false;
+        }
+    }
+    return success;
+}
+
+/* HAM HUY BIEN CON TRO VA THOAT */
+
+void close()
+{
+    gBackground.Clean();
+    SDL_DestroyRenderer(gScreen);
+    gScreen = NULL;
+
+    SDL_DestroyWindow(gWindow);
+    gWindow = NULL;
+
+    TTF_CloseFont(gFont);
+    gFont = NULL;
+
+    Mix_FreeChunk(gSound_bullet[0]);
+    gSound_bullet[0] = NULL;
+    Mix_FreeChunk(gSound_bullet[1]);
+    gSound_bullet[1] = NULL;
+    Mix_FreeChunk(gSound_bullet[2]);
+    gSound_bullet[2] = NULL;
+    Mix_FreeChunk(gSound_explosion);
+    gSound_explosion = NULL;
+    Mix_FreeChunk(gSound_ex_main);
+    gSound_ex_main = NULL;
+
+    Mix_FreeMusic(gSound_start);
+    gSound_start = NULL;
+    Mix_FreeMusic(gSound_end);
+    gSound_end = NULL;
+
+    IMG_Quit();
+    SDL_Quit();
+}
+
+/* HAM TAO VA XU LY ENEMIES*/
+
+std::vector<EnemiesObiect*> MakeEnemiesList()
+{
+    std::vector<EnemiesObiect*> listEnemies;
+    srand(time(0));
+
+    EnemiesObiect* soldier_enemies = new EnemiesObiect[20];
+    for (int i = 0; i < 20; i++)
+    {
+        EnemiesObiect* pEnemy = (soldier_enemies+i);
+        if (pEnemy != NULL)
+        {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
+            pEnemy->LoadImg("assert/enemy_left.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_type_move(EnemiesObiect::MOVE_IN_SPACE_ENEMY);
+            pEnemy->set_x_pos(500 + i*rand_y_*2 + 400);
+            pEnemy->set_y_pos(200);
+
+            int pos1 = pEnemy->get_x_pos() - 60;
+            int pos2 = pEnemy->get_x_pos() + 60;
+            pEnemy->SetAnimationPos(pos1, pos2);
+            pEnemy->set_input_left(1);
+            listEnemies.push_back(pEnemy);
+        }
+    }
+
+    EnemiesObiect* plane_enemies = new EnemiesObiect[20];
+    for (int i = 0; i < 20; i++)
+    {
+        EnemiesObiect* pEnemy = (plane_enemies+i);
+        if (pEnemy != NULL)
+        {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
+            pEnemy->LoadImg("assert/plane_left.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_type_move(EnemiesObiect::FLY_ENEMY);
+            pEnemy->set_x_pos(600 + i*rand_y_*3 + 700);
+            pEnemy->set_y_pos(rand_y_);
+
+            pEnemy->set_input_left(0);
+
+            Bullet* p_bullet = new Bullet[1];
+            pEnemy->InitBullet(p_bullet, gScreen);
+            listEnemies.push_back(pEnemy);
+        }
+    }
+
+    EnemiesObiect* tank_enemies = new EnemiesObiect[20];
+
+    for (int i = 0; i < 20; i++)
+    {
+        EnemiesObiect* pEnemy = (tank_enemies + i);
+        if (pEnemy != NULL)
+        {
+            int rand_y_ = SDLCommonFunc::MakeRandValue();
+            pEnemy->LoadImg("assert/enemy_tank.png", gScreen);
+            pEnemy->SetClips();
+            pEnemy->set_x_pos(700 + i*rand_y_*3 + 750);
+            pEnemy->set_y_pos(250);
+            pEnemy->set_type_move(EnemiesObiect::STATIC_ENEMY);
+            pEnemy->set_input_left(0);
+
+            Bullet* p_bullet = new Bullet[1];
+            pEnemy->InitBullet(p_bullet, gScreen);
+            listEnemies.push_back(pEnemy);
+        }
+    }
+    return listEnemies;
 }

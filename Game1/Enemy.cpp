@@ -264,20 +264,20 @@ void EnemiesObiect::ImpMoveType(SDL_Renderer* screen)
             {
                 input_type_.left_ = 1;
                 input_type_.right_ = 0;
-                LoadImg("img/enemy_left.png", screen);
+                LoadImg("assert/enemy_left.png", screen);
             }
             else if (x_pos_ < animation_a_)
             {
                 input_type_.left_ = 0;
                 input_type_.right_ = 1;
-                LoadImg("img/enemy_right.png", screen);
+                LoadImg("assert/enemy_right.png", screen);
             }
         }
         else
         {
             if (input_type_.left_ == 1)
             {
-                LoadImg("img/enemy_left.png", screen);
+                LoadImg("assert/enemy_left.png", screen);
             }
         }
     }
@@ -287,7 +287,7 @@ void EnemiesObiect::ImpMoveType(SDL_Renderer* screen)
         on_ground_ = false;
         if (input_type_.left_ == 1)
         {
-            LoadImg("img/plane_left.png", screen);
+            LoadImg("assert/plane_left.png", screen);
         }
     }
 

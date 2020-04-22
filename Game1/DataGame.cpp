@@ -21,7 +21,7 @@ void DataGame::SetPosition(const int& xp)
 
 void DataGame::Init(SDL_Renderer* screen)
 {
-    bool ret = LoadImg("img/player_life.png", screen);
+    bool ret = LoadImg("assert/player_life.png", screen);
     if (!ret)
     {
         return;
@@ -76,7 +76,7 @@ PlayerTorch::~PlayerTorch()
 
 void PlayerTorch::Init(SDL_Renderer* screen)
 {
-    bool ret = LoadImg("img/torch.png", screen);
+    bool ret = LoadImg("assert/torch.png", screen);
     if (!ret)
     {
         return;

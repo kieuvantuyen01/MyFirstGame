@@ -553,22 +553,22 @@ void MainPlayer::ControlPlayerImage(SDL_Renderer* renderer)
     {
         if (state_ == WALK_LEFT)
         {
-            LoadImg("img/player_left_.png", renderer);
+            LoadImg("assert/player_left_.png", renderer);
         }
         else
         {
-            LoadImg("img/player_right_.png", renderer);
+            LoadImg("assert/player_right_.png", renderer);
         }
     }
     else
     {
         if (state_ == WALK_LEFT)
         {
-            LoadImg("img/jump_left.png", renderer);
+            LoadImg("assert/jump_left.png", renderer);
         }
         else
         {
-            LoadImg("img/jump_right.png", renderer);
+            LoadImg("assert/jump_right.png", renderer);
         }
     }
 }

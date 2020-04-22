@@ -130,7 +130,7 @@
 1587523926 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
-1587373250 source:d:\btlon\game1\datagame.cpp
+1587547211 source:d:\btlon\game1\datagame.cpp
 	"DataGame.h"
 
 1587486479 d:\btlon\game1\datagame.h
@@ -188,7 +188,7 @@
 1587465099 source:d:\btlon\game1\sdl_untils.cpp
 	"SDL_Untils.h"
 
-1587487884 source:d:\btlon\game1\enemy.cpp
+1587547211 source:d:\btlon\game1\enemy.cpp
 	"Enemy.h"
 
 1587487876 d:\btlon\game1\enemy.h
@@ -196,7 +196,7 @@
 	"BaseObject.h"
 	"Bullet.h"
 
-1587487449 source:d:\btlon\game1\bullet.cpp
+1587547211 source:d:\btlon\game1\bullet.cpp
 	"Bullet.h"
 
 1587532328 d:\btlon\game1\bullet.h
@@ -217,7 +217,7 @@
 	"GeneralFunction.h"
 	"BaseObject.h"
 
-1587532645 source:d:\btlon\game1\mainplayer.cpp
+1587547211 source:d:\btlon\game1\mainplayer.cpp
 	"MainPlayer.h"
 	"Bullet.h"
 
