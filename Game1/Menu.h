@@ -1,8 +1,8 @@
 
 /*LOP XU LY MENU*/
 
-#ifndef MENU_H_
-#define MENU_H_
+#ifndef MENU_H
+#define MENU_H
 
 #include "GeneralFunction.h"
 #include "Text.h"

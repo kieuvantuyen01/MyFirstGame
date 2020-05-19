@@ -20,8 +20,8 @@ BaseObject gBackground;
 
 /* HAM KHOI TAO SDL */
 bool Init();
-/* HAM TAO VA XU LY ENEMIES*/
 
+/* HAM TAO VA XU LY ENEMIES*/
 std::vector<EnemiesObiect*> MakeEnemiesList();
 
 /* HAM HUY BIEN CON TRO VA THOAT */
@@ -448,7 +448,7 @@ bool Init()
         {
             success = false;
         }
-        gFont = TTF_OpenFont("font/dlxfont_.ttf", 15);
+        gFont = TTF_OpenFont("font/Classique-Saigon.ttf", 30);
         if (gFont == NULL)
         {
             success = false;

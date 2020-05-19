@@ -55,7 +55,7 @@ void Text::RenderText(SDL_Renderer* screen,
                     SDL_RendererFlip flip )
 {
     SDL_Rect renderQuad = {xp, yp, width_, height_};
-    if (clip !=- NULL)
+    if (clip != NULL)
     {
         renderQuad.w = clip->h;
         renderQuad.h = clip->h;

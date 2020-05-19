@@ -3,6 +3,7 @@
 
 #include "GeneralFunction.h"
 #include "BaseObject.h"
+#include "Text.h"
 
 bool SDLCommonFunc::isInside(int& x, int& y, SDL_Rect object)
 {

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1587532184 source:d:\btlon\game1\main.cpp
+1589901411 source:d:\btlon\game1\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -116,7 +116,7 @@
 1587525193 source:d:\btlon\game1\menu.cpp
 	"Menu.h"
 
-1587525190 d:\btlon\game1\menu.h
+1589901669 d:\btlon\game1\menu.h
 	"GeneralFunction.h"
 	"Text.h"
 
@@ -127,7 +127,7 @@
 1586570925 source:d:\btlon\game1\textobj.cpp
 	"TextObj.h"
 
-1587523926 source:d:\btlon\game1\text.cpp
+1588959294 source:d:\btlon\game1\text.cpp
 	"Text.h"
 
 1587547211 source:d:\btlon\game1\datagame.cpp
@@ -203,7 +203,7 @@
 	"BaseObject.h"
 	"GeneralFunction.h"
 
-1587532077 d:\btlon\game1\generalfunction.h
+1589901445 d:\btlon\game1\generalfunction.h
 	<windows.h>
 	<string>
 	<vector>
@@ -213,9 +213,10 @@
 	<SDL_ttf.h>
 	<fstream>
 
-1587524648 source:d:\btlon\game1\generalfunction.cpp
+1589901430 source:d:\btlon\game1\generalfunction.cpp
 	"GeneralFunction.h"
 	"BaseObject.h"
+	"Text.h"
 
 1587547211 source:d:\btlon\game1\mainplayer.cpp
 	"MainPlayer.h"

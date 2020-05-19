@@ -45,8 +45,8 @@
 		<Unit filename="GeneralFunction.h" />
 		<Unit filename="Geometric.cpp" />
 		<Unit filename="Geometric.h" />
-		<Unit filename="MainObject.cpp" />
-		<Unit filename="MainObject.h" />
+		<Unit filename="MainPlayer.cpp" />
+		<Unit filename="MainPlayer.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="Menu.cpp" />
